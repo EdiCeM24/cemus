@@ -1,0 +1,812 @@
+/* ./public/css/input.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Safe-padding for mobile devices with notches */
+:root {
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 20px;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #0f172a;
+}
+/** ========== ALL NAVBARS PAGE SECTION ========== **/
+.nav-link {
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s ease-in-out;
+  position: relative;
+}
+.nav-link.active {
+  border-bottom: 2px solid #ff4500;
+  width: 100%;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: orangered;
+  transition: width 0.3s ease-in-out;
+}
+.nav-link.active::after {
+  width: 100%;
+}
+/** ========== ADMIN DASHBOARD PAGE SECTION ========== **/
+/** ========== Google fonts ========== **/
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/** ========== GLOBALS ========== **/
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-blue: #2a2185;
+  --color-dask: #2a2a2a;
+  --color-white: #fff;
+  --color-gray: #f5f5f5;
+  --color-black1st: #222;
+  --color-black2nd: #999;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  /* padding: 0px 2px; */
+}
+
+/** ========== NAVIGATIONS ========== **/
+.container_navigation {
+  position: fixed;
+  width: 15%;
+  /* width: 100px; */
+  height: 100%;
+  background: var(--color-blue);
+  border-left: 10px solid var(--color-blue);
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.container_navigation.active {
+  width: 80px;
+}
+
+.container_navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.container_navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.container_navigation ul li:hover,
+.container_navigation ul li.hovered {
+  background-color: var(--color-white);
+}
+
+.container_navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.container_navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+.container_navigation ul li:hover a,
+.container_navigation ul li.hovered a {
+  color: var(--color-blue);
+}
+
+.container_navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+}
+
+.container_navigation ul li a .icon ion-icon {
+  font-size: 1.75rem;
+}
+
+.container_navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+/** ---------- CURVE OUTSIDE ---------- **/
+.container_navigation ul li:hover a::before,
+.container_navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--color-white);
+  pointer-events: none;
+}
+.container_navigation ul li:hover a::after,
+.container_navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--color-white);
+  pointer-events: none;
+}
+
+/** ========== MAIN CONTENTS SECTION ========== **/
+.main_container {
+  position: absolute;
+  width: calc(100% - 300px);
+  left: 300px;
+  min-height: 100vh;
+  background-color: var(--color-white);
+  transition: 0.5s;
+}
+
+.main_container.active {
+  width: calc(100% - 80px);
+  left: 80px;
+}
+
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.toggle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+.search {
+  position: relative;
+  width: 400px;
+  margin: 0 10px;
+}
+
+.search label {
+  position: relative;
+  width: 100%;
+}
+
+.search label input {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  padding: 5px 20px;
+  padding-left: 35px;
+  font-size: 18px;
+  outline: none;
+  border: 1px solid var(--color-blue);
+}
+
+.search label ion-icon {
+  border: 1px solid var(--color-blue);
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 1.2rem;
+}
+
+.user {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.user img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+
+/** ========== CARDS ========== **/
+.cardBox {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+}
+
+.cardBox .card {
+  position: relative;
+  background-color: var(--color-white);
+  padding: 30px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.06);
+  border-radius: 20px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.cardBox .card .numbers {
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-blue);
+}
+
+.cardBox .card .cardName {
+  color: var(--color-black2nd);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.cardBox .card .iconBox {
+  font-size: 1.5rem;
+  color: var(--color-black2nd);
+}
+
+.cardBox .card:hover {
+  background-color: var(--color-blue);
+  transition: all 0.3s ease-in;
+  opacity: 0.7;
+}
+
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBox {
+  color: var(--color-white);
+}
+
+/** ========== ORDER DETAILS ========== **/
+.details {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-top: 10px;
+}
+
+.details .recentOrders {
+  position: relative;
+  display: grid;
+  min-height: 320px;
+  background-color: var(--color-white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.details .cardHeader {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 30px;
+}
+
+.cardHeader strong {
+  font-weight: 600;
+  font-size: 32px;
+  color: var(--color-blue);
+}
+
+.cardHeader .v_btn {
+  position: relative;
+  padding: 5px 10px;
+  text-decoration: none;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  border-radius: 6px;
+  width: 80px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 5px 8px 12px rgba(0, 0, 0, 0.06);
+}
+
+.details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.details table thead td {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.details .recentOrders table tr {
+  color: var(--color-black1st);
+  font: 1em serif;
+  font-size: 18px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-black2nd);
+}
+
+.details .recentOrders table tr:last-child {
+  border-bottom: 1px solid var(--color-black2nd);
+}
+
+.details .recentOrders table tbody tr:hover {
+  background-color: var(--color-gray);
+}
+
+.details .recentOrders table tr td {
+  padding: 10px;
+}
+
+.details .recentOrders table tr td:last-child {
+  text-align: end;
+}
+
+.details .recentOrders table tr td:nth-child(2) {
+  text-align: end;
+}
+
+.details .recentOrders table tr td:nth-child(3) {
+  text-align: center;
+}
+
+.status.delivered {
+  padding: 2px 4px;
+  background-color: #8de02c;
+  color: var(--color-white);
+  border-radius: 4px;
+  font: 14px;
+  font-weight: 100;
+}
+
+.status.pending {
+  padding: 2px 4px;
+  background-color: #edc900;
+  color: var(--color-white);
+  border-radius: 4px;
+  font: 14px;
+  font-weight: 100;
+}
+
+.status.return {
+  padding: 2px 4px;
+  background-color: #e0412c;
+  color: var(--color-white);
+  border-radius: 4px;
+  font: 14px;
+  font-weight: 100;
+}
+
+.status.progress {
+  padding: 2px 4px;
+  background-color: #2ce03b;
+  color: var(--color-white);
+  border-radius: 4px;
+  font: 14px;
+  font-weight: 100;
+}
+
+.div_calc {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+}
+
+.total_price {
+  color: var(--color-blue);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.sum_total {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.action_note {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 3px;
+  font-weight: 600;
+}
+
+.recentCustomers {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background-color: var(--color-white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.06);
+  border-radius: 20px;
+}
+
+.recentCustomers .imageBx {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.recentCustomers .imageBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recentCustomers table tr:hover {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+.recentCustomers table tr td {
+  padding: 12px 10px;
+}
+
+.recentCustomers table tr td strong {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2rem;
+}
+
+.recentCustomers table tr td span {
+  font-size: 14px;
+  color: var(--color-black2nd);
+}
+
+.recentCustomers table tr:hover td span {
+  color: var(--color-white);
+}
+
+/** ========== BREAKPOINTS ========== **/
+@media screen and (max-width: 998px) {
+  .container_navigation {
+    left: -300px;
+  }
+  .container_navigation.active {
+    width: 300px;
+    left: 0;
+  }
+  .main_container {
+    width: 100%;
+    left: 0;
+  }
+  .main_container.active {
+    left: 300px;
+  }
+  .cardBox {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+  .recentOrders {
+    overflow-x: auto;
+  }
+  .status.progress {
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cardBox {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .cardHeader strong {
+    font-size: 20px;
+  }
+  .user {
+    min-width: 40px;
+  }
+  .container_navigation {
+    width: 100%;
+    left: -100%;
+    z-index: 1000;
+  }
+  .container_navigation.active {
+    width: 100%;
+    left: 0;
+  }
+  .toggle {
+    z-index: 10001;
+  }
+  .main_container.active .toggle {
+    color: #fff;
+    position: fixed;
+    right: 0;
+    left: initial;
+  }
+}
+/** ========== END OF ADMIN PAGE SECTION ========== **/
+
+/** ========== FOR REGISTER AND LOGIN PAGE ========== **/
+.authCard {
+  animation: fadeIn 0.5s ease-in-out;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+.auth-left {
+  animation: fadeIn 0.5s ease-in-out;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+/** ========== FOR END OF REGISTER AND LOGIN ========== **/
+/** ========== FOR HEADER PAGE ========== **/
+#myHeader {
+  background-image: url("/images/rahul-mishra-XXMA-8fBB-g-unsplash.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  object-fit: cover;
+  height: 250px;
+  left: 0;
+  top: 0;
+  margin-top: 0%;
+}
+/* .header {
+  
+} */
+
+/** ========== FOR END OF HEADER PAGE ========== **/
+@media screen and (max-width: 689px) {
+  .header_links {
+    display: none;
+  }
+  .tool-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  /** ========== FORGOT AND RESET PASSWORD PAGEs ========== **/
+  #contains {
+    margin-top: 15%;
+  }
+
+  /** ========== CONTACT PAGE ========== **/
+  .contact-conn {
+    margin-top: 13%;
+  }
+  .contact-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .contact-text_social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 3%;
+    flex: 1;
+  }
+  .contact-conn {
+    position: relative;
+  }
+  .contact_form_container {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 75%;
+    transform: translateX(-100%);
+    transition: all 0.05s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .show {
+    display: flex;
+    position: absolute;
+    top: 120%;
+    margin-top: 120%;
+    transform: translateX(100%);
+    transition: all 0.05s ease-in-out;
+    width: 100%;
+    height: 100vh;
+    margin-left: 4%;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  /** ========== END OF CONTACT PAGE ========== **/
+  /** ========== REGISTER AND LOGIN PAGEs SECTION ========== **/
+  .authCard {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    height: 100vh;
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  .auth-left {
+    width: 100%;
+  }
+}
+
+/** ========== CONTACT PAGE ========== **/
+.contact-conn {
+  position: relative;
+}
+.contact_form_container {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  top: 60%;
+  transform: translateY(50%);
+  transition: all 0.05s ease-in-out;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.contact_form_container.show {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(50%);
+  transition: all 0.05s ease-in-out;
+  width: 100%;
+  height: 70vh;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 998px) {
+  .navbar {
+    padding: 0;
+  }
+  /** ========== FORGOT AND RESET PASSWORD PAGEs ========== **/
+  #contains {
+    margin-top: 15%;
+  }
+
+  /** ========== CONTACT PAGE ========== **/
+  .contact-conn {
+    margin-top: 13%;
+  }
+  .contact-text_social {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 3%;
+    flex: 1;
+  }
+  .contact-conn {
+    position: relative;
+  }
+  .contact_form_container {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 30%;
+    transform: translateY(50%);
+    transition: all 0.05s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .contact_form_heading {
+    margin-top: 5%;
+  }
+  .show {
+    display: flex;
+    position: absolute;
+    top: 45%;
+    transform: translateY(50%);
+    transition: all 0.05s ease-in-out;
+    width: 100%;
+    height: 55vh;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #38bdf8, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/** ========== FOR ADMIN DASHBOARD ========== **/

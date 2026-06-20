@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%- title %></title>
+    <link rel="stylesheet" href="/css/output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+  </head>
+
+  <body class="font-[Arial] p-[30px] bg-[#f5f5f5]">
+    <div class="container bg-white p-[30px] rounded-[10px]">
+      <h2 class="text-[#2563eb]">Hello <%= user.name %></h2>
+
+      <p>This verification link expires in 30 minutes.</p>
+
+      <h1>You're Almost There!</h1>
+      <strong>
+        <p>We’ve sent you an email with your activation link.</p>
+        Please follow the steps to activate your account and gain full access to
+        all features of our website.
+      </strong>
+      <!-- <p>Click the verification link below:</p> -->
+
+      <!-- <a
+        href=""
+        class="btn bg-[#2563eb] text-white py-[14px] px-[20px] no-underline rounded-md mt-[20px] inline-block"
+      >
+        Verify Email
+      </a> -->
+    </div>
+    <footer><%- include('partials/footer.ejs') %></footer>
+  </body>
+</html>

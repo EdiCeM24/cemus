@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="/css/output.css" />
+
+<header class="header relative" id="myHeader">
+  <div class="header_nav fixed z-10 left-0 top-0 w-full" id="header">
+    <div
+      class="header_container flex items-center justify-evenly gap-32 py-4 px-3"
+    >
+      <div class="header_myLogo flex items-center justify-evenly gap-1">
+        <a
+          href="/api/v1/homes/home"
+          class="no-underline flex items-center justify-center gap-1"
+        >
+          <img
+            src="/images/favicon3.ico"
+            class="w-10 h-10 rounded-full object-cover"
+            alt=""
+          />
+          <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
+            EDIDIONG
+          </h1>
+        </a>
+      </div>
+
+      <div class="header_links flex items-center space-x-3 ml-8">
+        <a
+          href=""
+          class="nav-link no-underline text-white text-[16px] font-serif font-medium hover:text-cyan-400 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          id=""
+          >Payload</a
+        >
+        <a
+          href="/api/v1/homes/home"
+          class="nav-link no-underline text-white text-[16px] font-serif font-medium hover:text-cyan-400 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          id=""
+          >Home</a
+        >
+        <a
+          href="/api/v1/homes/about"
+          class="nav-link no-underline text-white text-[16px] font-serif font-medium hover:text-cyan-400 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          >About</a
+        >
+        <a
+          href="/api/v1/homes/projects"
+          class="nav-link no-underline text-white text-[16px] font-serif font-medium hover:text-cyan-400 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          id=""
+          >Projects</a
+        >
+        <a
+          href="/api/v1/contacts/contact"
+          class="nav-link no-underline text-white text-[16px] font-serif font-medium hover:text-cyan-400 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          id=""
+          >Contact</a
+        >
+      </div>
+    </div>
+
+    <div class="flex items-center py-4 space-x-3 group absolute top-8 right-3">
+      <img
+        src=""
+        alt="Logo"
+        class="text-white w-10 h-10 rounded-full object-cover"
+      />
+      <!-- <i class="fa-solid fa-user text-white"></i> -->
+      <div
+        class="hidden group-hover:block absolute right-3 top-5 mt-2 w-32 bg-white rounded-md shadow-lg py-2 p-6 text-center justify-center duration-150 ease-linear translate-y-4 skew-y-2"
+      >
+        <a
+          href=""
+          class="block no-underline text-teal-600 w-12 text-[16px] font-serif font-medium hover:text-orange-600 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          >Profile</a
+        >
+        <a
+          href=""
+          class="block no-underline text-teal-600 w-10 text-[16px] font-serif font-medium hover:text-orange-600 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          >Login</a
+        >
+        <a
+          href="/api/v1/auth/login"
+          class="block no-underline text-teal-600 w-10 text-[16px] font-serif font-medium hover:text-orange-600 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          >Login</a
+        >
+        <form action="<%-  %>" method="POST">
+          <button
+            type="submit"
+            class="block text-teal-600 border-none outline-none py-3 px-4 w-12 text-[16px] font-serif font-medium hover:text-orange-600 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+          >
+            Logout
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script src="/script/dash.js"></script>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Edidiong</title>
+  <link rel="stylesheet" href="/css/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ovo&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ovo&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+
+  
+</head>
+<body>
+ <!-- Navbar -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex justify-between items-center">
+
+      <div class="header_myLogo flex items-center justify-evenly gap-1">
+        <a href="/api/v1/homes/home" class="no-underline flex items-center justify-center gap-1">
+          <img
+            src="/images/favicon3.ico"
+            class="w-10 h-10 rounded-full object-cover"
+            alt=""
+          />
+          <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
+            EDIDIONG
+          </h1>
+        </a>
+      </div>
+      <!-- <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
+        EDIDIONG
+      </h1> -->
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="/api/v1/homes/home#home" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Home</a>
+        <a href="/api/v1/homes/about#about" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">About</a>
+        <a href="/api/v1/homes/projects" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Projects</a>
+        <a href="/api/v1/contacts/contact" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Contact</a>
+        <!-- <a href="#" class="hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Services</a> -->
+      </nav>
+
+      <button class="touch_me_out bg-cyan-500 hover:bg-cyan-400 transition ease-in-out px-5 py-2 rounded-full font-semibold text-slate-950 shadow-lg shadow-cyan-500/30">
+        Hire Me
+      </button>
+    </div>
+  </header>
+
+  <div class="contact-conn container mx-auto max-h-screen mt-[4%] p-10 px-10"> 
+    <div class="">
+      <% if (success_msg) { %>
+        <p class="text-green-600 font-serif font-semibold text-[16px]"><%= success_msg[0] %></p>
+      <% } %>
+    </div>
+
+    <div class="mb-2 p-1">
+      <% if (error_msg) { %>
+        <span class="text-rose-600 font-serif font-semibold text-[16px]"><%= error_msg %></span>
+      <% } %>
+    </div>
+
+    <div class="mb-2 p-1">
+      <% if(error) { %>
+        <span class="text-rose-600 font-serif font-semibold text-[16px]"><%= error %></span>
+      <%}%> 
+    </div>
+  </div>
+
+
+
+  <div class="flex items-center justify-between flex-col w-full mt-3">
+        <div class="left-side flex items-center flex-col justify-center p-5 px-10 bg-slate-50 w-[40%]">
+          
+          <div class="flex items-center justify-between flex-col">
+            <div class="my-0 mx-2 py-0 bg-slate-100 shadow-md border-2 border-orange-600">
+
+              <div class="flex items-center justify-center flex-col p-4">
+                <strong class="text-xl font-semibold font-serif mb-4 text-blue-500">Hello!</strong>
+                <span class="text-xl font-semibold font-serif mb-4 text-blue-500">It's Me</span>
+                <span class="text-2xl font-medium font-serif text-slate-800">
+                  <div class="fa fa-user text-blue-600"></div>
+                  Marcus Edidiong Cletus
+                </span>
+              </div>
+              <div class="flex items-center justify-center">
+                <p class="flex items-center gap-1 mb-2 text-xl font-semibold font-serif">
+                  <i class="fa fa-code text-xl text-blue-600"></i>
+                  A <span class="text-pink-700 font-serif">Software</span> Engineer
+                </p>
+              </div>
+
+              <div class="leading-tight ">
+                <div class="flex items-center justify-center gap-1">
+                  <p class="text-xl font-semibold font-serif text-slate-800 gap-1">
+                    <div class="fa fa-computer text-blue-600"></div>
+                    Studied <span class="text-rose-700 font-serif font-semibold gap-1"> Computer</span> Science
+                  </p>
+                </div>
+
+                <div class="mb-1 mt-1 flex items-center justify-center">
+                  <strong class="text-rose-700 text-xl font-serif font-semibold">At</strong>
+                </div>
+                <strong class="flex items-center font-serif mb-3 justify-center gap-1">
+                  <i class="fa fa-school text-blue-600"></i>
+                  Federal Polytechnic Nekede, Owerri
+                </strong>
+                
+                <p class="p-3 flex text-justify justify-start flex-col w-[100%] bg-slate-100 shadow-md text-xl text-slate-800 font-medium">
+                  Lorem ipsum dolor sit amet consectetur.
+                  Facere nobis aspernatur ab vero obcaecati.
+                  Ad eum repudiandae deserunt alias doloribus?
+                  Cumque ut eligendi praesentium doloremque ipsum.
+                  Fuga voluptatibus cum autem unde fugit.
+                </p>
+
+                <div class="mt-1 flex items-center justify-center flex-col p-3 bg-slate-100 shadow-md leading-tight">
+                  <div class="flex items-center justify-center">
+                    <p class="flex items-center gap-1 mb-2 text-xl font-semibold font-serif">
+                      <i class="fa fa-code text-xl text-blue-600"></i>
+                      Studying <span class="text-pink-700 font-serif">Software</span> Engineering
+                    </p>
+                  </div>
+
+                  <div class="flex items-center gap-1">
+                    <i class="fa fa-award text-blue-600"></i>
+                    <h3 class="mb-1 text-xl font-semibold font-serif text-slate-800">Postgraduate</h3>
+                  </div>
+
+                  
+                  <strong class="text-rose-700 text-xl font-serif font-semibold">At</strong>
+              
+
+                  <strong class="mb-1 text-slate-800 font-serif flex items-center gap-1">
+                    <i class="fa fa-school text-blue-600"></i>
+                     Federal University Of Technology Owerri
+                  </strong>
+                  <p class="flex text-justify justify-start flex-col w-[100%] bg-slate-100 shadow-md text-xl text-slate-800 font-medium mt-1 mb-1">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing.
+                    Blanditiis nihil earum nobis cumque ipsum vel?
+                    Accusantium, iure? Nemo nostrum velit odio aliquid.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+        <!-- About Section -->
+      <section id="about" class="py-28 bg-slate-900/50 border-t border-slate-800">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+
+          <div>
+            <a href="/api/v1/homes/home/#about">
+              <h2 class="text-4xl text-white lg:text-5xl font-extrabold mb-8">
+                About <span class="gradient-text">Me</span>
+              </h2>
+            </a>
+
+            <p class="text-slate-300 leading-relaxed text-lg mb-6">
+              I specialize in building secure and scalable applications with beautiful user experiences. My focus is creating products that are optimized for performance, maintainability, and business growth.
+            </p>
+
+            <p class="text-slate-400 leading-relaxed">
+              From backend APIs to frontend experiences, I combine modern development tools with clean architecture to create production-ready solutions.
+            </p>
+          </div>
+
+
+          <div class="grid grid-cols-2 gap-6">
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Frontend</h3>
+              <p class="text-slate-300">React.js, Next.js, TailwindCSS, Redux</p>
+            </div>
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Backend</h3>
+              <p class="text-slate-300">Node.js, Express.js, Python, Django, fastAPI, GraphQL, REST APIs</p>
+            </div>
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Database</h3>
+              <p class="text-slate-300">PostgreSQL, MySQL, MongoDB, Sequelize & Mongoose (ORM)</p>
+            </div>
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Deployment</h3>
+              <p class="text-slate-300">Docker, AWS, CI/CD, Production Hosting</p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <div class="tool-logos mt-[10%]">
+      <strong class="">Technologies:</strong>
+      <div class="tech grass">
+
+        <div class=" flex items-center justify-between p-3 gap-3 mb-4 shadow-lg">
+            <span class="flex items-center gap-[3px]">
+              <img src="/images/vite.jpg" class="w-6 h-6 object-cover rounded-md" alt="">
+              HTML
+            </span>
+            <span class="flex items-center gap-[3px]">
+              <img src="/images/vite.jpg" class="w-6 h-6 object-cover rounded-md" alt="">
+              React
+            </span>
+            <span class="flex items-center gap-[3px]">
+              <img src="/images/nextjs.jpg" class="w-6 h-6 object-cover rounded-md" alt="">
+              Next.js
+            </span>
+        </div>
+
+        <div class="flex items-center justify-between p-3 gap-3 mb-4">
+
+          <span class="flex items-center gap-[3px]">
+            <img src="/images/nodejs.jpg" class="w-6 h-6 object-cover rounded-md" alt="">
+            Node.js
+          </span>
+          <span class="flex items-center gap-[3px]">
+            <img src="/images/express.png" class="w-6 h-6 object-cover rounded-md" alt="">
+            Express
+          </span>
+          <span class="flex items-center gap-[3px]">
+            <img src="/images/python.png" class="w-6 h-6 object-cover rounded-md" alt="">
+            Python
+          </span>
+        </div>
+        </div>
+
+        <div class="">
+
+          <div class="flex items-center justify-between p-3 gap-3 mb-4">
+              <span class="flex items-center gap-[3px]">
+                <img src="/images/git.png" class="w-6 h-6 object-cover rounded-md" alt="">
+                Git
+              </span>
+              <span class="flex items-center gap-[3px]">
+                <img src="/images/django.png" class="w-6 h-6 object-cover rounded-md" alt="">
+                Django
+              </span>
+              <span class="flex items-center gap-[3px]">
+                <img src="/images/postgresql.png" class="w-6 h-6 object-cover rounded-md" alt="">
+                postgres
+              </span>
+          </div>
+          
+          <div class="flex items-center justify-between p-3 gap-3 mb-4">
+            <span class="flex items-center gap-[3px]">
+              <img src="/images/mysql.png" class="w-6 h-6 object-cover rounded-md" alt="">
+              MySQL
+            </span>
+            <span class="flex items-center gap-[3px]">
+              <img src="/images/mongodb-1.png" class="w-6 h-6 object-cover rounded-md" alt="">
+              MongoDB
+            </span>
+            <span class="flex items-center gap-[3px]">
+              <img src="/images/firebase.png" class="w-6 h-6 object-cover rounded-md" alt="">
+              Firebase
+            </span>
+          </div>
+      </div>
+  </div>
+
+   Modern Digital 
+  <footer>
+    <%- include('partials/footer.ejs') %>
+  </footer>
+</body>
+</html>

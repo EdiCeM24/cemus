@@ -1,0 +1,625 @@
+create a proper step by step guide for facebook, github and google Oauth2 authentication base production code in its standard
+Production OAuth2 Authentication Guide (Google, GitHub, Facebook) using Node.js, Express, Sequelize, PostgreSQL, EJS
+
+This guide follows modern production architecture:
+
+Client (EJS)
+      │
+      ▼
+Express Routes
+      │
+      ▼
+Passport OAuth Strategy
+      │
+      ▼
+Service Layer
+      │
+      ▼
+Repository Layer
+      │
+      ▼
+Sequelize ORM
+      │
+      ▼
+PostgreSQL
+1. Install Required Packages
+npm install passport
+npm install passport-google-oauth20
+npm install passport-github2
+npm install passport-facebook
+npm install express-session
+npm install connect-pg-simple
+npm install dotenv
+npm install uuid
+2. Database Design
+User Table
+// models/User.model.js
+
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
+
+const User = sequelize.define(
+  "User",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+
+    firstName: DataTypes.STRING,
+
+    lastName: DataTypes.STRING,
+
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
+
+    password: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    provider: {
+      type: DataTypes.ENUM(
+        "local",
+        "google",
+        "github",
+        "facebook"
+      ),
+      defaultValue: "local",
+    },
+
+    providerId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    avatar: DataTypes.TEXT,
+
+    isEmailVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+
+    role: {
+      type: DataTypes.ENUM(
+        "user",
+        "admin"
+      ),
+      defaultValue: "user",
+    },
+
+    lastLogin: DataTypes.DATE,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export default User;
+3. Environment Variables
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+FACEBOOK_APP_ID=
+FACEBOOK_APP_SECRET=
+
+SESSION_SECRET=
+
+CLIENT_URL=http://localhost:3000
+SERVER_URL=http://localhost:5000
+4. Create OAuth Applications
+Google OAuth Setup
+
+Go to:
+
+https://console.cloud.google.com
+
+Create Project
+
+Enable:
+
+Google Identity Services API
+
+Create OAuth Credentials.
+
+Authorized Redirect URI:
+
+http://localhost:5000/api/auth/google/callback
+
+Production:
+
+https://yourdomain.com/api/auth/google/callback
+GitHub OAuth Setup
+
+Go to:
+
+https://github.com/settings/developers
+
+Create OAuth App
+
+Authorization callback:
+
+http://localhost:5000/api/auth/github/callback
+
+Production:
+
+https://yourdomain.com/api/auth/github/callback
+Facebook OAuth Setup
+
+Go to:
+
+https://developers.facebook.com
+
+Create App
+
+Add:
+
+Facebook Login Product
+
+Valid Redirect URI:
+
+http://localhost:5000/api/auth/facebook/callback
+
+Production:
+
+https://yourdomain.com/api/auth/facebook/callback
+5. Session Configuration
+// config/session.js
+
+import session from "express-session";
+import pgSession from "connect-pg-simple";
+
+const PgStore = pgSession(session);
+
+export default session({
+  store: new PgStore({
+    conString: process.env.DATABASE_URL,
+  }),
+
+  secret: process.env.SESSION_SECRET,
+
+  resave: false,
+
+  saveUninitialized: false,
+
+  cookie: {
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+});
+6. Passport Configuration
+// config/passport.js
+
+import passport from "passport";
+
+import googleStrategy from "./strategies/google.js";
+import githubStrategy from "./strategies/github.js";
+import facebookStrategy from "./strategies/facebook.js";
+
+passport.use(googleStrategy);
+passport.use(githubStrategy);
+passport.use(facebookStrategy);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  const user = await User.findByPk(id);
+
+  done(null, user);
+});
+
+export default passport;
+7. OAuth User Service
+
+Centralize all provider logic.
+
+// services/oauth.service.js
+
+import User from "../models/User.model.js";
+
+export async function findOrCreateOAuthUser({
+  email,
+  provider,
+  providerId,
+  avatar,
+  firstName,
+  lastName,
+}) {
+  let user = await User.findOne({
+    where: { email },
+  });
+
+  if (!user) {
+    user = await User.create({
+      email,
+      provider,
+      providerId,
+      avatar,
+      firstName,
+      lastName,
+      isEmailVerified: true,
+    });
+  }
+
+  user.lastLogin = new Date();
+
+  await user.save();
+
+  return user;
+}
+8. Google Strategy
+// config/strategies/google.js
+
+import { Strategy } from "passport-google-oauth20";
+
+import { findOrCreateOAuthUser }
+from "../../services/oauth.service.js";
+
+export default new Strategy(
+  {
+    clientID:
+      process.env.GOOGLE_CLIENT_ID,
+
+    clientSecret:
+      process.env.GOOGLE_CLIENT_SECRET,
+
+    callbackURL:
+      "/api/auth/google/callback",
+  },
+
+  async (
+    accessToken,
+    refreshToken,
+    profile,
+    done
+  ) => {
+    try {
+      const user =
+        await findOrCreateOAuthUser({
+          email: profile.emails[0].value,
+
+          provider: "google",
+
+          providerId: profile.id,
+
+          avatar: profile.photos[0]?.value,
+
+          firstName:
+            profile.name.givenName,
+
+          lastName:
+            profile.name.familyName,
+        });
+
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  }
+);
+9. GitHub Strategy
+// config/strategies/github.js
+
+import { Strategy } from "passport-github2";
+
+export default new Strategy(
+  {
+    clientID:
+      process.env.GITHUB_CLIENT_ID,
+
+    clientSecret:
+      process.env.GITHUB_CLIENT_SECRET,
+
+    callbackURL:
+      "/api/auth/github/callback",
+  },
+
+  async (
+    accessToken,
+    refreshToken,
+    profile,
+    done
+  ) => {
+    try {
+      const user =
+        await findOrCreateOAuthUser({
+          email:
+            profile.emails?.[0]?.value,
+
+          provider: "github",
+
+          providerId: profile.id,
+
+          avatar:
+            profile.photos?.[0]?.value,
+
+          firstName:
+            profile.displayName,
+        });
+
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  }
+);
+10. Facebook Strategy
+// config/strategies/facebook.js
+
+import { Strategy }
+from "passport-facebook";
+
+export default new Strategy(
+  {
+    clientID:
+      process.env.FACEBOOK_APP_ID,
+
+    clientSecret:
+      process.env.FACEBOOK_APP_SECRET,
+
+    callbackURL:
+      "/api/auth/facebook/callback",
+
+    profileFields: [
+      "id",
+      "emails",
+      "name",
+      "picture.type(large)",
+    ],
+  },
+
+  async (
+    accessToken,
+    refreshToken,
+    profile,
+    done
+  ) => {
+    try {
+      const user =
+        await findOrCreateOAuthUser({
+          email:
+            profile.emails?.[0]?.value,
+
+          provider: "facebook",
+
+          providerId: profile.id,
+
+          avatar:
+            profile.photos?.[0]?.value,
+
+          firstName:
+            profile.name.givenName,
+
+          lastName:
+            profile.name.familyName,
+        });
+
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  }
+);
+11. OAuth Routes
+// routes/auth.routes.js
+
+import passport from "passport";
+
+import { Router } from "express";
+
+const router = Router();
+Google
+router.get(
+  "/google",
+
+  passport.authenticate(
+    "google",
+    {
+      scope: ["profile", "email"],
+    }
+  )
+);
+
+router.get(
+  "/google/callback",
+
+  passport.authenticate(
+    "google",
+    {
+      failureRedirect: "/login",
+    }
+  ),
+
+  (req, res) => {
+    res.redirect("/dashboard");
+  }
+);
+GitHub
+router.get(
+  "/github",
+
+  passport.authenticate(
+    "github",
+    {
+      scope: ["user:email"],
+    }
+  )
+);
+
+router.get(
+  "/github/callback",
+
+  passport.authenticate(
+    "github",
+    {
+      failureRedirect: "/login",
+    }
+  ),
+
+  (req, res) => {
+    res.redirect("/dashboard");
+  }
+);
+Facebook
+router.get(
+  "/facebook",
+
+  passport.authenticate(
+    "facebook",
+    {
+      scope: ["email"],
+    }
+  )
+);
+
+router.get(
+  "/facebook/callback",
+
+  passport.authenticate(
+    "facebook",
+    {
+      failureRedirect: "/login",
+    }
+  ),
+
+  (req, res) => {
+    res.redirect("/dashboard");
+  }
+);
+12. EJS Login Page
+<div class="oauth-buttons">
+
+  <a href="/api/auth/google">
+    Continue with Google
+  </a>
+
+  <a href="/api/auth/github">
+    Continue with GitHub
+  </a>
+
+  <a href="/api/auth/facebook">
+    Continue with Facebook
+  </a>
+
+</div>
+13. Logout
+router.post(
+  "/logout",
+  (req, res) => {
+    req.logout(() => {
+      req.session.destroy(() => {
+        res.redirect("/login");
+      });
+    });
+  }
+);
+14. Production Security Improvements
+Enable HTTPS
+app.set("trust proxy", 1);
+Secure Cookies
+cookie: {
+  secure: true,
+  httpOnly: true,
+  sameSite: "lax"
+}
+Helmet
+npm install helmet
+import helmet from "helmet";
+
+app.use(helmet());
+Rate Limiting
+npm install express-rate-limit
+import rateLimit from "express-rate-limit";
+
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+  })
+);
+CSRF Protection
+npm install csrf
+
+or
+
+npm install csurf
+15. Enterprise-Level OAuth Features
+
+For a production e-commerce or SaaS application, also implement:
+
+✓ OAuth Account Linking
+
+✓ Login Audit Logs
+
+✓ Device Tracking
+
+✓ Refresh Token Rotation
+
+✓ Session Management
+
+✓ Redis Session Store
+
+✓ OAuth Revocation
+
+✓ MFA after OAuth Login
+
+✓ Suspicious Login Detection
+
+✓ User Activity Logs
+
+✓ Role Based Access Control (RBAC)
+
+✓ Account Lockout
+
+✓ Email Notification on New Login
+
+✓ Login History Dashboard
+Recommended Production Folder Structure
+src/
+│
+├── config/
+│   ├── passport.js
+│   ├── session.js
+│   └── strategies/
+│       ├── google.js
+│       ├── github.js
+│       └── facebook.js
+│
+├── controllers/
+│   └── auth.controller.js
+│
+├── services/
+│   └── oauth.service.js
+│
+├── repositories/
+│   └── user.repository.js
+│
+├── routes/
+│   └── auth.routes.js
+│
+├── middleware/
+│   ├── authenticate.js
+│   ├── authorize.js
+│   └── session.middleware.js
+│
+├── models/
+│   └── User.model.js
+│
+├── views/
+│   ├── login.ejs
+│   └── dashboard.ejs
+│
+└── server.js
+
+For a true production-grade system, I would go one step further and use OAuth login only for identity verification, then issue your own JWT access token + refresh token, store refresh tokens in PostgreSQL/Redis, support account linking (Google + GitHub + Facebook on the same user account), maintain login audit logs, and separate Passport strategies from the authentication service layer. This scales much better for large e-commerce, SaaS, and marketplace applications.

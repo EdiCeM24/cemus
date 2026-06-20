@@ -1,0 +1,97 @@
+Recommended Production Improvements
+
+Instead of unlimited access basesd solely on role:
+* Store permissions in separate tables.
+* Use Sequelize associations:
+   1 Users
+   2 Roles
+   3 Permissions
+   4 RolePermissions
+* Use connect-pg-simple to store sessions in PostgreSQL
+* Add CSRF protection.
+* Ad rate limiting for login attempts.
+* Use password reset via email.
+* Enable audit logs for all admin actions.
+* Use bcrypt with 12+ salt rounds.
+* Never expose a public route for creating a super_admin.
+
+A production-grade design is usually:
+User -> Role -> Permission
+
+rather than relying only on a role column, 
+because it gives the Super Admin complete
+control while still allowing fine-grained
+permissions for other administrators.
+
+A secure Express + EJS + Sequelize stack 
+typically includes:
+
+* express-session
+* connect-pg-simple
+* bcrypt
+* helmet
+* csurf
+* express-rate-limit
+* PostgreSQL
+* Sequelize ORM
+* Role-based access control (RBAC)
+* Audit logging for admin actions
+
+This combination provides strong protection against
+session theft, CSRF attacks, brute-force login attempts,
+and common web vulnerabilities.
+
+How to configure connect-pg-simple in your project
+npm install connect-pg-simple
+
+In server.js file
+
+// import pg from 'pg';
+import connectPgSimple from "connect-pg-simple";
+
+const app = express();
+const port = PORT || 4000;
+// You can not the two at the same time:
+// const pgPool = new pg.Pool({
+  // user: "",
+  // host: "",
+  // database: "",
+  // password: "",
+  // port: 5433,
+// });
+
+const pgSession = connectPgSimple(session);
+const store = new pgSession({
+  // pool: pgPool,
+  conString: DATABASE_URL,
+  tableName: "user_sessions",
+  createTableIfMissing: true,
+});
+
+
+app.use(cookieParser());
+app.use(
+  session({
+    store: store,
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: {
+      secure: NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "strict",
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+    },
+  }),
+);
+
+// app.use(csrfProtection());
+app.use(csrf());
+
+app.use((req, res, next) => {
+  csrfProtection;
+  res.locals.csrfProtection = req.csrfToken();
+
+  next();
+});

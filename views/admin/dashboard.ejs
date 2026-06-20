@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title><%- title %></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+  
+  
+</head>
+<body class="bg-gray-100 p-10">
+
+  <table class="bg-white w-full mb-10">
+    <% user.forEach(user => { %>
+      <tr class="border">
+        <td><%= user.email %></td>
+        <td>
+          <form method="POST" action="/admin/delete-user/<%= user.id %>">
+            <button class="bg-red-500 text-white px-3 py-1">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+
+
+
+  <h2 class="text-xl mb-2">Messages</h2>
+<table class="bg-white w-full">
+  <% messages.forEach(msg => { %>
+    <tr class="border">
+      <td><%= msg.email %></td>
+      <td><%= msg.message %></td>
+      <td>
+        <form method="POST" action="/admin/delete-message/<%= msg.id %>">
+          <button class="bg-red-500 text-white px-3 py-1">Delete</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+</table>
+
+<form method="GET">
+  <input type="text" name="search" placeholder="Search..." />
+</form>
+
+<% users.data.forEach(user => { %>
+  <p><%= user.name %> - <%= user.email %></p>
+<% }) %>
+
+<div>
+  <% for(let i = 1; i <= users.totalPages; i++) { %>
+    <a href="?page=<%= i %>"><%= i %></a>
+  <% } %>
+</div>
+
+<div class="">
+  <!-- Admin Deletes-->
+   <% if (user.role === 'admin') { %>
+      <a href="/delete-user/<%= user.id %>">Delete</a>
+   <% } %>
+</div>
+
+
+ <footer><%- include('../partials/footer.ejs') %></footer>
+ <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+</body>
+</html>

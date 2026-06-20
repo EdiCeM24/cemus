@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+        <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%- title %></title>
+      
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ovo&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ovo&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="text-white overflow-x-hidden p-0 m-0 box-border">
+    <header>
+      <%- include('partials/header.ejs') %>
+    </header>
+    <!-- Main Content Area -->
+        <main class="main relative flex items-center justify-between flex-col w-full">
+          <div class="mb-5 absolute -top-[3%] -mt-[3%]">
+            <a
+              href="/api/v1/contacts/contact"
+              class="contact-btn border-2 border-orange-600  py-2 px-3 font-serif font-semibold  focus:visited:bg-orange-500 rounded-sm hover:bg-orange-500 text-orange-500 hover:text-teal-600 transition duration-150 ease-linear"
+              >Contact Me</a
+            >
+          </div> 
+
+          <div class="signup-message absolute -top-12 gap-4 flex items-center justify-between text-nowrap whitespace-normal">
+                <% for( let index = 0; index < success_msg.length; index++ ) { %>
+                  <div class="flex items-center justify-evenly gap-2 -mt-4 bg-slate-300 bg-opacity-70 p-1 py-1 px-1" id="success_msg">
+                    <% if (success_msg[index]) { %>
+                      <p class="text-green-600 text-pretty text-sm font-medium"><%= success_msg[0] %></p>
+                      <span class="cursor-pointer text-2xl font-semibold text-rose-600 hover:text-rose-500" id="success-btn">&times;</span>
+                    <% } %>
+                  </div>
+                <% } %>
+
+                <div class="flex items-center justify-evenly gap-2 -mt-4 bg-opacity-70 p-1 py-1 px-1" id="error_msg">
+                  <% for( let index = 0; index < error_msg.length; index++ ) { %>
+                    <% if (error_msg[index]) { %>
+                      <span class="text-rose-600 text-pretty bg-slate-300 -mt-4 bg-opacity-70 p-1 py-1 px-1  text-sm font-medium"><%= error_msg %></span>
+                      <span class="cursor-pointer text-2xl font-semibold -mt-4 bg-opacity-70 p-1 py-1 px-1 text-rose-600 hover:text-rose-500 bg-slate-300" id="error-Btn">&times;</span>
+                    <% } %>
+                  <% } %>
+                </div>
+
+                <div class="flex items-center justify-evenly gap-2 -mt-4 bg-opacity-70 p-1 py-1 px-1" id="error_msge">
+                  <% for( let index = 0; index < error.length; index++ ) { %>
+                    <% if(error[index]) { %>
+                      <span class="text-rose-600 text-pretty bg-slate-300 text-sm -mt-4 bg-opacity-70 p-1 py-1 px-1 font-medium"><%= error %></span>
+                      <span class="cursor-pointer text-2xl font-semibold text-rose-600 hover:text-rose-500 -mt-4 bg-opacity-70 p-1 py-1 px-1 bg-slate-300" id="errorEl">&times;</span>
+                    <%}%> 
+                  <% } %>
+                </div>
+              </div>
+          
+          </div>
+
+          <!-- ========== INTRODUCTION ========== -->
+          <!-- Hero Section -->
+      <section id="home" class="min-h-screen flex items-center relative overflow-hidden pt-32">
+
+        <div class="absolute inset-0">
+          <div class="absolute top-20 left-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-10 right-10 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+
+          <!-- Left Content -->
+          <div>
+
+            <p class="uppercase tracking-[0.3em] text-cyan-400 text-sm mb-5">
+              Full Stack Developer
+            </p>
+
+            <h2 class="text-xl lg:text-xl font-extrabold leading-tight mb-5">
+              Hi, I'm Edidiong
+            </h2>
+           
+            <h2 class="text-xl lg:text-xl font-extrabold leading-tight">
+              <span class="gradient-text flex text-start flex-col">A Full Stack Developer</span>
+              <span class="text-xl lg:text-xl font-extrabold leading-tight mt-6 mb-10">Studied Computer Science.</span>
+            </h2>
+
+            <p class="text-slate-300 text-lg leading-relaxed max-w-xl mt-8 mb-10">
+              I design and develop modern, scalable, and production-ready web applications using React.js, Node.js, Express.js, PostgreSQL, and modern UI technologies.
+            </p>
+
+            <div class="flex flex-wrap gap-5">
+
+              <button id="view-projects" class="bg-cyan-500 hover:bg-cyan-400 transition px-8 py-4 rounded-full text-slate-950 font-bold shadow-xl shadow-cyan-500/30">
+                View Projects
+              </button>
+
+              <button class="glass flex items-center justify-center gap-[2px] hover:bg-white/10 transition px-8 py-4 rounded-full font-semibold" id="cv-btn">
+                <i class="fa-solid fa-download"></i>
+                Download CV
+              </button>
+
+            </div>
+
+            <div class="flex items-center justify-evenly space-x-2 mt-5 mb-3 p-2">
+              <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-github"></i></a>
+              <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-facebook"></i></a>
+              <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-6 mt-16">
+
+              <div class="glass rounded-2xl p-6 text-center">
+                <h3 class="text-3xl font-extrabold text-cyan-400">4+</h3>
+                <p class="text-slate-300 mt-2">Years Experience</p>
+              </div>
+
+              <div class="glass rounded-2xl p-6 text-center">
+                <h3 class="text-3xl font-extrabold text-cyan-400">80+</h3>
+                <p class="text-slate-300 mt-2">Projects</p>
+              </div>
+
+              <div class="glass rounded-2xl p-6 text-center">
+                <h3 class="text-3xl font-extrabold text-cyan-400">50+</h3>
+                <p class="text-slate-300 mt-2">Clients</p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Right Content -->
+          <div class="relative flex justify-center lg:justify-end">
+
+            <div class="absolute w-[450px] h-[450px] bg-cyan-500/20 rounded-full blur-3xl"></div>
+
+            <div class="relative glass p-4 rounded-[40px] shadow-2xl shadow-cyan-500/20">
+
+              <img
+                src="/images/cemus_in_suit.jpg"
+                alt="Portfolio Hero"
+                class="w-[400px] h-[500px] object-cover rounded-[30px]"
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- About Section -->
+      <section id="about" class="py-28 bg-slate-900/50 border-t border-slate-800">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+
+          <div>
+            <h2 class="text-4xl lg:text-5xl font-extrabold mb-8 cursor-pointer" id="about-me">
+              About <span class="gradient-text">Me</span>
+            </h2>
+
+            <p class="text-slate-300 leading-relaxed text-lg mb-6">
+              I specialize in building secure and scalable applications with beautiful user experiences. My focus is creating products that are optimized for performance, maintainability, and business growth.
+            </p>
+
+            <p class="text-slate-400 leading-relaxed">
+              From backend APIs to frontend experiences, I combine modern development tools with clean architecture to create production-ready solutions.
+            </p>
+          </div>
+
+
+          <div class="grid grid-cols-2 gap-6">
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Frontend</h3>
+              <p class="text-slate-300">React.js, Next.js, TailwindCSS, Redux</p>
+            </div>
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Backend</h3>
+              <p class="text-slate-300">Node.js, Express.js, Python, Django, fastAPI, GraphQL, REST APIs</p>
+            </div>
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Database</h3>
+              <p class="text-slate-300">PostgreSQL, MySQL, MongoDB, Sequelize & Mongoose (ORM)</p>
+            </div>
+
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-cyan-400 text-xl font-bold mb-4">Deployment</h3>
+              <p class="text-slate-300">Docker, AWS, CI/CD, Production Hosting</p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Projects -->
+      <section id="projects" class="py-28">
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+          
+          <a href="/api/v1/homes/projects/#projects" id="projects">
+            <div class="text-center mb-20">
+              <h2 class="text-4xl lg:text-5xl font-extrabold mb-5">
+                Featured <span class="gradient-text">Projects</span>
+              </h2>
+
+              <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                Some production-level applications and systems I have designed and developed.
+              </p>
+            </div>
+          </a>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+              <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+              <div class="p-8">
+                <h3 class="text-2xl font-bold mb-4">SaaS Dashboard</h3>
+                <p class="text-slate-300 mb-6">
+                  Analytics and subscription management platform with real-time reports.
+                </p>
+
+                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                  View Project →
+                </button>
+              </div>
+            </div>
+
+
+            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+              <div class="p-8">
+                <h3 class="text-2xl font-bold mb-4">E-Commerce App</h3>
+                <p class="text-slate-300 mb-6">
+                  Full production ecommerce application with payments and authentication.
+                </p>
+
+                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                  View Project →
+                </button>
+              </div>
+            </div>
+
+
+            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+              <div class="p-8">
+                <h3 class="text-2xl font-bold mb-4">AI Platform</h3>
+                <p class="text-slate-300 mb-6">
+                  AI powered productivity application with secure backend architecture.
+                </p>
+
+                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                  View Project →
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- Contact -->
+      <section id="contact" class="py-28 border-t border-slate-800 bg-slate-900/40">
+
+        <div class="max-w-4xl mx-auto px-6 text-center">
+
+          <h2 class="text-4xl lg:text-5xl font-extrabold mb-8">
+            Let's Build Something <span class="gradient-text">Amazing</span>
+          </h2>
+
+          <p class="text-slate-300 text-lg mb-10">
+            Ready to create scalable digital products and modern experiences.
+          </p>
+
+          <button id="contact-me" class="bg-cyan-500 hover:bg-cyan-400 transition px-10 py-5 rounded-full text-slate-950 font-bold shadow-xl shadow-cyan-500/30">
+            Contact Me
+          </button>
+
+        </div>
+      </section>
+      
+
+    </main>
+    <footer>
+      <%- include('partials/footer.ejs') %>
+    </footer>
+    <script src="/script/app.js"></script>
+  </body>
+</html>

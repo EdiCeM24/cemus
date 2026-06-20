@@ -1,0 +1,78 @@
+---
+
+# IONIC CDNs
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+
+# How To Run
+
+## Install Tailwind Quickly
+
+This version already uses Tailwind CDN.
+
+Simply:
+
+1. Save the file as `index.html`
+2. Save your generated hero image as `hero-image.png`
+3. Open the file in your browser
+
+---
+
+# Recommended Production Stack
+
+* Frontend: React.js + TailwindCSS
+* Backend: Node.js + Express.js
+* Database: PostgreSQL
+* ORM: Sequelize
+* Deployment: Vercel / Render / AWS
+* Email: Nodemailer
+* Auth: JWT + Refresh Tokens
+
+
+
+Prevent Old JWT Reuse
+
+When verifying JWT:
+
+if (
+  decoded.iat <
+  user.passwordChangedAt.getTime() / 1000
+) {
+  throw new Error(
+    "Password recently changed"
+  );
+}
+
+
+
+App Password
+eccl nubu endz hgcq
+
+<div class="oauth-container">
+
+  <a
+    href="/api/auth/google"
+    class="google-btn"
+  >
+    Continue with Google
+  </a>
+
+
+  <a
+    href="/api/auth/facebook"
+    class="facebook-btn"
+  >
+    Continue with Facebook
+  </a>
+
+
+  <a
+    href="/api/auth/github"
+    class="github-btn"
+  >
+    Continue with GitHub
+  </a>
+
+</div>

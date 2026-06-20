@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%- title %></title>
+  <link rel="stylesheet" text="text/css" href="../scss/_home.css" />
+  <link rel="stylesheet" text="text/css" href="../scss/index.css" />
+  <link rel="stylesheet" text="text/css" href="../scss/style.css" />
+  <link rel="stylesheet" href="/css/output.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ovo&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+
+</head>
+<body class="bg-[#f9fafb] p-0 m-0 h-[100vh]">
+  <div class="signup-container mx-auto container flex items-center justify-center bg-[#f9fafb] mt-[3%]">
+    
+
+    <div class="auth-container flex h-[100vh] bg-[#f9fafb] items-center justify-center">
+      
+     
+      
+      <div class="authCard flex items-center justify-evenly m-[30px] w-full h-[600px]">
+
+        <div class="auth-left authCard flex-1 bg-gradient-to-tr from-[#4f46e5] via-[#9911f3] to-[#34ef78] flex p-[40px] text-white items-center h-[400px] w-[25%] justify-center flex-col rounded-[4px]">
+          <strong>Welcome Back!</strong>
+          <span class="font-semibold font-serif">Sign In to your account...</span>
+          <div class="signup-message">
+            <div class="p-2 mb-2">
+               <% if (success_msg) { %>
+                <p class="text-green-500 text-justify text-lg font-medium"><%= success_msg[0] %></p>
+               <% } %>
+            </div>
+
+            <div class="mb-2 p-1">
+              <% if (error_msg) { %>
+                <span class="text-rose-500 font-serif font-semibold"><%= error_msg %></span>
+              <% } %>
+            </div>
+
+            <div class="mb-2 p-1">
+              <% if(error) { %>
+                <span class="text-rose-500 font-serif font-semibold"><%= error %></span>
+              <%}%> 
+            </div>
+          </div>
+        </div>
+        <div class="auth-right flex-1 p-[0px]">
+          <form action="/api/v1/auth/sign-in" method="POST" class="form p-0.5">
+            <input type="hidden" name="csrf" value="<%= csrfToken %>">
+            <div class="signup-head-text mb-5">
+              <strong class="flex text-justify font-serif text-pretty text-[16px] font-semibold text-gray-800" id=""></strong>
+            </div>
+            <div class="social-link flex space-x-1 items-center justify-evenly bottom-1 mb-[3px] mt-1">
+              <a href="/api/auth/google" class="no-underline"><img src="/images/google.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+              <a href="/api/auth/facebook" class="no-underline"><img src="/images/facebook.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+              <a href="/api/auth/github" class="no-underline"><img src="/images/github.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+            </div>
+            <div class="mb-0.5 p-0 mt-3">
+              <!-- <div class="profile-image">
+                <input type="file" class="w-full p-[8px] text-slate-950 mb-0.5" name="profile" id="profile" required>
+              </div> -->
+
+              <div class="mb-[12px] p-0">
+                <input type="email" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="email" id="email" placeholder="Enter your email..." required autocomplete="off" autofocus>
+              </div>
+
+              <div class="mb-1 p-0">
+                <input type="password" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="password" id="password" placeholder="Enter your password..." required>
+                <span class="signup_eye_icons relative"><i class="fa fa-eye absolute top-1 right-3 cursor-pointer" aria-hidden="false"></i></span>
+              </div>
+              
+              <div class="btn-signup mb-0.5 p-0.5">
+                <button type="submit" class="signup-btn w-full p-2 bg-[#4f46e5] text-white border-none rounded-[4px] cursor-pointer transition-[0.3s] duration-150 ease-in-out uppercase text-[20px] hover:bg-[#6366f1]">Sign In</button>
+              </div>
+            </div>
+
+            <div class="signup-cont p-0.5 w-full">
+              <div class="parma-link flex items-center justify-between">
+                <p class="text-black text-[15px] font-medium">Don't have an account? <a href="/api/v1/auth/sign-up" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Register</a></p>
+
+                <p class="text-black font-semibold text-[16px]">Forgot Password?  <a href="/api/v1/passwords/reset-password" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Reset</a></p>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/script/scripts.js"></script>
+  <footer class="py-10 mt-5 text-center text-slate-500 border-t border-slate-800">
+    © 2026 EDIDIONG Portfolio. All Rights Reserved.
+  </footer>
+</body>
+</html>
