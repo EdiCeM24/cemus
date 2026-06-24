@@ -63,3 +63,38 @@ export const adminLogin = asyncHandler(async (req, res) => {
     return res.redirect("/api/v1/auth/login");
   }
 });
+
+
+// secure Cookies:
+// cookie: {
+  // secure: true,
+  // httpOnly: true,
+  // sameSite: "lax"
+// }
+
+// 5. Session Configuration
+// config/session.js
+
+// import session from "express-session";
+// import pgSession from "connect-pg-simple";
+
+// const PgStore = pgSession(session);
+
+// export default session({
+//   store: new PgStore({
+//     conString: process.env.DATABASE_URL,
+//   }),
+
+//   secret: process.env.SESSION_SECRET,
+
+//   resave: false,
+
+//   saveUninitialized: false,
+
+//   cookie: {
+//     secure: process.env.NODE_ENV === "production",
+//     httpOnly: true,
+//     sameSite: "lax",
+//     maxAge: 1000 * 60 * 60 * 24 * 7,
+//   },
+// });

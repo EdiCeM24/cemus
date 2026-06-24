@@ -29,7 +29,7 @@ import { csrfProtection } from "./middlewares/csrf.Middleware.js";
 import asyncHandler from "./utils/asyncHandler.js";
 import { paginate } from "./utils/pagination.js";
 import { searchQuery } from "./utils/search.js";
-import AppError from "./utils/AppError.js";
+// import AppError from "./utils/AppError.js";
 import { asyncWrapper } from "./controllers/home.controller.js";
 import errorHandling from "./middlewares/errorHandling.middleware.js";
 import { detectDevice } from "./middlewares/device.middleware.js";
@@ -58,7 +58,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));
-
+// Enable HTTP
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin: CLIENT_URL,
@@ -69,7 +70,8 @@ app.use(cookieParser());
 app.use(
   session({
     store: store,
-    secret: SESSION_SECRET,
+    secret:
+      SESSION_SECRET || "hendleStupidityInthecodeBaseThathAsSoManYErroZ107xc/.",
     resave: false,
     saveUninitialized: false,
     rolling: true,
@@ -95,7 +97,7 @@ app.use((req, res, next) => {
 app.use(asyncHandler);
 app.use(paginate);
 app.use(searchQuery);
-app.use(AppError);
+// app.use(AppError);
 app.use(errorHandling);
 app.use(asyncWrapper);
 app.use(detectDevice);

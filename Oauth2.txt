@@ -623,3 +623,94 @@ src/
 └── server.js
 
 For a true production-grade system, I would go one step further and use OAuth login only for identity verification, then issue your own JWT access token + refresh token, store refresh tokens in PostgreSQL/Redis, support account linking (Google + GitHub + Facebook on the same user account), maintain login audit logs, and separate Passport strategies from the authentication service layer. This scales much better for large e-commerce, SaaS, and marketplace applications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To use Facebook, GitHub, and Google OAuth2 authentication in a Node.js project with EJS templates, the most industry-standard approach is using Passport.js along with its dedicated strategies.
+
+Developer Console 
+
+Before writing code, register your application on each provider's developer platform to obtain a Client ID and Client Secret:
+  1. Google: Go to the Google Cloud Console, create a project, and configure your OAuth consent screen. Under Credentials, create an OAuth 2.0 Client ID as a Web application.
+  
+  . Authorized redirect URI: 
+      http://localhost:3000/auth/google/callback
+
+  2. GitHub: Navigate to your profile Settings > Developer Settings > OAuth Apps and click New OAuth App.
+
+    . Authorization callback URL: 
+        http://localhost:3000/auth/github/callback
+
+  3. Facebook: Create an app on the Meta for Developers portal, navigate to Use Cases, and set up Facebook Login.
+      . Valid OAuth Redirect URIs: 
+        http://localhost:3000/auth/facebook/callback
+
+
+  1. Project Directory Structure
+
+    Organize your workspace to decouple your logic and keep your view templates 
+      structured cleanly:
+
+        text
+
+        ├── config/
+        └── passport.js
+        ├── views/
+        │   ├── login.ejs
+        │   └── dashboard.ejs
+        ├── .env
+        ├── package.json
+        └── server.js
+                
+
+  2. Dependency Installation
+
+  Initialize your application and run the following command to download Express, EJS, 
+  Passport core, the three specific strategy packages, and session/environment 
+  utilities:
+  
+  bashnpm init -y
+  npm install express ejs express-session passport passport-google-oauth20 passport-github2 passport-facebook dotenv
+
+  Use code with caution.
+
+3. Environment Configuration (.env)
+Store your external credentials securely using environment variables:
+
+env
+
+SESSION_SECRET=a_deep_and_unpredictable_secret_key
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+
+FACEBOOK_CLIENT_ID=your_facebook_client_id
+FACEBOOK_CLIENT_SECRET=your_facebook_client_secret
+
+Use code with caution.
+
+4. Passport Strategy Configuration (config/passport.js)Initialize Passport strategies to accept authentication profiles and save them to your active application session:
+│   └── passport.js
+├── views/
+│   ├── login.ejs
+│   └── dashboard.ejs
+├── .env
+├── package.json
+└── server.js
+Use code with caution.
+
+

@@ -4,7 +4,7 @@ import crypto from "crypto";
 import { registerDevice } from "../services/device.service.js";
 
 import User from "../models/User.model.js";
-import OAuthAccount from "../models/OauthAccount.model.js";
+import OauthAccount from "../models/OauthAccount.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const oauthLoginHandler = asyncHandler(
@@ -18,7 +18,7 @@ export const oauthLoginHandler = asyncHandler(
     accessToken,
     refreshToken,
   }) => {
-    let oauthAccount = await OAuthAccount.findOne({
+    let oauthAccount = await OauthAccount.findOne({
       where: {
         provider,
         providerId,
@@ -77,6 +77,45 @@ export const oauthLoginHandler = asyncHandler(
       UserId: user.id,
     });
 
+    user.lastLogin = new Date();
+
     return user;
   },
 );
+
+// 7. OAuth User Service
+
+// Centralize all provider logic.
+
+// services/oauth.service.js
+
+// import User from "../models/User.model.js";
+
+// export async function findOrCreateOAuthUser({
+//   email,
+//   provider,
+//   providerId,
+//   avatar,
+//   name,
+// }) {
+//   let user = await User.findOne({
+//     where: { email },
+//   });
+
+//   if (!user) {
+//     user = await User.create({
+//       email,
+//       provider,
+//       providerId,
+//       avatar,
+//       name,
+//       isEmailVerified: true,
+//     });
+//   }
+
+//   user.lastLogin = new Date();
+
+//   await user.save();
+
+//   return user;
+// }

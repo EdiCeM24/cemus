@@ -9,7 +9,7 @@ import {
 } from "../controllers/admin.controller.js";
 import { authorize, protects } from "../middlewares/auth.middleware.js";
 import isAdmin from "../middlewares/isAdmin.middleware.js";
-import verifyUser from "../auth/verify.js";
+import { verifyEmail } from "../controllers/auth.controller.js";
 
 const adminRouter = express.Router();
 // authorize("admin"), protects, isAdmin,
@@ -25,7 +25,7 @@ adminRouter.get("/admin", admins);
 // PUT UPDATE STUFF FOR THE USERS
 //adminRouter.put('/', )
 
-adminRouter.get("/:id", authorize, verifyUser, adminBoard);
+adminRouter.get("/:id", authorize, verifyEmail, adminBoard);
 
 adminRouter.delete("/user/:id", authorize, isAdmin, handleUserDelete);
 

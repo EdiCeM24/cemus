@@ -12,18 +12,15 @@ export const asyncWrapper = (fn) => {
 
 const homePage = asyncWrapper(async (req, res) => {
   try {
-    res.render("index");
+    res.render("home", { title: "Edidiong's Page" }, (err, ejs) => {
+      if (err) {
+        return req.flash("error_msg", "Page not found or template error");
+      } else {
+        req.flash("success_msg", "Page loaded successfully!");
+      }
 
-    // res.render("home", { title: "Edidiong's Page" }, (err, ejs) => {
-    //   if (err) {
-    //     return req.flash("error_msg", "Page not found or template error");
-    //   } else {
-    //     req.flash("success_msg", "Page loaded successfully!");
-    //   }
-
-    //   res.send(ejs);
-    // });
-    // console.log("Find the failed load page: ", err);
+      res.send(ejs);
+    });
   } catch (error) {
     console.log("why the failed page: ", error);
 

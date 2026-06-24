@@ -9,11 +9,7 @@ const UserSchema = sequelize.define(
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
     },
-    firstName: {
-      type: DataTypes.STRING,
-      required: true,
-    },
-    lastName: {
+    name: {
       type: DataTypes.STRING,
       required: true,
     },
@@ -74,7 +70,12 @@ const UserSchema = sequelize.define(
       defaultValue: "local",
     },
     providerId: {
-      ty
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    isEmailVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     avatar: {
       type: DataTypes.TEXT,
@@ -104,6 +105,9 @@ const UserSchema = sequelize.define(
     isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
+    },
+    lastLogin: {
+      type: DataTypes.DATE,
     },
   },
   { timestamps: true },
