@@ -5,8 +5,18 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { Op } from "sequelize";
 import { admins } from "../controllers/admin.controller.js";
 
+// I will test it if it works
 export const protects = asyncHandler(async (req, res, next) => {
-  const token = req.cookies.token;
+  const authHeader = req.Headers["authorization"];
+
+  if (!authHeader) {
+    req.flash("error_msg", "You are forbidden!");
+
+    return res.redirect("/api/v1/auth/sign-up");
+  }
+
+  const token = authHeader.split(" ")[1];
+  // req.cookies.token;
 
   if (!token) {
     req.flash("success", "Unauthorized");
@@ -15,9 +25,6 @@ export const protects = asyncHandler(async (req, res, next) => {
 
   try {
     const userId = req.params.id;
-
-    const decoded = jwt.verify(token, userId, JWT_SECRET_KEY);
-
     const user = await User.findByPk(decoded.userId);
 
     if (!user) {
@@ -26,7 +33,9 @@ export const protects = asyncHandler(async (req, res, next) => {
       return res.redirect("/api/v1/auth/login");
     }
 
-    req.user = user;
+    const decoded = jwt.verify(token, JWT_SECRET_KEY);
+
+    req.user = decoded.id;
 
     if (!req.isAuthenticated()) {
       req.flash("error_msg", "My good friend you are not authenticated!");

@@ -1,35 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-        <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%- title %></title>
-      
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/output.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ovo&display=swap"
-      rel="stylesheet"
-    />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ovo&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-  </head>
+  <%- include('partials/head.ejs') %>
   <body class="text-white overflow-x-hidden p-0 m-0 box-border">
     <header>
       <%- include('partials/header.ejs') %>
@@ -115,8 +86,11 @@
               <button class="glass flex items-center justify-center gap-[2px] hover:bg-white/10 transition px-8 py-4 rounded-full font-semibold" id="cv-btn">
                 <i class="fa-solid fa-download"></i>
                 Download CV
-              </button>
-
+              </button><i class="fa fa-times" aria-hidden="true"></i><i class="fa-graphite fa-thin fa-sun"></i>
+              <i class="fa-jelly fa-regular fa-moon"></i>
+              <i class="fa-solid fa-download"></i>
+              <i class="fa-solid fa-angle-right"></i>
+                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </div>
 
             <div class="flex items-center justify-evenly space-x-2 mt-5 mb-3 p-2">

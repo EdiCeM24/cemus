@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
 const migration = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.addColumn('Users', 'role', {
-      type: Sequelize.ENUM('user', 'admin'),
-      defaultValue: 'user',
+    await queryInterface.addColumn("Users", "role", {
+      type: Sequelize.ENUM("user", "admin", "super_admin"),
+      defaultValue: "user",
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Users', 'role');
+    await queryInterface.removeColumn("Users", "role");
   },
 };
 

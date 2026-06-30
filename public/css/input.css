@@ -670,6 +670,18 @@ body {
   .contact-conn {
     position: relative;
   }
+  .contact-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .contact-heading {
+    margin-top: 25% !important;
+    padding: 5px 10px;
+    margin-left: -4%;
+    width: 100%;
+  }
   .contact_form_container {
     display: none;
     position: absolute;
@@ -717,6 +729,7 @@ body {
 .contact-conn {
   position: relative;
 }
+
 .contact_form_container {
   display: none;
   position: absolute;
@@ -754,6 +767,22 @@ body {
   /** ========== CONTACT PAGE ========== **/
   .contact-conn {
     margin-top: 13%;
+  }
+  .contact-image {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .myPhoto img {
+    width: 70%;
+  }
+  .contact-heading {
+    padding-left: 20px;
+    display: flex;
+    width: 35%;
+    text-align: center;
+    justify-content: space-between;
   }
   .contact-text_social {
     display: flex;

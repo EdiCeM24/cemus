@@ -1,0 +1,1158 @@
+A production-level search system should not simply query a database with LIKE '%keyword%'. Instead, it should be scalable, secure, fast, and flexible enough to search across products, blog posts, categories, tags, users (if permitted), and more.
+
+A standard search architecture looks like this:
+
+Browser (Search Input)
+        │
+        ▼
+EJS / Django Template
+        │
+AJAX / Fetch / Form Submit
+        │
+        ▼
+Controller / View
+        │
+Validation
+Authentication (if required)
+Rate Limiting
+Caching
+        │
+        ▼
+Service Layer
+        │
+Search Builder
+        │
+Database (PostgreSQL)
+        │
+Return Results
+        ▼
+Pagination
+Sorting
+Filtering
+Highlight Matching
+        ▼
+Render EJS / Django Template
+Features of a Production Search
+
+A modern e-commerce search should support:
+
+Product name
+SKU
+Brand
+Category
+Subcategory
+Tags
+Description
+Price range
+Rating
+Color
+Size
+Availability
+Created date
+Popular products
+New arrivals
+Relevance ranking
+Pagination
+Auto-complete
+Search suggestions
+Typo tolerance
+Full-text search
+
+Example:
+
+Search:
+
+iphone
+
+Returns
+
+✓ iPhone 15 Pro
+✓ iPhone Charger
+✓ iPhone Case
+✓ iPhone Cable
+Example Database
+Products
+
+id
+name
+slug
+description
+price
+stock
+brandId
+categoryId
+
+Categories
+
+id
+name
+
+Brands
+
+id
+name
+
+Tags
+
+id
+name
+
+ProductTags
+
+productId
+tagId
+Node.js + Express + EJS (Sequelize)
+Route
+router.get("/search", productController.searchProducts);
+Controller
+import ProductService from "../services/product.service.js";
+
+export const searchProducts = async (req, res) => {
+    const keyword = req.query.q || "";
+
+    const products = await ProductService.search(keyword);
+
+    res.render("products/search", {
+        keyword,
+        products
+    });
+};
+Service Layer
+import { Op } from "sequelize";
+import Product from "../models/Product.model.js";
+
+class ProductService {
+
+    static async search(keyword){
+
+        return await Product.findAll({
+
+            where:{
+                [Op.or]:[
+                    {
+                        name:{
+                            [Op.iLike]:`%${keyword}%`
+                        }
+                    },
+
+                    {
+                        description:{
+                            [Op.iLike]:`%${keyword}%`
+                        }
+                    }
+                ]
+            }
+
+        });
+
+    }
+
+}
+
+export default ProductService;
+Search Form
+<form action="/search">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search products..."
+    >
+
+    <button>
+        Search
+    </button>
+
+</form>
+Result Page
+<% products.forEach(product=>{ %>
+
+<div>
+
+<h2>
+
+<%= product.name %>
+
+</h2>
+
+<p>
+
+<%= product.price %>
+
+</p>
+
+</div>
+
+<% }) %>
+Searching Multiple Fields
+where:{
+
+    [Op.or]:[
+
+        {
+            name:{
+                [Op.iLike]:`%${keyword}%`
+            }
+        },
+
+        {
+            description:{
+                [Op.iLike]:`%${keyword}%`
+            }
+        },
+
+        {
+            sku:{
+                [Op.iLike]:`%${keyword}%`
+            }
+        }
+
+    ]
+
+}
+Search with Category
+/search?q=shoe&category=men
+where:{
+
+categoryId:req.query.category,
+
+name:{
+    [Op.iLike]:`%shoe%`
+}
+
+}
+Search by Price
+Under $100
+price:{
+    [Op.between]:[
+        20,
+        100
+    ]
+}
+Search with Pagination
+const page = Number(req.query.page) || 1;
+
+const limit = 20;
+
+const offset = (page-1)*limit;
+
+Product.findAndCountAll({
+
+limit,
+
+offset
+
+});
+Search Sorting
+Newest
+
+Price Low → High
+
+Price High → Low
+
+Best Selling
+
+Most Viewed
+
+Highest Rated
+
+Example
+
+order:[
+    ["price","ASC"]
+]
+Auto Complete (AJAX)
+
+As the user types:
+
+i
+ip
+iph
+ipho
+iphone
+
+Each request
+
+GET
+
+/api/search?q=iph
+
+Response
+
+[
+  {
+    "name":"iPhone 15"
+  },
+  {
+    "name":"iPhone Charger"
+  }
+]
+
+JavaScript
+
+searchInput.addEventListener("keyup", async ()=>{
+
+const q = searchInput.value;
+
+const res = await fetch(`/api/search?q=${q}`);
+
+const products = await res.json();
+
+});
+PostgreSQL Full-Text Search (Recommended)
+
+Instead of ILIKE, PostgreSQL full-text search is much faster for large datasets.
+
+Example SQL:
+
+SELECT *
+FROM products
+WHERE
+to_tsvector(name || ' ' || description)
+@@ plainto_tsquery('iphone');
+
+This approach scales much better than wildcard searches and supports relevance ranking.
+
+Django Implementation
+URL
+path("search/", views.search_products, name="search")
+View
+from django.shortcuts import render
+from django.db.models import Q
+from .models import Product
+
+def search_products(request):
+
+    keyword = request.GET.get("q", "")
+
+    products = Product.objects.filter(
+
+        Q(name__icontains=keyword) |
+
+        Q(description__icontains=keyword)
+
+    )
+
+    return render(request, "products/search.html", {
+        "products": products,
+        "keyword": keyword
+    })
+Search Form
+<form method="GET" action="{% url 'search' %}">
+
+<input
+type="text"
+name="q"
+placeholder="Search products">
+
+<button>
+Search
+</button>
+
+</form>
+Template
+{% for product in products %}
+
+<h2>{{ product.name }}</h2>
+
+<p>{{ product.price }}</p>
+
+{% endfor %}
+Django Full-Text Search (PostgreSQL)
+from django.contrib.postgres.search import SearchVector
+
+Product.objects.annotate(
+
+search=SearchVector(
+    "name",
+    "description"
+)
+
+).filter(
+
+search="iphone"
+
+)
+
+You can also add SearchRank and SearchQuery to rank results by relevance.
+
+Searching Posts
+
+The same approach applies to blog posts.
+
+Node.js (Sequelize):
+
+where:{
+
+[Op.or]:[
+{
+title:{
+[Op.iLike]:`%${keyword}%`
+}
+},
+{
+content:{
+[Op.iLike]:`%${keyword}%`
+}
+}
+]
+
+}
+
+Django:
+
+Post.objects.filter(
+    Q(title__icontains=keyword) |
+    Q(content__icontains=keyword)
+)
+Performance Best Practices
+
+For production systems, consider the following:
+
+Database indexing: Add indexes to frequently searched columns (name, sku, slug, category_id, etc.). For PostgreSQL full-text search, use a GIN index on the tsvector column.
+Service layer: Keep search logic in a dedicated service (SearchService or ProductService) rather than directly in controllers or views.
+Input validation: Trim whitespace, enforce reasonable maximum query lengths, and reject invalid or empty searches when appropriate.
+Pagination: Always paginate search results to avoid loading thousands of records into memory.
+Selective loading: Fetch only the columns you need and eagerly load related models (categories, brands, images) only when necessary.
+Caching: Cache popular search results using a cache such as Redis to reduce database load.
+Rate limiting: Protect public search endpoints from abuse by limiting request rates per IP or user.
+Prepared queries/ORM filters: Use Sequelize operators (Op.iLike) or Django ORM filters instead of raw SQL string concatenation to prevent SQL injection.
+Relevance ranking: Prefer PostgreSQL full-text search with ranking (ts_rank or Django's SearchRank) over simple wildcard matching for large datasets.
+Advanced search engines: For catalogs containing hundreds of thousands or millions of records, integrate dedicated search platforms such as Elasticsearch, OpenSearch, or Meilisearch to gain typo tolerance, faceted filtering, synonyms, fuzzy matching, and near real-time indexing.
+
+For the production-grade Node.js EJS e-commerce architecture you've been building (authentication, authorization, Sequelize, PostgreSQL, categories, variants, wishlist, cart, orders, dashboard, etc.), the next logical step is to add a dedicated Search Module with a layered architecture:
+
+controllers/
+    search.controller.js
+
+services/
+    search.service.js
+
+repositories/
+    search.repository.js
+
+validators/
+    search.validator.js
+
+routes/
+    search.routes.js
+
+middlewares/
+    searchCache.js
+    searchRateLimit.js
+
+views/
+    search/
+        index.ejs
+        autocomplete.ejs
+
+public/js/
+    search.js
+
+public/css/
+    search.css
+
+This structure keeps the search feature modular, testable, and ready to evolve from basic database queries to advanced search engines without changing your controllers or views.
+
+how can we write a production level code for refreshToken verification and generate refreshToken in login route when a user is using the webpage when accessToken has expired in 15 minutes. I need step by step guide from user registration to login using sequelize ORM of postgresql database in Node.js ejs project
+
+For a production-level Node.js + Express + EJS + PostgreSQL + Sequelize application, the authentication flow should never ask the user to log in again just because the access token expires after 15 minutes. Instead, the application should automatically issue a new access token using a valid refresh token.
+
+The recommended flow is:
+
+User
+   │
+   ▼
+Register
+   │
+   ▼
+Verify Email
+   │
+   ▼
+Login
+   │
+   ├──────────────► Access Token (15 min)
+   │
+   └──────────────► Refresh Token (7–30 days)
+                       │
+                       ▼
+                HttpOnly Cookie
+                       │
+                       ▼
+Access Token Expires
+                       │
+                       ▼
+Browser automatically calls
+POST /auth/refresh
+                       │
+                       ▼
+Refresh Token Verified
+                       │
+                       ▼
+Old Refresh Token Revoked
+                       │
+                       ▼
+New Access Token
++
+New Refresh Token
+                       │
+                       ▼
+User Continues Browsing
+Production Folder Structure
+src/
+
+config/
+    env.js
+    database.js
+    jwt.js
+
+controllers/
+    auth.controller.js
+
+middlewares/
+    authenticate.js
+    authorize.js
+
+models/
+    User.model.js
+    RefreshToken.model.js
+
+repositories/
+    user.repository.js
+    refresh.repository.js
+
+services/
+    auth.service.js
+    token.service.js
+    refresh.service.js
+
+utils/
+    generateTokens.js
+    cookieOptions.js
+    hashToken.js
+
+validators/
+    auth.validator.js
+
+routes/
+    auth.routes.js
+STEP 1 — User Registration
+
+The registration process should:
+
+Validate request
+Check duplicate email
+Hash password
+Create user
+Send email verification token
+Do not generate JWT tokens yet
+POST /register
+
+Flow
+
+Validate
+
+↓
+
+Check Email
+
+↓
+
+Hash Password
+
+↓
+
+Create User
+
+↓
+
+Send Verification Email
+
+↓
+
+Success
+STEP 2 — Email Verification
+GET /verify-email/:token
+Find User
+
+↓
+
+Verify Token
+
+↓
+
+Activate Account
+
+↓
+
+Delete Verification Token
+STEP 3 — Login
+POST /login
+
+Flow
+
+Email
+
+↓
+
+Password
+
+↓
+
+Verified?
+
+↓
+
+Account Active?
+
+↓
+
+Generate Access Token
+
+↓
+
+Generate Refresh Token
+
+↓
+
+Hash Refresh Token
+
+↓
+
+Save Refresh Token in Database
+
+↓
+
+Set HttpOnly Cookie
+
+↓
+
+Return User
+Why Save Refresh Token?
+
+Never store the raw refresh token.
+
+Instead:
+
+Refresh Token
+
+↓
+
+SHA256
+
+↓
+
+Database
+
+If your database is compromised, attackers cannot immediately reuse valid refresh tokens.
+
+A RefreshToken model might contain fields such as:
+
+id
+userId
+tokenHash
+expiresAt
+revokedAt
+replacedByTokenHash
+userAgent
+ipAddress
+
+This enables device management and refresh-token rotation.
+
+STEP 4 — Generate Tokens
+
+Login generates two JWTs:
+
+Access Token
+
+{
+   id,
+   role
+}
+
+expires:
+
+15 minutes
+
+Refresh Token
+
+{
+   id,
+   tokenId
+}
+
+expires:
+
+7 days
+
+The refresh token should reference a database record (for example with a tokenId) so it can be individually revoked.
+
+STEP 5 — Send Cookies
+
+Only the refresh token should be stored as an HttpOnly cookie.
+
+Set-Cookie
+
+refreshToken=xxxxxxxx
+
+HttpOnly
+
+Secure
+
+SameSite=Lax
+
+MaxAge=7 days
+
+The access token is typically returned in the response body (or stored server-side in a session if you're using server-rendered authentication).
+
+STEP 6 — User Visits Pages
+GET /dashboard
+
+Browser sends:
+
+Authorization
+
+Bearer AccessToken
+
+or, depending on your EJS architecture, the server reads the access token from a secure cookie.
+
+STEP 7 — Middleware
+
+Middleware verifies the access token.
+
+Verify JWT
+
+↓
+
+Valid?
+
+↓
+
+Yes
+
+↓
+
+Next()
+
+↓
+
+No
+
+↓
+
+401 Unauthorized
+
+If the access token has expired, the client should request a new one via the refresh endpoint instead of forcing the user to log in.
+
+STEP 8 — Refresh Endpoint
+POST /auth/refresh
+
+Flow
+
+Read Cookie
+
+↓
+
+Verify JWT Signature
+
+↓
+
+Extract tokenId
+
+↓
+
+Find Refresh Token
+
+↓
+
+Hash Cookie Token
+
+↓
+
+Compare Hash
+
+↓
+
+Expired?
+
+↓
+
+Revoked?
+
+↓
+
+User Active?
+
+↓
+
+Generate NEW Access Token
+
+↓
+
+Generate NEW Refresh Token
+
+↓
+
+Revoke OLD Refresh Token
+
+↓
+
+Save NEW Refresh Token
+
+↓
+
+Send Cookie
+
+↓
+
+Return Access Token
+
+This is refresh token rotation, which is the recommended production approach.
+
+Why Rotate?
+
+Never reuse refresh tokens indefinitely.
+
+Instead:
+
+Old Refresh Token
+
+↓
+
+Revoke
+
+↓
+
+Generate New One
+
+↓
+
+Store New One
+
+↓
+
+Return New Cookie
+
+Benefits:
+
+prevents replay attacks
+limits damage if a refresh token is stolen
+supports per-device logout
+Step 9 — Access Token Expires
+
+Suppose the user is reading products for 40 minutes.
+
+Timeline
+
+10:00 Login
+
+↓
+
+Access Token expires
+
+10:15
+
+↓
+
+User clicks
+
+/cart
+
+↓
+
+401
+
+↓
+
+Frontend calls
+
+/auth/refresh
+
+↓
+
+Refresh Success
+
+↓
+
+Retry Request
+
+↓
+
+Page Loads
+
+The user should not notice the token refresh.
+
+Step 10 — Logout
+POST /logout
+Read Cookie
+
+↓
+
+Find Refresh Token
+
+↓
+
+Revoke
+
+↓
+
+Delete Cookie
+
+↓
+
+Logout
+
+Do not simply clear the cookie; revoke the corresponding database record as well.
+
+Refresh Token Verification
+
+The verification process should include:
+
+JWT Verify
+
+↓
+
+Token Expired?
+
+↓
+
+Database Lookup
+
+↓
+
+Hash Compare
+
+↓
+
+Revoked?
+
+↓
+
+User Exists?
+
+↓
+
+User Active?
+
+↓
+
+Issue New Tokens
+
+If any step fails, reject the request and require a fresh login.
+
+Recommended Expiration Times
+Token	Time
+Access Token	15 minutes
+Refresh Token	7–30 days
+Email Verification	24 hours
+Password Reset	15–30 minutes
+Device Management
+
+Each login should create a separate refresh-token record.
+
+Laptop
+
+↓
+
+Refresh Token A
+
+Phone
+
+↓
+
+Refresh Token B
+
+Tablet
+
+↓
+
+Refresh Token C
+
+Logging out from one device revokes only that device's refresh token, allowing the others to remain signed in.
+
+Production Security Checklist
+
+Your implementation should include:
+
+✅ Access tokens valid for about 15 minutes
+✅ Refresh tokens valid for 7–30 days
+✅ Refresh token rotation on every refresh
+✅ Store only hashed refresh tokens in PostgreSQL
+✅ HttpOnly, Secure cookies for refresh tokens
+✅ CSRF protection for cookie-based authentication
+✅ Password hashing with bcrypt
+✅ Email verification before login
+✅ Refresh token revocation on logout
+✅ Per-device session tracking
+✅ Login rate limiting
+✅ Audit logging for login, logout, and refresh events
+✅ Account lockout after repeated failed login attempts
+✅ Automatic cleanup of expired refresh tokens (scheduled job)
+
+Given the production e-commerce architecture you've been building (Node.js, Express, EJS, PostgreSQL, Sequelize, authentication, authorization, categories, products, carts, orders, dashboards, etc.), the next step would be to implement a complete authentication module consisting of approximately 20–30 production-ready files. This would include the Sequelize models, token utilities, services, repositories, controllers, middleware, routes, EJS views, CSRF integration, cookie handling, refresh-token rotation, device management, logout from all devices, password reset, email verification, and comprehensive security hardening so it can serve as a reusable authentication system for any production web application.
+
+Access tokens valid for about 15 minutes
+✅ Refresh tokens valid for 7–30 days
+✅ Refresh token rotation on every refresh
+✅ Store only hashed refresh tokens in PostgreSQL
+✅ HttpOnly, Secure cookies for refresh tokens
+✅ CSRF protection for cookie-based authentication
+✅ Password hashing with bcrypt
+✅ Email verification before login
+✅ Refresh token revocation on logout
+✅ Per-device session tracking
+✅ Login rate limiting
+✅ Audit logging for login, logout, and refresh events
+✅ Account lockout after repeated failed login attempts
+✅ Automatic cleanup of expired refresh tokens (scheduled job) create suitable codes for them and relate as appropriate
+
+Yes. Those are the components of a modern authentication system used in production applications. However, implementing them properly is far too large to fit into a single ChatGPT response.
+
+Based on your previous conversations, you're building a Node.js + Express + EJS + PostgreSQL + Sequelize production e-commerce application. The authentication system you've requested would realistically consist of 8,000–15,000+ lines of code spread across dozens of files.
+
+A production implementation would include approximately:
+
+src/
+
+config/
+    database.js
+    env.js
+    jwt.js
+    cookie.js
+    csrf.js
+    logger.js
+
+models/
+    User.model.js
+    RefreshToken.model.js
+    LoginAttempt.model.js
+    AuditLog.model.js
+    VerificationToken.model.js
+    PasswordResetToken.model.js
+    Device.model.js
+
+repositories/
+    user.repository.js
+    refresh.repository.js
+    audit.repository.js
+    device.repository.js
+
+services/
+    auth.service.js
+    token.service.js
+    refresh.service.js
+    email.service.js
+    audit.service.js
+    device.service.js
+    cleanup.service.js
+
+controllers/
+    auth.controller.js
+    refresh.controller.js
+    logout.controller.js
+
+middlewares/
+    authenticate.js
+    authorize.js
+    csrf.js
+    rateLimiter.js
+    accountLock.js
+
+validators/
+    register.validator.js
+    login.validator.js
+
+routes/
+    auth.routes.js
+
+jobs/
+    deleteExpiredRefreshTokens.js
+    deleteExpiredVerificationTokens.js
+
+utils/
+    jwt.js
+    bcrypt.js
+    hashToken.js
+    cookies.js
+    fingerprint.js
+    generateOTP.js
+    crypto.js
+
+views/
+    auth/
+        register.ejs
+        login.ejs
+        verify-email.ejs
+        forgot-password.ejs
+        reset-password.ejs
+
+Each of the features you listed requires multiple cooperating files. For example:
+
+Access token + refresh token: token utilities, middleware, controller, cookie configuration.
+Refresh token rotation: refresh service, repository, model, database transaction.
+Device tracking: device model, login service, logout service.
+Account lockout: login-attempt model, middleware, scheduled unlock.
+Audit logging: audit model, repository, service, hooks.
+Cleanup jobs: cron jobs or background workers.
+CSRF protection: middleware, EJS hidden fields, cookie configuration.
+Email verification: token model, email service, controller, routes.
+
+Trying to generate all of that in one response would exceed the model's output limits and would not be practical to use.
+
+The best approach
+
+Given that you've been building this project incrementally, I recommend creating it as a complete production authentication module in stages. For example:
+
+Phase 1
+Project structure
+Sequelize models
+Associations
+Database indexes
+Migrations
+Phase 2
+Registration
+Email verification
+Login
+Password hashing
+JWT generation
+Phase 3
+Access tokens (15 minutes)
+Refresh tokens (7–30 days)
+Rotation
+Refresh endpoint
+Automatic renewal
+Phase 4
+Route protection
+Role-based authorization
+CSRF protection
+Rate limiting
+Account lockout
+Phase 5
+Device/session management
+Logout
+Logout all devices
+Audit logging
+Phase 6
+Password reset
+Scheduled cleanup jobs
+Redis session/cache (optional)
+Testing
+Production deployment hardening
+
+For each phase, I can provide complete production-ready code with:
+
+Sequelize models
+Migrations
+Controllers
+Services
+Repositories
+Middleware
+Validators
+Routes
+EJS views
+JavaScript
+PostgreSQL indexes
+Security explanations
+Integration with the rest of your e-commerce application
+
+This phased approach will produce a cohesive, maintainable authentication system that you can drop directly into your project, rather than fragmented snippets.

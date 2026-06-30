@@ -1,4 +1,5 @@
 import Joi from "joi";
+import asyncHandler from "../utils/asyncHandler.js";
 
 const userSchema = Joi.object({
   name: Joi.string().min(3).required(),
@@ -8,7 +9,7 @@ const userSchema = Joi.object({
   profile: Joi.string().required(),
 });
 
-const validateUser = async (req, res, next) => {
+const validateUser = asyncHandler(async (req, res, next) => {
   const { error } = await userSchema.validate(req.body);
   if (error)
     return res.status(400).json({
@@ -17,6 +18,6 @@ const validateUser = async (req, res, next) => {
       error: error.details[0].message,
     });
   next();
-};
+});
 
 export default validateUser;

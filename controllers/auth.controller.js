@@ -16,6 +16,7 @@ import hashToken from "../utils/hashToken.js";
 import { Op } from "sequelize";
 import cleanupExpiredUsers from "../jobs/cleanupExpiredUsers.job.js";
 import sequelize from "../database/db.js";
+// import generateRefreshToken from "./refreshToken.controller.js";
 
 // CONTROLLER FUNCTIONALITIES LOGIC
 export const register = asyncHandler(async (req, res) => {
@@ -136,13 +137,13 @@ export const register = asyncHandler(async (req, res) => {
       if (newUser) {
         await newUser.destroy();
       }
-      req.flash("error_msg", "Verification error");
+      req.flash("error_msg", "Error Sending verification link to your email.");
       return res.redirect("/api/v1/auth/sign-up");
     }
 
     req.flash("success_msg", "Registration successful. Check your email.");
 
-    return res.redirect("/api/v1/auth/verify-token");
+    return res.redirect("/api/v1/auth/verify-email");
   } catch (error) {
     console.log(error);
     await transaction.rollback();
@@ -182,26 +183,28 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   req.flash("success_msg", "Email verified successfully ✅");
 
-  return res.redirect("/api/v1/auth/login");
+  return res.redirect("/api/v1/auth/verify-success");
 });
 
 export const signIn = asyncHandler(async (req, res) => {
   try {
-    let { email, password } = req.body;
+    const { email, password } = req.body;
+
+    email = email?.trim().toLowerCase();
+    password = password?.trim();
 
     if (!email || !password) {
       req.flash("error_msg", "All fields are required!");
       return res.redirect("/api/v1/auth/login");
     }
 
-    email = email?.trim().toLowerCase();
-    password = password?.trim();
-
     // Email Verification
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
       req.flash("error_msg", "Invalid email pattern.");
+      await user.destroy();
+
       return res.redirect("/api/v1/auth/login");
     }
 
@@ -221,13 +224,15 @@ export const signIn = asyncHandler(async (req, res) => {
 
     if (!user) {
       req.flash("error_msg", "Invalid email or password!");
+      await user.destroy();
       return res.redirect("/api/v1/auth/login");
     }
 
     // Account lock check
     if (user.lockUntil && user.lockUntil > new Date()) {
       req.flash("error_msg", "Account locked. Try again later.");
-      return res.redirect("/api/v1/auth/login");
+      await user.destroy();
+      return res.redirect("/api/v1/auth/sign-up");
     }
 
     const validPassword = await bcryptSalt.compare(password, user.password);
@@ -245,6 +250,7 @@ export const signIn = asyncHandler(async (req, res) => {
 
       req.flash("error_msg", "Invalid email or password");
 
+      await user.destroy();
       return res.redirect("/api/v1/auth/login");
     }
 
@@ -259,6 +265,9 @@ export const signIn = asyncHandler(async (req, res) => {
     user.lockUntil = null;
 
     await user.save();
+
+    // Generate RefreshTokken
+    // const generatedRefreshToken = await generateRefreshToken(user);
 
     // Access Token
     const accessToken = jwt.sign(
@@ -291,7 +300,7 @@ export const signIn = asyncHandler(async (req, res) => {
     await RefreshToken.create({
       token: hashedRefreshToken,
       userId: user.id,
-      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      expiresAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
     });
 
     res.cookie("accessToken", accessToken, {
@@ -299,6 +308,7 @@ export const signIn = asyncHandler(async (req, res) => {
       sameSite: "strict",
       httpOnly: true,
       maxAge: 15 * 60 * 1000,
+      secure: true,
     });
 
     res.cookie("refreshToken", refreshToken, {
@@ -306,13 +316,14 @@ export const signIn = asyncHandler(async (req, res) => {
       httpOnly: true,
       sameSite: "strict",
       maxAge: 3 * 24 * 60 * 60 * 1000,
+      secure: true,
     });
 
     req.flash("success_msg", "You are logged in successfully! ✅");
 
     return res.redirect("/api/v1/homes/home");
   } catch (error) {
-    console.log(error);
+    console.log("error from here", error);
     req.flash("error_msg", "Error logging you in");
     return res.redirect("/api/v1/auth/sign-up");
   }
@@ -336,7 +347,19 @@ export const signOut = asyncHandler(async (req, res) => {
       });
     }
 
-    req.flash("success_msg", "You logged out successfully! ✅");
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+
+    req.flash("success_msg", "You' re logged out successfully! ✅");
     return res.redirect("/api/v1/auth/login");
   } catch (error) {
     console.log(error);

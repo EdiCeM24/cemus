@@ -26,14 +26,10 @@ import homeRouter from "./routes/home.route.js";
 import passwordResetRouter from "./routes/passwordReset.route.js";
 import { protects } from "./middlewares/auth.middleware.js";
 import { csrfProtection } from "./middlewares/csrf.Middleware.js";
-import asyncHandler from "./utils/asyncHandler.js";
-import { paginate } from "./utils/pagination.js";
-import { searchQuery } from "./utils/search.js";
-// import AppError from "./utils/AppError.js";
-import { asyncWrapper } from "./controllers/home.controller.js";
-import errorHandling from "./middlewares/errorHandling.middleware.js";
 import { detectDevice } from "./middlewares/device.middleware.js";
 import { limiter } from "./middlewares/rateLimiter.middleware.js";
+import credentials from "./middlewares/credentials.middleware.js";
+import corsOptions from "./config/corsOptions.js";
 
 const app = express();
 const port = PORT || 4000;
@@ -42,7 +38,7 @@ const port = PORT || 4000;
 //   host: "",
 //   database: "",
 //   password: "",
-//   port: 5433,
+//   port: 5432,
 // });
 
 const pgSession = connectPgSimple(session);
@@ -53,6 +49,16 @@ const store = new pgSession({
   createTableIfMissing: true,
 });
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send("Internal Server Error");
+
+  next();
+});
+
+// app.use(logger);
+app.use(credentials);
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -85,8 +91,7 @@ app.use(
 );
 
 // app.use(csrfProtection());
-app.use(csrf());
-
+app.use(csrf({ cookie: true }));
 app.use((req, res, next) => {
   csrfProtection;
   res.locals.csrfProtection = req.csrfToken();
@@ -94,12 +99,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(asyncHandler);
-app.use(paginate);
-app.use(searchQuery);
-// app.use(AppError);
-app.use(errorHandling);
-app.use(asyncWrapper);
 app.use(detectDevice);
 
 app.use(passport.initialize());
@@ -117,9 +116,9 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join("public", "home.html"));
+  res.sendFile(path.join("public", "home.ejs"));
 });
-app.use(cors());
+
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success");
   res.locals.error_msg = req.flash("error_msg");
@@ -160,6 +159,7 @@ sequelize
   })
   .catch((err) => {
     console.log(`Server is not responding: ${err}`);
+    process.exit(1);
   });
 
 export default app;

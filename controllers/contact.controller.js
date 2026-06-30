@@ -1,19 +1,28 @@
-import Contact from '../models/contact.model.js';
+import Contact from "../models/contact.model.js";
 import {} from "../config/env.js";
 import sendEmail from "../config/sendEmail.js";
 import User from "../models/User.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { Op } from "sequelize";
+import csrf from "csurf";
+
+
+//
+// app.use(csrf({ cookie: true }));
 
 export const handleContactForm = async (req, res) => {
-  res.render("contact", { title: "Contact Edidiong" }, (err, ejs) => {
-    if (err) {
-      return req.flash("error_msg", "Page not found or template error");
-    } else {
-      req.flash("success_msg", "Page loaded successfully!");
-    }
-    res.send(ejs);
-  });
+  res.render(
+    "contact",
+    { title: "Contact Edidiong", csrfToken: req.csrfToken() },
+    (err, ejs) => {
+      if (err) {
+        return req.flash("error_msg", "Page not found or template error");
+      } else {
+        req.flash("success_msg", "Page loaded successfully!");
+      }
+      res.send(ejs);
+    },
+  );
 };
 
 export const handleContactLogic = async (req, res) => {

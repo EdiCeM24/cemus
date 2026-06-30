@@ -11,6 +11,10 @@ homeRouter.get("/about", protects, about);
 
 homeRouter.get("/projects", project);
 
+homeRouter.get("/projects", project);
+
+homeRouter.get("/projects", project);
+
 // POST FOR CLIENT TO CREATE SUGGESTIONS OR HELP
 // homeRouter.post('/');
 

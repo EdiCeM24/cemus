@@ -6,8 +6,8 @@ const UserSchema = sequelize.define(
   {
     id: {
       type: DataTypes.UUID,
-      primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -39,6 +39,10 @@ const UserSchema = sequelize.define(
       type: DataTypes.STRING,
       required: true,
       allowNull: false,
+    },
+    loginAttempts: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     failedLoginAttempts: {
       type: DataTypes.INTEGER,

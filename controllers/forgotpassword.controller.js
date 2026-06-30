@@ -11,7 +11,7 @@ import sendEmail from "../config/sendEmail.js";
 export const forgotPasswordLogic = asyncHandler(async (req, res) => {
   res.render(
     "forgot-password",
-    { title: "Edidiong's Forgot Password Page" },
+    { title: "Edidiong's Forgot Password Page", csrfToken: req.csrfToken() },
     (err, ejs) => {
       if (err) {
         return req.flash("error_msg", "Page not found or template error");
@@ -27,7 +27,7 @@ export const forgotPasswordLogic = asyncHandler(async (req, res) => {
 export const passwordReset = asyncHandler(async (req, res) => {
   res.render(
     "passwordReset",
-    { title: "Edidiong's Forgot Password Page" },
+    { title: "Edidiong's Forgot Password Page", csrfToken: req.csrfToken() },
     (err, ejs) => {
       if (err) {
         return req.flash("error_msg", "Page not found or template error");
@@ -99,8 +99,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
       "If the email exists, a reset link has been sent.",
     );
 
-    return res.redirect("/api/v1/auth/forgot-password");
-    return res.redirect("/api/v1/passwords/reset-password"); // Needs to be cross check again.
+    return res.redirect("/api/v1/auth/forgot");
   }
 
   // Generate raw token

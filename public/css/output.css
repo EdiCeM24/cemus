@@ -628,12 +628,20 @@ video {
   left: 5rem;
 }
 
+.left-5 {
+  left: 1.25rem;
+}
+
 .right-10 {
   right: 2.5rem;
 }
 
 .right-3 {
   right: 0.75rem;
+}
+
+.right-4 {
+  right: 1rem;
 }
 
 .top-0 {
@@ -664,8 +672,8 @@ video {
   z-index: 50;
 }
 
-.float-right {
-  float: right;
+.z-\[99\] {
+  z-index: 99;
 }
 
 .m-0 {
@@ -691,16 +699,16 @@ video {
   margin-bottom: 0px;
 }
 
+.-ml-\[4\%\] {
+  margin-left: -4%;
+}
+
 .-mt-4 {
   margin-top: -1rem;
 }
 
 .-mt-\[3\%\] {
   margin-top: -3%;
-}
-
-.-mt-\[5\%\] {
-  margin-top: -5%;
 }
 
 .mb-0\.5 {
@@ -767,6 +775,10 @@ video {
   margin-left: 2rem;
 }
 
+.ml-\[15\%\] {
+  margin-left: 15%;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -791,12 +803,24 @@ video {
   margin-top: 1.25rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
 .mt-\[10\%\] {
   margin-top: 10%;
 }
 
 .mt-\[15\%\] {
   margin-top: 15%;
+}
+
+.mt-\[20\%\] {
+  margin-top: 20%;
 }
 
 .mt-\[20px\] {
@@ -813,18 +837,6 @@ video {
 
 .mt-\[5\%\] {
   margin-top: 5%;
-}
-
-.mt-10 {
-  margin-top: 2.5rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
-.mt-8 {
-  margin-top: 2rem;
 }
 
 .box-border {
@@ -983,10 +995,6 @@ video {
   max-width: 80rem;
 }
 
-.max-w-\[100\%\] {
-  max-width: 100%;
-}
-
 .max-w-xl {
   max-width: 36rem;
 }
@@ -1037,20 +1045,12 @@ video {
   place-items: end;
 }
 
-.place-items-center {
-  place-items: center;
-}
-
 .items-center {
   align-items: center;
 }
 
 .justify-start {
   justify-content: flex-start;
-}
-
-.justify-end {
-  justify-content: flex-end;
 }
 
 .justify-center {
@@ -1216,8 +1216,20 @@ video {
   border-bottom-width: 2px;
 }
 
+.border-l-4 {
+  border-left-width: 4px;
+}
+
 .border-t {
   border-top-width: 1px;
+}
+
+.border-l {
+  border-left-width: 1px;
+}
+
+.border-l-2 {
+  border-left-width: 2px;
 }
 
 .border-solid {
@@ -1258,9 +1270,19 @@ video {
   border-color: rgb(167 139 250 / var(--tw-border-opacity, 1));
 }
 
+.border-green-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(22 163 74 / var(--tw-border-opacity, 1));
+}
+
 .border-b-orange-600 {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(234 88 12 / var(--tw-border-opacity, 1));
+}
+
+.border-l-green-600 {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(22 163 74 / var(--tw-border-opacity, 1));
 }
 
 .bg-\[\#2563eb\] {
@@ -1377,6 +1399,11 @@ video {
 
 .bg-slate-900\/50 {
   background-color: rgb(15 23 42 / 0.5);
+}
+
+.bg-slate-950 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(2 6 23 / var(--tw-bg-opacity, 1));
 }
 
 .bg-slate-950\/80 {
@@ -1642,6 +1669,10 @@ video {
   line-height: 2.5rem;
 }
 
+.text-\[11px\] {
+  font-size: 11px;
+}
+
 .text-\[15px\] {
   font-size: 15px;
 }
@@ -1656,6 +1687,10 @@ video {
 
 .text-\[20px\] {
   font-size: 20px;
+}
+
+.text-\[26px\] {
+  font-size: 26px;
 }
 
 .text-\[50px\] {
@@ -1732,9 +1767,18 @@ video {
   color: rgb(37 99 235 / var(--tw-text-opacity, 1));
 }
 
+.text-\[\#3ae43a\] {
+  --tw-text-opacity: 1;
+  color: rgb(58 228 58 / var(--tw-text-opacity, 1));
+}
+
 .text-\[\#eee\] {
   --tw-text-opacity: 1;
   color: rgb(238 238 238 / var(--tw-text-opacity, 1));
+}
+
+.text-\[23\] {
+  color: 23;
 }
 
 .text-amber-100 {
@@ -1780,6 +1824,11 @@ video {
 .text-cyan-600 {
   --tw-text-opacity: 1;
   color: rgb(8 145 178 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-100 {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity, 1));
 }
 
 .text-gray-800 {
@@ -2665,6 +2714,20 @@ body {
     position: relative;
   }
 
+  .contact-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .contact-heading {
+    margin-top: 25% !important;
+    padding: 5px 10px;
+    margin-left: -4%;
+    width: 100%;
+  }
+
   .contact_form_container {
     display: none;
     position: absolute;
@@ -2760,6 +2823,25 @@ body {
 
   .contact-conn {
     margin-top: 13%;
+  }
+
+  .contact-image {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .myPhoto img {
+    width: 70%;
+  }
+
+  .contact-heading {
+    padding-left: 20px;
+    display: flex;
+    width: 35%;
+    text-align: center;
+    justify-content: space-between;
   }
 
   .contact-text_social {

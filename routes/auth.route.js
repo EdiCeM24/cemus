@@ -10,23 +10,27 @@ import {
   handleLogin,
   verifyTokenMessage,
   handleSignup,
+  verifySuccessMessage,
 } from "../controllers/home.controller.js";
 import { upload } from "../middlewares/upload.middleware.js";
 import { authorize } from "../middlewares/auth.middleware.js";
 import passport from "passport";
 import validateUser from "../middlewares/inputValidator.middleware.js";
+import { refreshTokenHandler } from "../controllers/refreshToken.controller.js";
 
 const authRouter = express.Router();
 
-// verifyEmail,
 authRouter.get("/sign-up", handleSignup);
 // verifyEmail,
 authRouter.get("/login", handleLogin);
 
-// I am confused of this below:
-authRouter.get("/verify-token/:token", verifyTokenMessage);
+authRouter.get("/verify-success", verifySuccessMessage);
 
-authRouter.get("/verify/:token", verifyEmail);
+authRouter.get("/verify-token", verifyTokenMessage);
+
+authRouter.post("/refresh-token", refreshTokenHandler); // To check with the verifyTokenMessage.
+
+authRouter.post("/verify/:token", verifyEmail);
 
 authRouter.post("/register", upload.single("profile"), validateUser, register);
 

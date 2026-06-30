@@ -1,66 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Edidiong</title>
-  <link rel="stylesheet" href="/css/output.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ovo&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ovo&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
-
-  
-</head>
+  <head>
+    <%- include('partials/head.ejs') %>
+  </head>
 <body>
  <!-- Navbar -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800">
-
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex justify-between items-center">
-
-      <div class="header_myLogo flex items-center justify-evenly gap-1">
-        <a href="/api/v1/homes/home" class="no-underline flex items-center justify-center gap-1">
-          <img
-            src="/images/favicon3.ico"
-            class="w-10 h-10 rounded-full object-cover"
-            alt=""
-          />
-          <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
-            EDIDIONG
-          </h1>
-        </a>
-      </div>
-      <!-- <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
-        EDIDIONG
-      </h1> -->
-
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-        <a href="/api/v1/homes/home#home" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Home</a>
-        <a href="/api/v1/homes/about#about" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">About</a>
-        <a href="/api/v1/homes/projects" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Projects</a>
-        <a href="/api/v1/contacts/contact" class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Contact</a>
-        <!-- <a href="#" class="hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Services</a> -->
-      </nav>
-
-      <button class="touch_me_out bg-cyan-500 hover:bg-cyan-400 transition ease-in-out px-5 py-2 rounded-full font-semibold text-slate-950 shadow-lg shadow-cyan-500/30">
-        Hire Me
-      </button>
-    </div>
+  <header>
+    <%- include('includes/header.ejs') %>
   </header>
 
   <div class="contact-conn container mx-auto max-h-screen mt-[4%] p-10 px-10"> 
@@ -162,7 +108,9 @@
 
           </div>
 
-
+            <p class="contact-heading text-justify text-gray-100 flex-col text-xl font-semibold font-serif">
+<!--Check here for properposition-->I'm a Software Engineer, studied computer Science and also pursuing PGD with 5 years experience in the sector, developing stuning websites and mobile application. 
+            </p>
         </div>
 
         <!-- About Section -->
@@ -219,7 +167,7 @@
       <div class="tech grass">
 
         <div class=" flex items-center justify-between p-3 gap-3 mb-4 shadow-lg">
-            <span class="flex items-center gap-[3px]">
+            <!-- <span class="flex items-center gap-[3px]">
               <img src="/images/vite.jpg" class="w-6 h-6 object-cover rounded-md" alt="">
               HTML
             </span>
@@ -279,7 +227,7 @@
             <span class="flex items-center gap-[3px]">
               <img src="/images/firebase.png" class="w-6 h-6 object-cover rounded-md" alt="">
               Firebase
-            </span>
+            </span> -->
           </div>
       </div>
   </div>

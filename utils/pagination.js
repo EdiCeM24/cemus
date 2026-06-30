@@ -5,7 +5,7 @@ export const paginate = async (model, page = 1, limit = 10, where = {}) => {
     where,
     limit,
     offset,
-    order: [['createdAt', 'DESC']],
+    order: [["createdAt", "DESC"]],
   });
 
   return {
