@@ -17,6 +17,7 @@ const UserSchema = sequelize.define(
       type: DataTypes.STRING,
       required: true,
       trim: true,
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
