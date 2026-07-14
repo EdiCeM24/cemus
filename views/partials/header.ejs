@@ -55,11 +55,7 @@
     </div>
 
     <div class="flex items-center py-4 space-x-3 group absolute top-8 right-3">
-      <img
-        src=""
-        alt="Logo"
-        class="text-white w-10 h-10 rounded-full object-cover"
-      />
+      <% if(user.avatar) { %> <img src="<%= user.avatar %>" class="text-white w-10 h-10 rounded-full object-cover"/> <% } %>
       <!-- <i class="fa-solid fa-user text-white"></i> -->
       <div
         class="hidden group-hover:block absolute right-3 top-5 mt-2 w-32 bg-white rounded-md shadow-lg py-2 p-6 text-center justify-center duration-150 ease-linear translate-y-4 skew-y-2"
@@ -91,5 +87,14 @@
     </div>
   </div>
 </header>
+
+<body>
+    
+    
+    <p>Email Registered: <%= user.email || 'Private/Not Provided' %></p>
+    <form action="/logout" method="POST">
+        <button type="submit">Secure Logout</button>
+    </form>
+</body>
 
 <script src="/script/dash.js"></script>

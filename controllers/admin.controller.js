@@ -79,7 +79,7 @@ const handleUserDelete = asyncHandler(async (req, res) => {
     if (user) {
       await User.destroy();
 
-      req.flash("success_msg", "User deleted successfully!");
+      req.flash("success_msg", "User deleted successfully ✅");
     }
 
     return res.redirect("/dashboard");

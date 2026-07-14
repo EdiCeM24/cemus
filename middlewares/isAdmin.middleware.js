@@ -1,7 +1,7 @@
 import User from "../models/User.model.js";
 
 const isAdmin = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params.id;
 
   const user = await User.findByPk(id);
 

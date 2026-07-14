@@ -1,5 +1,5 @@
 # Specify base image
-FROM node:18-alpine
+FROM node:18
 
 # Specify working directory
 WORKDIR /cemus

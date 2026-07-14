@@ -19,7 +19,7 @@ export const protects = asyncHandler(async (req, res, next) => {
   // req.cookies.token;
 
   if (!token) {
-    req.flash("success", "Unauthorized");
+    req.flash("error_msg", "Unauthorized");
     return res.redirect("/api/v1/auth/login");
   }
 

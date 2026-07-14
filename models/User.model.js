@@ -54,6 +54,12 @@ const UserSchema = sequelize.define(
     verificationToken: {
       type: DataTypes.STRING,
     },
+    accessToken: {
+      type: DataTypes.STRING,
+    },
+    refreshToken: {
+      type: DataTypes.STRING,
+    },
     isVerified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -76,6 +82,7 @@ const UserSchema = sequelize.define(
     providerId: {
       type: DataTypes.STRING,
       allowNull: true,
+      unique: true,
     },
     isEmailVerified: {
       type: DataTypes.BOOLEAN,

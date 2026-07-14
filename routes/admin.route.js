@@ -9,12 +9,18 @@ import {
 } from "../controllers/admin.controller.js";
 import { authorize, protects } from "../middlewares/auth.middleware.js";
 import isAdmin from "../middlewares/isAdmin.middleware.js";
-import { verifyEmail } from "../controllers/auth.controller.js";
+import verifyEmail from "../controllers/verifyEmail.controller.js";
 
 const adminRouter = express.Router();
 // authorize("admin"), protects, isAdmin,
-adminRouter.get("/dashboard", dashboard);
-adminRouter.get("/admin", admins);
+adminRouter.get(
+  "/dashboard",
+  protects,
+  authorize("super_admin", "admin"),
+  dashboard,
+);
+
+adminRouter.get("/admin", protects, authorize("super_admin", "admin"), admins);
 
 // GET ALL USERS
 //adminRouter.get('/', )
@@ -25,12 +31,44 @@ adminRouter.get("/admin", admins);
 // PUT UPDATE STUFF FOR THE USERS
 //adminRouter.put('/', )
 
-adminRouter.get("/:id", authorize, verifyEmail, adminBoard);
+adminRouter.get(
+  "/:id",
+  authorize("super_admin", "admin"),
+  protects,
+  verifyEmail,
+  adminBoard,
+);
 
-adminRouter.delete("/user/:id", authorize, isAdmin, handleUserDelete);
+adminRouter.delete(
+  "/user/:id",
+  authorize("super_admin", "admin"),
+  protects,
+  isAdmin,
+  handleUserDelete,
+);
 
-adminRouter.delete("/message/:id", authorize, isAdmin, deleteMessage);
+adminRouter.delete(
+  "/message/:id",
+  authorize("super_admin", "admin"),
+  protects,
+  isAdmin,
+  deleteMessage,
+);
 
-adminRouter.put("/users/:id", updateUser);
+adminRouter.put(
+  "/users/:id",
+  authorize("super_admin", "admin"),
+  protects,
+  updateUser,
+);
+
+// POST FOR CLIENT TO CREATE SUGGESTIONS OR HELP
+// homeRouter.post('/');
+
+// PUT FOR CLIENT TO UPDATE SUGGESTIONS OR HELP
+// homeRouter.put('/');
+
+// DELETE FOR CLIENT TO DELETE THEIR UPDATE SUGGESTIONS OR HELP
+// homeRouter.delete('/');
 
 export default adminRouter;

@@ -1,28 +1,33 @@
 // config/strategies/github.js
-
+import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "../env.js";
 import { Strategy } from "passport-github2";
+import { findOrCreateOAuthUser } from "../../services/oauth.service.js";
 
 export default new Strategy(
   {
-    clientID: process.env.GITHUB_CLIENT_ID,
+    clientID: GITHUB_CLIENT_ID,
 
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    clientSecret: GITHUB_CLIENT_SECRET,
 
-    callbackURL: "/api/auth/github/callback",
+    callbackURL: "http:localhost:6002/auth/github/callback",
   },
 
   async (accessToken, refreshToken, profile, done) => {
     try {
       const user = await findOrCreateOAuthUser({
-        email: profile.emails?.[0]?.value,
-
-        provider: "github",
+        oauthProvider: "github",
 
         providerId: profile.id,
 
+        name: profile.name,
+
+        email: profile.emails?.[0]?.value,
+
         avatar: profile.photos?.[0]?.value,
 
-        firstName: profile.displayName,
+        accessToken: accessToken,
+
+        refreshToken: refreshToken,
       });
 
       done(null, user);

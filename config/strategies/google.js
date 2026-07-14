@@ -1,32 +1,33 @@
-// config/strategies/google.js
-
 import { Strategy } from "passport-google-oauth20";
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "../env.js";
 
 import { findOrCreateOAuthUser } from "../../services/oauth.service.js";
 
 export default new Strategy(
   {
-    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientID: GOOGLE_CLIENT_ID,
 
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    clientSecret: GOOGLE_CLIENT_SECRET,
 
-    callbackURL: "/api/auth/google/callback",
+    callbackURL: "http://localhost:6002/auth/google/callback",
   },
 
   async (accessToken, refreshToken, profile, done) => {
     try {
       const user = await findOrCreateOAuthUser({
-        email: profile.emails[0].value,
-
-        provider: "google",
+        oauthProvider: "google",
 
         providerId: profile.id,
 
+        email: profile.emails[0].value,
+
         avatar: profile.photos[0]?.value,
 
-        firstName: profile.name.givenName,
+        name: profile.name,
 
-        lastName: profile.name.familyName,
+        accessToken: accessToken,
+
+        refreshToken: refreshToken,
       });
 
       done(null, user);

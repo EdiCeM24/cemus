@@ -4,11 +4,8 @@ import path from "path";
 import cors from "cors";
 import session from "express-session";
 import flash from "connect-flash";
-import passport from "passport";
 import helmet from "helmet";
-// import pg from 'pg';
 import connectPgSimple from "connect-pg-simple";
-import csrf from "csurf";
 
 //OTHER IMPORTS
 import {
@@ -17,6 +14,7 @@ import {
   SESSION_SECRET,
   DATABASE_URL,
 } from "./config/env.js";
+import passport from "./config/passport.js";
 import sequelize from "./database/db.js";
 import { PORT } from "./config/env.js";
 import authRouter from "./routes/auth.route.js";
@@ -24,8 +22,7 @@ import adminRouter from "./routes/admin.route.js";
 import contactRouter from "./routes/contact.route.js";
 import homeRouter from "./routes/home.route.js";
 import passwordResetRouter from "./routes/passwordReset.route.js";
-import { protects } from "./middlewares/auth.middleware.js";
-import { csrfProtection } from "./middlewares/csrf.Middleware.js";
+import { authorize, protects } from "./middlewares/auth.middleware.js";
 import { detectDevice } from "./middlewares/device.middleware.js";
 import { limiter } from "./middlewares/rateLimiter.middleware.js";
 import credentials from "./middlewares/credentials.middleware.js";
@@ -40,6 +37,11 @@ const port = PORT || 4000;
 //   password: "",
 //   port: 5432,
 // });
+
+// const { Strategy } = pkg;
+
+if (Array.isArray()) {
+}
 
 const pgSession = connectPgSimple(session);
 const store = new pgSession({
@@ -56,14 +58,14 @@ app.use((err, req, res, next) => {
   next();
 });
 
-// app.use(logger);
-app.use(credentials);
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));
+app.use(credentials);
+app.use(cors(corsOptions));
+
 // Enable HTTP
 app.set("trust proxy", 1);
 app.use(
@@ -76,11 +78,11 @@ app.use(cookieParser());
 app.use(
   session({
     store: store,
-    secret:
-      SESSION_SECRET || "hendleStupidityInthecodeBaseThathAsSoManYErroZ107xc/.",
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     rolling: true,
+    proxy: true,
     cookie: {
       secure: NODE_ENV === "production",
       httpOnly: true,
@@ -90,19 +92,15 @@ app.use(
   }),
 );
 
-// app.use(csrfProtection());
-app.use(csrf({ cookie: true }));
-app.use((req, res, next) => {
-  csrfProtection;
-  res.locals.csrfProtection = req.csrfToken();
-
-  next();
-});
-
-app.use(detectDevice);
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Authentication Protection Middleware
+const ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+  res.redirect("/api/v1/auth/login");
+};
+
 app.use(helmet());
 app.use(flash());
 app.use(
@@ -135,20 +133,87 @@ app.use((req, res, next) => {
   next();
 });
 
-// While below ones applies to some specific routes:
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/admin", limiter, adminRouter);
-app.use("/api/v1/contacts", contactRouter);
-app.use("/api/v1/homes", homeRouter);
-app.use("/api/v1/passwords", limiter, passwordResetRouter);
-
-// TO PROTECT
-// app.get("/home", protects, (req, res) => {
-//   res.render("home", {
-//     user: req.user,
-//   });
+// app.get("/api/v1/homes/home", (req, res) => {
+//   req.session.views = (req.session.views || 0) + 10;
+//   res.send(`You have viewed this page ${req.session.views} times`);
 // });
 
+app.use(detectDevice);
+
+// While below ones applies to some specific routes:
+app.use("/api/v1/auth", authRouter);
+app.use(
+  "/api/v1/admin",
+  limiter,
+  protects,
+  authorize("admin", "super_admin"),
+  adminRouter,
+);
+app.use("/api/v1/contacts", contactRouter);
+app.use("/api/v1/homes", homeRouter); // ensureAuthenticated,
+app.use("/api/v1/passwords", limiter, passwordResetRouter);
+
+//
+// OAuth Callback Route
+app.get(
+  "/auth/github",
+  passport.authenticate("github", {
+    scope: ["user: email"],
+    failureRedirect: "/api/v1/auth/login",
+  }),
+  (req, res) => {
+    res.redirect("/api/v1/homes/home");
+  },
+);
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    failureRedirect: "/api/v1/auth/login",
+  }),
+  (req, res) => {
+    res.redirect("/api/v1/homes/home");
+  },
+);
+app.get(
+  "/auth/facebook",
+  passport.authenticate("facebook", {
+    scope: ["profile", "email"],
+    failureRedirect: "/api/v1/auth/login",
+  }),
+  (req, res) => {
+    res.redirect("/api/v1/homes/home");
+  },
+);
+
+//
+// Secure Logout Context
+app.post("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      res.redirect("/login");
+    });
+  });
+});
+
+// DOWNLOAD CV
+app.get("/download-cv/", (req, res) => {
+  const cvPath = path.join("public", "me-resume.pdf");
+  const cvName = "me-resume.pdf";
+  res.download(cvPath, cvName, (err) => {
+    if (err) {
+      console.error(err);
+      req.flash("error_msg", "File not found!");
+      return res.redirect("/api/v1/homes/home");
+    } else {
+      req.flash("success_msg", "CV downloaded successfully!");
+    }
+  });
+});
+
+// DB AND SERVER
 sequelize
   .sync()
   .then(() => {
@@ -161,5 +226,3 @@ sequelize
     console.log(`Server is not responding: ${err}`);
     process.exit(1);
   });
-
-export default app;

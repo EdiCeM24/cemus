@@ -1,32 +1,35 @@
 // config/strategies/facebook.js
-
+import { FACEBOOK_APP_SECRET, FACEBOOK_APP_ID } from "../env.js";
 import { Strategy } from "passport-facebook";
+import { findOrCreateOAuthUser } from "../../services/oauth.service.js";
 
 export default new Strategy(
   {
-    clientID: process.env.FACEBOOK_APP_ID,
+    clientID: FACEBOOK_APP_ID,
 
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    clientSecret: FACEBOOK_APP_SECRET,
 
-    callbackURL: "/api/auth/facebook/callback",
+    callbackURL: "http://localhost:6002/auth/facebook/callback",
 
-    profileFields: ["id", "emails", "name", "picture.type(large)"],
+    profileFields: ["id", "emails", "name", "profile.type(large)"],
   },
 
   async (accessToken, refreshToken, profile, done) => {
     try {
       const user = await findOrCreateOAuthUser({
-        email: profile.emails?.[0]?.value,
+        oauthProvider: "facebook",
 
-        provider: "facebook",
+        email: profile.emails?.[0]?.value,
 
         providerId: profile.id,
 
         avatar: profile.photos?.[0]?.value,
 
-        firstName: profile.name.givenName,
+        name: profile.name.name,
 
-        lastName: profile.name.familyName,
+        accessToken: accessToken,
+
+        refreshToken: refreshToken,
       });
 
       done(null, user);

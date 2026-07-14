@@ -1,5 +1,10 @@
 import express from "express";
-import homePage, { about, project } from "../controllers/home.controller.js";
+import homePage, {
+  about,
+  privacyPolicy,
+  project,
+  termsOfUse,
+} from "../controllers/home.controller.js";
 import { authorize, protects } from "../middlewares/auth.middleware.js";
 
 const homeRouter = express.Router();
@@ -7,7 +12,8 @@ const homeRouter = express.Router();
 // protects,
 homeRouter.get("/home", homePage);
 
-homeRouter.get("/about", protects, about);
+// protects
+homeRouter.get("/about", about);
 
 homeRouter.get("/projects", project);
 
@@ -15,13 +21,8 @@ homeRouter.get("/projects", project);
 
 homeRouter.get("/projects", project);
 
-// POST FOR CLIENT TO CREATE SUGGESTIONS OR HELP
-// homeRouter.post('/');
+homeRouter.get("/privacy-policy", privacyPolicy);
 
-// PUT FOR CLIENT TO UPDATE SUGGESTIONS OR HELP
-// homeRouter.put('/');
-
-// DELETE FOR CLIENT TO DELETE THEIR UPDATE SUGGESTIONS OR HELP
-// homeRouter.delete('/');
+homeRouter.get("/terms-of-use", termsOfUse);
 
 export default homeRouter;

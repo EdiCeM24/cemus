@@ -12,7 +12,7 @@ export const asyncWrapper = (fn) => {
 
 const homePage = asyncWrapper(async (req, res) => {
   try {
-    res.render("home", { title: "Edidiong's Page" }, (err, ejs) => {
+    res.render("home", { title: "Edidiong Page" }, (err, ejs) => {
       if (err) {
         return req.flash("error_msg", "Page not found or template error");
       } else {
@@ -68,19 +68,14 @@ export const project = asyncWrapper(async (req, res) => {
 
 export const handleSignup = asyncWrapper(async (req, res) => {
   try {
-    res.render(
-      "index",
-      { title: "Register's Page", csrfToken: req.csrfToken() },
-      (err, ejs) => {
-        if (err) {
-          return req.flash("error_msg", "Page not found or template error");
-        } else {
-          req.flash("success_msg", "Page loaded successfully!");
-        }
-
-        res.send(ejs);
-      },
-    );
+    res.render("auth/index", { title: "Registration Page" }, (err, ejs) => {
+      if (err) {
+        return req.flash("error_msg", "Page not found or template error");
+      } else {
+        req.flash("success_msg", "Page loaded successfully!");
+      }
+      res.send(ejs);
+    });
   } catch (error) {
     console.log("why the failed page: ", error);
 
@@ -91,19 +86,15 @@ export const handleSignup = asyncWrapper(async (req, res) => {
 
 export const handleLogin = asyncHandler(async (req, res) => {
   try {
-    res.render(
-      "login",
-      { title: "Login's Page", csrfToken: req.csrfToken() },
-      (err, ejs) => {
-        if (err) {
-          return req.flash("error_msg", "Page not found or template error");
-        } else {
-          req.flash("success_msg", "Page loaded successfully!");
-        }
+    res.render("auth/login", { title: "Login Page" }, (err, ejs) => {
+      if (err) {
+        return req.flash("error_msg", "Page not found or template error");
+      } else {
+        req.flash("success_msg", "Page loaded successfully! ✅");
+      }
 
-        res.send(ejs);
-      },
-    );
+      res.send(ejs);
+    });
   } catch (error) {
     console.log("why the failed page: ", error);
 
@@ -127,7 +118,7 @@ export const verifyTokenMessage = asyncHandler(async (req, res) => {
     console.log("why the failed page: ", error);
 
     req.flash("error_msg", "We are sorry that your page unable to load: ", err);
-    return;
+    return res.redirect("/api/v1/auth/sign-up");
   }
 });
 
@@ -142,6 +133,52 @@ export const verifySuccessMessage = asyncHandler(async (req, res) => {
 
       res.send(ejs);
     });
+  } catch (error) {
+    console.log("why the failed page: ", error);
+
+    req.flash("error_msg", "We are sorry that your page unable to load: ", err);
+    return;
+  }
+});
+
+export const termsOfUse = asyncHandler(async (req, res) => {
+  try {
+    res.render(
+      "private/terms-of-use",
+      { title: "Edidiong's Page" },
+      (err, ejs) => {
+        if (err) {
+          return req.flash("error_msg", "Page not found or template error");
+        } else {
+          req.flash("success_msg", "Page loaded successfully!");
+        }
+
+        res.send(ejs);
+      },
+    );
+  } catch (error) {
+    console.log("why the failed page: ", error);
+
+    req.flash("error_msg", "We are sorry that your page unable to load: ", err);
+    return;
+  }
+});
+
+export const privacyPolicy = asyncHandler(async (req, res) => {
+  try {
+    res.render(
+      "private/privacy-policy",
+      { title: "Edidiong's Page" },
+      (err, ejs) => {
+        if (err) {
+          return req.flash("error_msg", "Page not found or template error");
+        } else {
+          req.flash("success_msg", "Page loaded successfully!");
+        }
+
+        res.send(ejs);
+      },
+    );
   } catch (error) {
     console.log("why the failed page: ", error);
 
