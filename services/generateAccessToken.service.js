@@ -1,19 +1,17 @@
 import crypto from "crypto";
 import { JWT_SECRET_KEY } from "../config/env.js";
 import jwt from "jsonwebtoken";
+import secret from "../auth/config.js";
 
-export const generateAccessToken = () => {
-  return crypto.randomBytes(64).toString("hex");
+const generateAccessToken = (user) => {
+  const accessToken = jwt.sign(
+    { id: user.id, role: user.role },
+    JWT_SECRET_KEY,
+    {
+      expiresIn: secret.accessTokenExpiresIn,
+    },
+  );
+  return accessToken;
 };
 
-// Access Token
-const tokenId = jwt.sign(
-  {
-    id: user.id,
-    role: user.role,
-  },
-  JWT_SECRET_KEY,
-  {
-    expiresIn: "15m",
-  },
-);
+export default generateAccessToken;

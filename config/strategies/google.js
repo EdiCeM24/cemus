@@ -13,6 +13,8 @@ export default new Strategy(
   },
 
   async (accessToken, refreshToken, profile, done) => {
+    done(null, profile);
+    console.log("Testing google profile: ", profile);
     try {
       const user = await findOrCreateOAuthUser({
         oauthProvider: "google",

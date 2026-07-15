@@ -43,7 +43,7 @@ export const register = asyncHandler(async (req, res) => {
   if (!usernameRegex.test(username)) {
     req.flash(
       "error_msg",
-      "Invalid username format, it must be alphanumeric and at least one special character.",
+      "Username must contain only letters, numbers and underscores and be between 3 and 30 characters.",
     );
     return res.redirect("/api/v1/auth/sign-up");
   }
@@ -63,59 +63,57 @@ export const register = asyncHandler(async (req, res) => {
   }
   // Password Length Check
   if (password.length < 8) {
-    req.flash("error_msg", "Password must be at least 8 characters");
+    req.flash("error_msg", "Password must be at least 8 characters.");
     return res.redirect("/api/v1/auth/sign-up");
   }
-
-  // Find User Identification
-  const user = await User.findOne({
-    where: {
-      [Op.or]: [{ email }, { username }],
-    },
-    transaction,
-  });
-  // User Identification Check
-  if (user) {
-    req.flash("error_msg", "User already exists");
-    return res.redirect("/api/v1/auth/sign-up");
-  }
-
-  // Generate verification token
-  const rawToken = crypto.randomBytes(32).toString("hex");
-
-  const hashedToken = hashToken(rawToken);
-
-  const verificationTokenExpires = new Date(Date.now() + 20 * 60 * 1000);
-
-  const salt = await bcryptSalt.genSalt(12);
-  const hashed = await bcryptSalt.hash(password, salt);
 
   const transaction = await sequelize.transaction();
-
-  const newUser = await User.create(
-    {
-      name,
-      username,
-      email,
-      password: hashed,
-      profile: profile,
-      verificationToken: hashedToken,
-      verificationTokenExpires,
-      isVerified: false,
-      role: "user",
-    },
-    {
-      transaction,
-    },
-  );
-
-  await transaction.commit();
-  // ✅ Create verification link
-  // const verifyLink = `http://localhost:5080/api/v1/autconst rawToken = crypto.randomBytes(32).toString("hex");h/verify-email?token=${hashedToken}`;
-
-  const verifyLink = `${CLIENT_URL}/api/v1/auth/verify-email/${rawToken}`;
-
   try {
+    // Find User Identification
+    const user = await User.findOne({
+      where: {
+        [Op.or]: [{ email }, { username }],
+      },
+      transaction,
+    });
+    // User Identification Check
+    if (user) {
+      req.flash("error_msg", "User already exists");
+      return res.redirect("/api/v1/auth/sign-up");
+    }
+
+    // Generate verification token
+    const rawToken = crypto.randomBytes(32).toString("hex");
+
+    const hashedToken = hashToken(rawToken);
+
+    const verificationTokenExpires = new Date(Date.now() + 20 * 60 * 1000);
+
+    const salt = await bcryptSalt.genSalt(12);
+    const hashed = await bcryptSalt.hash(password, salt);
+
+    const newUser = await User.create(
+      {
+        name,
+        username,
+        email,
+        password: hashed,
+        profile: profile,
+        verificationToken: hashedToken,
+        verificationTokenExpires,
+        isVerified: false,
+        role: "user",
+      },
+      {
+        transaction,
+      },
+    );
+
+    await transaction.commit();
+
+    // ✅ Create verification link
+    const verifyLink = `${CLIENT_URL}/api/v1/auth/verify-email/${rawToken}`;
+
     // Needs to review the mail message why not send.
     await sendEmail({
       to: newUser.email,
@@ -132,19 +130,20 @@ export const register = asyncHandler(async (req, res) => {
           <a href="${verifyLink}">Verify Email</a>
         `,
     });
-    await transaction.commit();
-  } catch (err) {
-    console.log(err);
-    if (!newUser) {
+
+    req.flash("success_msg", "Registration successful. check your email. ✅");
+    return res.redirect("/api/v1/auth/verify-email");
+  } catch (error) {
+    console.log(error);
+    if (newUser) {
       await newUser.destroy({ transaction });
     }
+    await transaction.rollback();
+
     req.flash("error_msg", "Please verify your information.");
+
     return res.redirect("/api/v1/auth/sign-up");
   }
-
-  req.flash("success_msg", "Registration successful ✅. Check your email.");
-
-  return res.redirect("/api/v1/auth/verify-email");
 });
 
 export const signOut = asyncHandler(async (req, res) => {

@@ -9,7 +9,7 @@ export default new Strategy(
 
     clientSecret: GITHUB_CLIENT_SECRET,
 
-    callbackURL: "http:localhost:6002/auth/github/callback",
+    callbackURL: "http:localhost:6002/api/auth/github/callback",
   },
 
   async (accessToken, refreshToken, profile, done) => {

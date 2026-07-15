@@ -1,4 +1,5 @@
 import User from "../models/User.model.js";
+import { Op } from "sequelize";
 import cleanupExpiredUsers from "../jobs/cleanupExpiredUsers.job.js";
 import hashToken from "../utils/hashToken.js";
 import asyncHandler from "../utils/asyncHandler.js";
@@ -6,8 +7,9 @@ import asyncHandler from "../utils/asyncHandler.js";
 const verifyEmail = asyncHandler(async (req, res) => {
   const { token } = req.params;
 
-  const hashedToken = hashToken(token);
+  const hashedToken = await hashToken(token);
 
+  // 2. Set the expiration to 30 minutes in the past/future depending on your logic
   const user = await User.findOne({
     where: {
       verificationToken: hashedToken,

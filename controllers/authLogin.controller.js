@@ -1,5 +1,6 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import User from "../models/User.model.js";
+import { Op } from "sequelize";
 import bcryptSalt from "bcryptjs";
 import crypto from "crypto";
 import { cookieOptions } from "../config/cookies.js";
@@ -29,9 +30,13 @@ const signIn = asyncHandler(async (req, res) => {
     return res.redirect("/api/v1/auth/login");
   }
 
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: { [Op]: [{ email }] } });
 
   if (!user) {
+    await bcryptSalt.compare(
+      password,
+      "$2b$10$FakeHashForTimingAttackPrevention",
+    );
     req.flash("error_msg", "Invalid email or password!");
 
     return res.redirect("/api/v1/auth/login");
@@ -41,7 +46,7 @@ const signIn = asyncHandler(async (req, res) => {
   if (user.lockUntil && user.lockUntil > new Date()) {
     req.flash("error_msg", "Account locked. Try again later.");
 
-    return res.redirect("/api/v1/auth/sign-up");
+    return res.redirect("/api/v1/auth/login");
   }
 
   const validPassword = await bcryptSalt.compare(password, user.password);
@@ -64,19 +69,29 @@ const signIn = asyncHandler(async (req, res) => {
 
   // Require verified email
   if (!user.isVerified) {
-    req.flash("error_msg", "Please verify your email first");
-    await cleanupExpiredUsers();
-    return res.redirect("/api/v1/auth/sign-up");
+    const twentyFoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    // user.timestamp
+    if (user.createdAt < twentyFoursAgo) {
+      await user.destroy();
+      req.flash(
+        "error_msg",
+        "Verification link expired. Please, sign up again.",
+      );
+      return res.redirect("/api/v1/auth/sign-up");
+    }
+
+    req.flash("error_msg", "Please verify your email to login in.");
   }
 
+  // Reset Login Restrictions
   user.failedLoginAttempts = 0;
   user.lockUntil = null;
-
   await user.save();
 
-  // Generate AccessToken and RefreshTokken
+  // Generate Tokens
   const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
+  const refreshToken = generateRefreshToken();
+  await User.update({ refreshToken }, { where: { id: user.id } });
 
   const hashedRefreshToken = crypto
     .createHash("sha256")

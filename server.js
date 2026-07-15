@@ -26,7 +26,7 @@ import { authorize, protects } from "./middlewares/auth.middleware.js";
 import { detectDevice } from "./middlewares/device.middleware.js";
 import { limiter } from "./middlewares/rateLimiter.middleware.js";
 import credentials from "./middlewares/credentials.middleware.js";
-import corsOptions from "./config/corsOptions.js";
+// import corsOptions from "./config/corsOptions.js";
 
 const app = express();
 const port = PORT || 4000;
@@ -64,13 +64,15 @@ app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));
 app.use(credentials);
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // Enable HTTP
 app.set("trust proxy", 1);
 app.use(
   cors({
     origin: CLIENT_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );
@@ -155,26 +157,28 @@ app.use("/api/v1/passwords", limiter, passwordResetRouter);
 
 //
 // OAuth Callback Route
+
 app.get(
   "/auth/github",
   passport.authenticate("github", {
-    scope: ["user: email"],
+    scope: ["user:email"],
     failureRedirect: "/api/v1/auth/login",
   }),
   (req, res) => {
     res.redirect("/api/v1/homes/home");
   },
 );
+
+// 2. CALLBACK ROUTE (Where Google sends the user back)
 app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    failureRedirect: "/api/v1/auth/login",
-  }),
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/api/v1/auth/login" }),
   (req, res) => {
+    // Successful authentication, redirect home.
     res.redirect("/api/v1/homes/home");
   },
 );
+
 app.get(
   "/auth/facebook",
   passport.authenticate("facebook", {
