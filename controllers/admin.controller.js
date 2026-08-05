@@ -1,9 +1,9 @@
 import User from "../models/User.model.js";
-
 import { paginate } from "../utils/pagination.js";
 import { searchQuery } from "../utils/search.js";
 import sendEmail from "../config/sendEmail.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import Contact from "../models/contact.model.js";
 
 const dashboard = asyncHandler(async (req, res) => {
   res.render("admin/index", { title: "Dashboard Page" }, (err, ejs) => {
@@ -39,6 +39,10 @@ const adminBoard = asyncHandler(async (req, res) => {
     const user = await User.findAll();
 
     const messages = await Contact.findAll();
+    // activities
+    const activities = await Contact.findOne({
+      where: { id: req.messages.id },
+    });
 
     const page = parseInt(req.query.page) || 1;
     const keyword = req.query.search || "";
@@ -93,7 +97,7 @@ const handleUserDelete = asyncHandler(async (req, res) => {
 // DELETE CONTACT MESSAGE
 const deleteMessage = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params.id;
 
     const user = await Contact.findByPk(id);
 
@@ -111,17 +115,9 @@ const deleteMessage = asyncHandler(async (req, res) => {
 });
 
 // UPDATE
-const updateUser = asyncHandler(async (req, res) => {
+const messageHandler = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const userId = await User.findByPk(id);
-
-    const { role } = req.body;
-
-    const user = await User.update({ role }, { where: { userId } });
-
-    await user.save();
+    const {} = req.body;
 
     return res.redirect("/dashboard");
   } catch (error) {
@@ -135,6 +131,6 @@ export {
   handleUserDelete,
   deleteMessage,
   dashboard,
-  updateUser,
+  messageHandler,
   admins,
 };

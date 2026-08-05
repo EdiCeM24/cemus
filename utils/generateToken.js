@@ -15,6 +15,6 @@ export const generateAccessToken = (user) => {
 //
 export const generatedRefreshToken = (user) => {
   return jwt.sign({ id: user.id }, JWT_REFRESH_SECRET_KEY, {
-    expiresIn: new Date(Date.now() > 3 * 24 * 60 * 60 * 1000),
+    expiresIn: new Date(Date.now() > 7 * 24 * 60 * 60 * 1000),
   });
 };

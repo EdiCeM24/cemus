@@ -3,7 +3,6 @@ import {
   handleContactForm,
   handleContactLogic,
 } from "../controllers/contact.controller.js";
-import { authorize } from "../middlewares/auth.middleware.js";
 
 const contactRouter = express.Router();
 

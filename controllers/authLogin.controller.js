@@ -77,6 +77,7 @@ const signIn = asyncHandler(async (req, res) => {
         "error_msg",
         "Verification link expired. Please, sign up again.",
       );
+      cleanupExpiredUsers();
       return res.redirect("/api/v1/auth/sign-up");
     }
 
@@ -115,36 +116,13 @@ const signIn = asyncHandler(async (req, res) => {
 
 export default signIn;
 
-//
-// FOR LOGIN PRODUCTION FLOW STRUCTURE:
-// Validate Request
-//       │
-//       ▼
-// Normalize Input
-//       │
-//       ▼
-// Find User
-//       │
-//       ▼
-// Check Account Status
-//       │
-//       ▼
-// Verify Password
-//       │
-//       ▼
-// Reset/Login Attempts
-//       │
-//       ▼
-// Generate JWTs
-//       │
-//       ▼
-// Store Hashed Refresh Token
-//       │
-//       ▼
-// Set Secure Cookies
-//       │
-//       ▼
-// Audit Log
-//       │
-//       ▼
-// Return Response
+export const user = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    res.render("user", { user });
+  } catch (error) {
+    res
+      .status(500)
+      .render("error", { message: "Internal Server Error: ", error });
+  }
+});

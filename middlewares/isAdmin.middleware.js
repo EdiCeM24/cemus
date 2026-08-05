@@ -1,7 +1,8 @@
 import User from "../models/User.model.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
-const isAdmin = async (req, res, next) => {
-  const { id } = req.params.id;
+const isAdmin = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
 
   const user = await User.findByPk(id);
 
@@ -17,6 +18,6 @@ const isAdmin = async (req, res, next) => {
     return res.redirect("/api/v1/auth/sign-up");
   }
   next();
-};
+});
 
 export default isAdmin;

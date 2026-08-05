@@ -1,4 +1,4 @@
-import dotenv, { config } from "dotenv";
+import dotenv from "dotenv";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV || "development"}.local` });
 
@@ -17,6 +17,7 @@ export const {
   AUTH_PASS,
   LOGGING,
   CLIENT_URL,
+  SERVER_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   GITHUB_CLIENT_ID,

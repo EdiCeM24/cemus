@@ -252,3 +252,64 @@ token.service.js
 
 utils/
 hashToken.js
+
+# LOGIN CONTROLLER STRUCTURE
+
+FOR LOGIN PRODUCTION FLOW STRUCTURE:
+Validate Request
+│
+▼
+Normalize Input
+│
+▼
+Find User
+│
+▼
+Check Account Status
+│
+▼
+Verify Password
+│
+▼
+Reset/Login Attempts
+│
+▼
+Generate JWTs
+│
+▼
+Store Hashed Refresh Token
+│
+▼
+Set Secure Cookies
+│
+▼
+Audit Log
+│
+▼
+Return Response
+
+# LOGOUT CONTROLLER STRUCTURE
+
+FOR LOGOUT PRODUCTION FLOW:
+Read refresh token
+│
+▼
+If token exists
+│
+▼
+Hash token using helper
+│
+▼
+Delete refresh token from DB
+│
+▼
+Clear access cookie
+│
+▼
+Clear refresh cookie
+│
+▼
+Audit log logout
+│
+▼
+Redirect

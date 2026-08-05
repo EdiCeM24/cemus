@@ -2,6 +2,7 @@
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "../env.js";
 import { Strategy } from "passport-github2";
 import { findOrCreateOAuthUser } from "../../services/oauth.service.js";
+import { registerDevice } from "../../services/device.service.js";
 
 export default new Strategy(
   {
@@ -9,7 +10,8 @@ export default new Strategy(
 
     clientSecret: GITHUB_CLIENT_SECRET,
 
-    callbackURL: "http:localhost:6002/api/auth/github/callback",
+    callbackURL: "/auth/github/callback",
+    proxy: true,
   },
 
   async (accessToken, refreshToken, profile, done) => {
@@ -19,7 +21,9 @@ export default new Strategy(
 
         providerId: profile.id,
 
-        name: profile.name,
+        firstName: profile.name?.givenName,
+
+        lastName: profile.name?.familyName,
 
         email: profile.emails?.[0]?.value,
 
@@ -30,7 +34,8 @@ export default new Strategy(
         refreshToken: refreshToken,
       });
 
-      done(null, user);
+      await registerDevice(user);
+      return done(null, user);
     } catch (err) {
       done(err);
     }

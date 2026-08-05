@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%- title %></title>
+    <link rel="stylesheet" href="/css/output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+    />
+  </head>
+
+  <body class="font-[Arial] p-[30px] bg-[#f5f5f5]">
+    <p class="mt-3 mb-4 text-2xl font-serif font-extrabold text-center">
+      Feel free to navigate to a page of your choice.
+    </p>
+    <div
+      class="container settings-contents mx-auto md:flex items-center justify-evenly gap-5 h-screen bg-white p-[30px] rounded-[10px]"
+    >
+      <a
+        href="/api/v1/passwords/forgot"
+        class="settings-mob bg-slate-950 py-2.5 px-3 text-lg rounded-md text-center text-gray-300 font-serif font-bold"
+        >Change Password</a
+      >
+      <a
+        href="/"
+        class="settings-mob bg-slate-950 py-2.5 px-3 text-lg rounded-md text-center text-gray-300 font-serif font-bold"
+        >Terms and Conditions</a
+      >
+      <a
+        href="/"
+        class="settings-mob bg-slate-950 py-2.5 px-3 text-lg rounded-md text-center text-gray-300 font-serif font-bold"
+        >Privacy Policy</a
+      >
+      <a
+        href=""
+        class="settings-mob bg-slate-950 py-2.5 px-3 text-lg rounded-md text-center text-gray-300 font-serif font-bold"
+        >Privacy Policy</a
+      >
+      <a
+        href=""
+        class="settings-mob bg-slate-950 py-2.5 px-3 text-lg rounded-md text-center text-gray-300 font-serif font-bold"
+        >Privacy Policy</a
+      >
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <footer><%- include('partials/footer.ejs') %></footer>
+  </body>
+</html>

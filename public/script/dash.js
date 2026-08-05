@@ -1,6 +1,10 @@
 // HEADER NAV BOTTOM BORDER
 const navLinks = document.querySelectorAll(".nav-link");
 
+// SIDEBAR ADMIN
+const dropdownBtns = document.querySelectorAll("#dropdown-btn");
+const dropdownMenus = document.querySelectorAll("#dropdown-menu");
+
 // HEADER NAVIGATION BOTTOM BORDER
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
@@ -16,3 +20,56 @@ navLinks.forEach((link) => {
 // }
 
 // app();
+
+//
+dropdownBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // Remove active ID from all buttons
+    dropdownBtns.forEach((button) => button.classList.remove("active"));
+    // Add active ID to clicked button
+    btn.classList.add("active");
+
+    // Hide all dropdown menus
+    dropdownMenus.forEach((menu) => menu.classList.remove("show"));
+    // Show dropdown menu corresponding to clicked button
+    // const menu = btn.nextElementSibling;
+    // if (menu && menu.classList.contains("dropdown-menu")) {
+    //   menu.classList.add("show");
+    // }
+    // dropdownMenus[index].classList.add("show");
+
+    const dropdownMenu = btn.parentNode.querySelector("#dropdown-menu");
+    if (dropdownMenu) {
+      dropdownMenu.classList.add("show");
+    }
+  });
+});
+
+// dropdownBtns.forEach((btn) => {
+//   btn.addEventListener("click", () => {
+//     const target = btn.dataset.target;
+//     const menu = document.querySelector(target);
+
+//     // Remove active class from all buttons
+//     dropdownBtns.forEach((b) => b.classList.remove("active"));
+//     // Add active class to clicked button
+//     btn.classList.add("active");
+
+//     // Hide all dropdown menus
+//     dropdownMenus.forEach((men) => men.classList.remove("show"));
+//     if (menu) {
+//       menu.classList.add("show");
+//     }
+//   });
+// });
+
+const bsCollapse = new bootstrap.Collapse("#myCollapse", {
+  toggle: false,
+});
+
+const accordionCollapseElementList = document.querySelectorAll(
+  "#myAccordion .collapse",
+);
+const accordionCollapseList = [...accordionCollapseElementList].map(
+  (accordionCollapseEl) => new bootstrap.Collapse(accordionCollapseEl),
+);

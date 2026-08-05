@@ -1,3 +1,5 @@
+import { Op } from "sequelize";
+import User from "../models/User.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const asyncWrapper = (fn) => {
@@ -10,10 +12,12 @@ export const asyncWrapper = (fn) => {
   };
 };
 
-const homePage = asyncWrapper(async (req, res) => {
+export const homePage = asyncWrapper(async (req, res) => {
   try {
-    res.render("home", { title: "Edidiong Page" }, (err, ejs) => {
+    const user = await User.findAll();
+    res.render("home", { title: "Edidiong Page", user }, (err, ejs) => {
       if (err) {
+        console.log("this page is not loaded: ", err, "home");
         return req.flash("error_msg", "Page not found or template error");
       } else {
         req.flash("success_msg", "Page loaded successfully!");
@@ -22,9 +26,11 @@ const homePage = asyncWrapper(async (req, res) => {
       res.send(ejs);
     });
   } catch (error) {
-    console.log("why the failed page: ", error);
-
-    req.flash("error_msg", "We are sorry that your page unable to load: ", err);
+    req.flash(
+      "error_msg",
+      "We are sorry that your page was unable to load: ",
+      error,
+    );
     return;
   }
 });
@@ -179,6 +185,25 @@ export const privacyPolicy = asyncHandler(async (req, res) => {
         res.send(ejs);
       },
     );
+  } catch (error) {
+    console.log("why the failed page: ", error);
+
+    req.flash("error_msg", "We are sorry that your page unable to load: ", err);
+    return;
+  }
+});
+
+export const settings = asyncHandler(async (req, res) => {
+  try {
+    res.render("settings", { title: "Edidiong Settings Page" }, (err, ejs) => {
+      if (err) {
+        return req.flash("error_msg", "Page not found or template error");
+      } else {
+        req.flash("success_msg", "Page loaded successfully!");
+      }
+
+      res.send(ejs);
+    });
   } catch (error) {
     console.log("why the failed page: ", error);
 

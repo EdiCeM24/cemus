@@ -28,7 +28,7 @@ const contactFormContainerElem = document.querySelector(
 );
 
 contactFormCancel.addEventListener("click", () => {
-  contactFormContainerElem.style.display = "flex";
+  hireMe.style.display = "flex";
   if (contactFormContainerElem) {
     contactFormContainerElem.style.display = "none";
   }

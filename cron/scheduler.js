@@ -7,5 +7,3 @@ cron.schedule("0 0 ***", () => {
   console.log("Running daily cron job: cleanupExpiredUsers");
   cleanupExpiredUsers();
 });
-
-// cleanupExpiredUsers();

@@ -34,6 +34,12 @@ const ContactSchema = sequelize.define(
       trim: true,
       allowNull: false,
     },
+    activity: {
+      type: DataTypes.STRING,
+      required: true,
+      trim: true,
+      allowNull: false,
+    },
     subject: {
       type: DataTypes.STRING,
       required: true,

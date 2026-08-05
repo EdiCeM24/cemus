@@ -2,6 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@plugin "daisyui";
 
 /* Safe-padding for mobile devices with notches */
 :root {
@@ -12,6 +13,7 @@
 body {
   font-family: "Inter", sans-serif;
   background: #0f172a;
+  overflow-y: scroll;
 }
 /** ========== ALL NAVBARS PAGE SECTION ========== **/
 .nav-link {
@@ -67,6 +69,46 @@ body {
   width: 100%;
   /* padding: 0px 2px; */
 }
+#side_dashboard_open.shows {
+  display: block;
+}
+#side_works_open.show {
+  display: block;
+}
+#dropdown-btn.active {
+  background-color: #38bdf8;
+}
+#dropdown-menu {
+  display: none;
+}
+#dropdown-menu.show {
+  display: block;
+}
+
+/** ========== ABOUT AND PROJECT PAGES ========== **/
+.contact_form {
+  display: none;
+  position: absolute;
+  z-index: 50;
+  top: 50%;
+  margin-top: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 0.05s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.01);
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
+.contact_form.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/** ========== END OF ABOUT AND PROJECT PAGES ========== **/
 
 /** ========== NAVIGATIONS ========== **/
 .container_navigation {
@@ -688,8 +730,14 @@ body {
     z-index: 10;
     top: 150%;
     margin-top: 100%;
-    transform: translateX(-100%);
+    transform: translateX(-100%) scale(0);
     transition: all 0.05s ease-in-out;
+    opacity: 0;
+    transition: all 0.05s ease-in-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.01);
+    transition:
+      transform 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -699,7 +747,7 @@ body {
     position: absolute;
     top: 120%;
     margin-top: 120%;
-    transform: translateX(100%);
+    transform: translateX(100%) scale(1);
     transition: all 0.05s ease-in-out;
     width: 100%;
     height: 100vh;
@@ -708,6 +756,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    opacity: 1;
   }
   /** ========== END OF CONTACT PAGE ========== **/
   /** ========== REGISTER AND LOGIN PAGEs SECTION ========== **/
@@ -724,6 +773,49 @@ body {
   .auth-left {
     width: 100%;
   }
+  /** ========== settings Page ========== **/
+  .settings-mob {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .settings-contents {
+    height: 100vh;
+    margin-top: 20%;
+  }
+  /** ========== Dashboard ========== **/
+  .admin-navbar {
+    transform: translateY(-100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    flex-direction: column;
+  }
+  .board-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 10px;
+  }
+  .active-btn {
+    transform: translateX(-100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+  }
+  .mob-container {
+    margin-left: -80px;
+  }
+  .mob-contents {
+    margin-left: -80px;
+  }
 }
 
 /** ========== CONTACT PAGE ========== **/
@@ -736,24 +828,35 @@ body {
   position: absolute;
   z-index: 10;
   top: 60%;
-  transform: translateY(50%);
-  transition: all 0.05s ease-in-out;
+  transform: translateY(50%) scale(0);
+  /* transition: all 0.05s ease-in-out; */
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  opacity: 0;
+  /* transform: translate(-50%, -50%) scale(0); */
+  transition: all 0.05s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.01);
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
-.contact_form_container.show {
+.show {
   display: flex;
   position: absolute;
   top: 50%;
-  transform: translateY(50%);
-  transition: all 0.05s ease-in-out;
+  transform: translateY(50%) scale(1);
+  /* transition: all 0.05s ease-in-out;  */
   width: 100%;
   height: 70vh;
   z-index: 10;
   align-items: center;
   justify-content: center;
+  transition: all 0.05s ease-in-out;
   flex-direction: column;
+  /* transform: translate(-50%, -50%) scale(1); */
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.01);
 }
 
 @media screen and (max-width: 998px) {
@@ -803,11 +906,18 @@ body {
     position: absolute;
     z-index: 10;
     top: 30%;
-    transform: translateY(50%);
+    transform: translateY(50%) scale(0);
     transition: all 0.05s ease-in-out;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    opacity: 0;
+    /* transform: translate(-50%, -50%) scale(0); */
+    transition: all 0.05s ease-in-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.01);
+    transition:
+      transform 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
   }
   .contact_form_heading {
     margin-top: 5%;
@@ -816,7 +926,6 @@ body {
     display: flex;
     position: absolute;
     top: 45%;
-    transform: translateY(50%);
     transition: all 0.05s ease-in-out;
     width: 100%;
     height: 55vh;
@@ -824,6 +933,14 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    transform: translateY(100%) scale(1);
+    opacity: 1;
+  }
+  /** ========== SETTINGS PAGE ========== **/
+  .settings-mob {
+    font-size: 12px;
+    font-weight: 600;
+    flex-wrap: nowrap;
   }
 }
 

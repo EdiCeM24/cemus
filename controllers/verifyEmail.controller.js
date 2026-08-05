@@ -7,6 +7,9 @@ import asyncHandler from "../utils/asyncHandler.js";
 const verifyEmail = asyncHandler(async (req, res) => {
   const { token } = req.params;
 
+  if (!token) {
+    return res.status(400).json({ message: "Invalid token" });
+  }
   const hashedToken = await hashToken(token);
 
   // 2. Set the expiration to 30 minutes in the past/future depending on your logic
@@ -14,7 +17,7 @@ const verifyEmail = asyncHandler(async (req, res) => {
     where: {
       verificationToken: hashedToken,
       verificationTokenExpires: {
-        [Op.gt]: new Date(Date.now() > 30 * 60 * 60 * 1000),
+        [Op.gt]: new Date(Date.now()),
       },
     },
   });

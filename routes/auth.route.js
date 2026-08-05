@@ -7,24 +7,35 @@ import {
   verifySuccessMessage,
 } from "../controllers/home.controller.js";
 import verifyEmail from "../controllers/verifyEmail.controller.js";
-import signIn from "../controllers/authLogin.controller.js";
+import signIn, { user } from "../controllers/authLogin.controller.js";
 import { upload } from "../middlewares/upload.middleware.js";
-import { authorize } from "../middlewares/auth.middleware.js";
 import validateUser from "../middlewares/inputValidator.middleware.js";
 // import { refreshTokenHandler } from "../controllers/refreshToken.controller.js";
 import verifyRefreshToken from "../services/auth.service.js";
+import { protects } from "../middlewares/protect.middleware.js";
 
 const authRouter = express.Router();
 
+// GET Routes:
+
 authRouter.get("/sign-up", handleSignup);
 // verifyEmail,
-authRouter.get("/login", handleLogin);
+authRouter.get("/login", verifyEmail, protects, handleLogin);
 
-authRouter.get("/verify-success", verifySuccessMessage);
+authRouter.get("/verify-success", verifyEmail, verifySuccessMessage);
 
 authRouter.get("/verify-email", verifyTokenMessage);
 
-authRouter.post("/refresh-token", verifyRefreshToken); // To check with the verifyTokenMessage.
+// authRouter.get(
+//   "/user",
+//   protects,
+//   authorize(["user", "super_admin", "admin"]),
+//   user,
+// );
+
+// POST Routes:
+
+authRouter.post("/refresh-token", verifyRefreshToken); // To use it and verify sign in
 
 authRouter.post("/verify/:token", verifyEmail);
 
@@ -32,6 +43,7 @@ authRouter.post("/register", upload.single("profile"), validateUser, register);
 
 authRouter.post("/sign-in", validateUser, signIn);
 
+// verifyToken
 authRouter.post("/logout", signOut);
 
 export default authRouter;

@@ -11,7 +11,7 @@ import sendEmail from "../config/sendEmail.js";
 export const forgotPasswordLogic = asyncHandler(async (req, res) => {
   res.render(
     "forgot-password",
-    { title: "Edidiong's Forgot Password Page", csrfToken: req.csrfToken() },
+    { title: "Edidiong's Forgot Password Page" },
     (err, ejs) => {
       if (err) {
         return req.flash("error_msg", "Page not found or template error");
@@ -110,7 +110,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
 
   user.resetPasswordToken = hashedToken;
 
-  user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000);
+  user.resetPasswordExpires = new Date(Date.now() + 30 * 60 * 60 * 1000);
 
   await user.save();
 

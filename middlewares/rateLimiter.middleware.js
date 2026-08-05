@@ -1,9 +1,11 @@
 import rateLimit from "express-rate-limit";
 
-export const limiter = rateLimit({
+const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 15,
+  max: 5,
   message: {
     message: "Too many requests, try again later.",
   },
 });
+
+export default limiter;

@@ -9,7 +9,11 @@ const UserSchema = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    name: {
+    firstName: {
+      type: DataTypes.STRING,
+      required: true,
+    },
+    lastName: {
       type: DataTypes.STRING,
       required: true,
     },
@@ -32,14 +36,11 @@ const UserSchema = sequelize.define(
     },
     password: {
       type: DataTypes.STRING,
-      required: true,
-      trim: true,
-      allowNull: false,
+      allowNull: true,
     },
     profile: {
       type: DataTypes.STRING,
-      required: true,
-      allowNull: false,
+      allowNull: true,
     },
     loginAttempts: {
       type: DataTypes.INTEGER,

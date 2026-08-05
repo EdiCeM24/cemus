@@ -61,6 +61,835 @@
 </div>
 
 
+<div
+  class="flex items-center justify-between w-full top-0 relative mt-[5%] p-5"
+>
+  <div class="relative flex items-center justify-between gap-5 h-[100%]">
+        <!-- ========== SIDEBAR SECTION ========== -->
+        <!--SIDEBAR-->
+        <div class="sidebar_content mt-[7%]">
+          
+        </div>
+        <!-- ========== FLOOR GROUND ========== -->
+        <div class="flex items-center justify-center flex-col p-5">
+          <!--TOPBAR-->
+          <div class="topbar mt-[60%] md:mt-[30%] lg:mt-[25%]">
+            
+          </div>
+
+          <div
+            class="sidebar flex items-start flex-col mt-[35%] justify-start top-0 left-0 shadow-sm"
+          >
+            <span class="mb-4 mt-[7%]">
+              <button
+                class="text-xl font-serif font-semibold text-gray-300"
+                id="side_dashboard_btn"
+              >
+                Dashboard
+              </button>
+              <div
+                id="side_dashboard_open"
+                class="hidden items-center justify-start flex-col p-3 mt-2 mb-3"
+              >
+                <a href="/api/v1/admin/dashboard">Board</a>
+              </div>
+            </span>
+            
+            <span class="mb-4">
+              <button
+                class="text-xl font-semibold font-serif text-gray-300"
+                id="side_users_btn"
+              >
+                Users
+              </button>
+              <div
+                id="side_users_open"
+                class="hidde flex-1 flex-col py-3 px-4 p-3 mt-2 mb-3"
+              >
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+              </div>
+            </span>
+            <span class="mb-4">
+              <button
+                class="text-xl font-semibold font-serif text-gray-300"
+                id="side_chart_btn"
+              >
+                Chart
+              </button>
+              <div
+                id="side_cart_open"
+                class="hidde flex-1 flex-col py-3 px-4 mt-2 mb-3"
+              >
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+              </div>
+            </span>
+
+            <span class="mb-4">
+              <button
+                class="text-xl font-semibold font-serif text-gray-300"
+                id="side_msg_btn"
+              >
+                Messages
+              </button>
+              <div
+                id="side_msg_open"
+                class="hidde flex-1 flex-col py-3 px-4 mt-2 mb-3"
+              >
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+              </div>
+            </span>
+            <span class="mb-4">
+              <button
+                class="text-xl font-semibold font-serif text-gray-300"
+                id="side_settings_btn"
+              >
+                Settings
+              </button>
+              <div
+                id="side_settings_open"
+                class="hidde flex-1 flex-col py-3 px-4 mt-2 mb-3"
+              >
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+                <a href="/api/v1/admin/dashboard">Board</a>
+              </div>
+            </span>
+
+
+
+            <div class="mt-[30%] mb-4">
+            <button
+              class="text-xl font-serif font-semibold text-gray-300"
+              id="side_dashboard_btn"
+            >
+              Dashboard
+            </button>
+            <div
+              class="hidden flex-1 flex-col p-3 py-3 px-4 mt-2 mb-3"
+              id="side_dashboard_open"
+            >
+              <a href="/api/v1/admin/dashboard" class="">Board</a>
+              <a href="/api/v1/admin/dashboard" class="">Board</a>
+              <a href="/api/v1/admin/dashboard" class="">Board</a>
+            </div>
+          </div>
+          <div class="mb-4">
+            <li class="list-none relative">
+              <span class="ico m-0 p-0">
+                <ion-icon name="storefront-outline"></ion-icon>
+                <button class="block text-gray-300" id="side_works_btn">
+                  Works
+                </button>
+              </span>
+
+              <div
+                id="side_works_open"
+                class="hidden absolute left-0 -top-10 -mt-[30%] items-center justify-center flex-col flex-1 hover:flex"
+              >
+                <a
+                  href="/api/v1/admin/admin"
+                  class="px-5 mb-2 text-lg font-medium font-serif"
+                  >Admin</a
+                >
+                <a href="" class="px-5 mb-2 text-lg font-medium font-serif"
+                  >help 2</a
+                >
+                <a href="" class="px-5 mb-2 text-lg font-medium font-serif"
+                  >help 3</a
+                >
+              </div>
+            </li>
+          </div>
+          <div class="mb-4">
+            <li class="list-none relative">
+              <span class="ico m-0 p-0">
+                <ion-icon name="storefront-outline"></ion-icon>
+                <button class="block text-gray-300" id="side_users_btn">
+                  Users
+                </button>
+              </span>
+
+              <div
+                id="side_users_open"
+                class="hidden absolute left-0 -top-10 -mt-[30%] items-center justify-center flex-col flex-1 hover:flex"
+              >
+                <a
+                  href="/api/v1/admin/admin"
+                  class="px-5 mb-2 text-lg font-medium font-serif"
+                  >Admin</a
+                >
+                <a href="" class="px-5 mb-2 text-lg font-medium font-serif"
+                  >help 2</a
+                >
+                <a href="" class="px-5 mb-2 text-lg font-medium font-serif"
+                  >help 3</a
+                >
+              </div>
+            </li>
+          </div>
+          <div class="mb-4">
+            <li class="list-none relative">
+              <span class="ico m-0 p-0">
+                <ion-icon name="storefront-outline"></ion-icon>
+                <button class="block text-gray-300" id="side_chart_btn">
+                  Chart
+                </button>
+              </span>
+
+              <div
+                id="side_chart_open"
+                class="hidden absolute left-0 -top-10 -mt-[30%] items-center justify-center flex-col flex-1 hover:flex"
+              >
+                <a
+                  href="/api/v1/admin/admin"
+                  class="px-5 mb-2 text-lg font-medium font-serif"
+                  >Admin</a
+                >
+                <a href="" class="px-5 mb-2 text-lg font-medium font-serif"
+                  >help 2</a
+                >
+                <a href="" class="px-5 mb-2 text-lg font-medium font-serif"
+                  >help 3</a
+                >
+              </div>
+            </li>
+          </div>
+          
+        </div>
+      </div>
+
+        lg:mt-[6%] mt-[22%] lg:left-[20%] 
+        
+</div>
+
+
+
+
+<ul class="list-none p-0 m-0 relative mt-10">
+              <li class="relative top-0">
+                <button
+                  class="bg-white p-1.5 rounded text-xl font-serif"
+                  id="dropdown-btn"
+                >
+                  Dashboard
+                </button>
+                <ul
+                  class="accordion-content absolute top-0 left-0"
+                  id="dropdown-menu"
+                >
+                  <li class="mb-1"><a href="" class="">Admin</a></li>
+                  <li class="mb-1"><a href="" class="">Admin</a></li>
+                  <li class="mb-1"><a href="" class="">Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-[80%] mb-[15%] p-3">
+            <ul class="list-none p-0 m-0 relative">
+              <button
+                class="bg-white p-1.5 rounded text-xl font-serif"
+                id="dropdown-btn"
+              >
+                Works
+              </button>
+              <li class="relative">
+                <ul class="absolute top-0 left-[0%] mt-2" id="dropdown-menu">
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-[80%] mb-[40%] p-5">
+            <ul class="list-none p-0 m-0">
+              <button
+                class="bg-white p-1.5 rounded text-xl font-serif"
+                id="dropdown-btn"
+              >
+                Users
+              </button>
+              <li class="relative">
+                <ul class="absolute top-0 left-[0%]" id="dropdown-menu">
+                  <li class="mb-2"><a href="" class="">Admin</a></li>
+                  <li class="mb-2"><a href="" class="">Admin</a></li>
+                  <li class="mb-2"><a href="" class="">Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-[80%] mb-[40%] p-3">
+            <ul class="list-none p-0 m-0">
+              <button
+                class="bg-white p-1.5 rounded text-xl font-serif"
+                id="dropdown-btn"
+              >
+                Chart
+              </button>
+              <li class="relative">
+                <ul
+                  class="menu-line absolute top-0 left-[0%]"
+                  id="dropdown-menu"
+                >
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-[80%] mb-[40%] p-3">
+            <ul class="list-none p-0 m-0">
+              <button
+                class="active-btn bg-white p-1.5 rounded text-xl font-serif"
+                id="dropdown-btn"
+              >
+                Messages
+              </button>
+              <li class="relative">
+                <ul class="absolute top-0 left-[0%]" id="dropdown-menu">
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-[80%] mb-[40%] p-3">
+            <ul class="list-none p-0 m-0">
+              <button
+                class="active-btn bg-white p-1.5 rounded text-xl font-serif"
+                id="dropdown-btn"
+              >
+                Settings
+              </button>
+              <li class="relative">
+                <ul class="absolute top-0 left-[0%]" id="dropdown-menu">
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                  <li class="mb-2.5"><a href="" class="">Admin</a></li>
+                </ul>
+              </li>
+            </ul>
+
+
+
+
+            <!-- MAIN AREA -->
+        <div
+          class="mob-container flex-1 flex flex-col lg:mt-[8%] mt-[10%] p-2.5"
+        >
+          <!-- TOPBAR -->
+          <div class="p-4">
+            <div
+              class="board-container h-[400px] md:flex items-center justify-evenly gap-1 bg-slate-800 md:h-[200px] shadow-md shadow-fuchsia-200 p-4 w-full"
+            >
+              <div
+                class="board grass m-0 bg-[#ff8800] top-0 py-1 h-[100px] w-[50%] p-2 rounded shadow-md shadow-slate-600"
+                id=""
+              >
+                <p class="text-gray-300 text-lg font-semibold font-serif">
+                  Visitors
+                </p>
+                <span class="text-rose-600 text-2xl font-semibold" id=""
+                  >0</span
+                >
+              </div>
+              <div
+                class="board grass m-0 bg-[#ff8800] top-0 py-1 h-[100px] w-[50%] p-2 rounded shadow-md shadow-slate-600"
+                id=""
+              >
+                <p class="text-gray-300 text-lg font-semibold font-serif">
+                  Contacts
+                </p>
+                <span class="text-rose-600 text-2xl font-semibold" id=""
+                  >0</span
+                >
+              </div>
+              <div
+                class="board grass m-0 bg-[#ff8800] top-0 py-1 h-[100px] w-[50%] p-2 rounded shadow-md shadow-slate-600"
+                id=""
+              >
+                <p class="text-gray-300 text-lg font-semibold font-serif">
+                  Users
+                </p>
+                <span class="text-rose-600 text-3xl font-semibold" id=""
+                  >0</span
+                >
+              </div>
+              <div
+                class="board grass m-0 bg-[#ff8800] top-0 py-1 h-[100px] w-[50%] p-2 rounded shadow-md shadow-slate-600"
+                id=""
+              >
+                <p class="text-gray-300 text-lg font-semibold font-serif">
+                  Devices
+                </p>
+                <span class="text-rose-600 text-3xl font-semibold" id=""
+                  >0</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- FORM AREA -->
+          <div class="mob-contents flex-1 p-2 lg:mt-[3%] mt-[4%]">
+            <form
+              action=""
+              method="POST"
+              class="bg-slate-950 p-4 rounded shadow-md hidde"
+            >
+              <button class="bg-[#ff8800] p-1.5 rounded-sm" id="dashboard">
+                Dashboard
+              </button>
+              <p
+                class="text-gray-300 text-pretty text-lg mb-1.5 font-serif font-medium"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
+                dolorum numquam veritatis voluptas. Nostrum, perferendis soluta.
+              </p>
+              <div class="mb-1">
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2 text-white shadow-md"
+                />
+                <input
+                  type="text"
+                  name="firstName"
+                  id="fName"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                  placeholder="First Name"
+                />
+              </div>
+              <div class="mb-1">
+                <input
+                  type="username"
+                  name="username"
+                  id="username"
+                  placeholder="Enter Username"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter Email"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                />
+              </div>
+              <textarea
+                name="message"
+                class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                id="message"
+                cols="10"
+                rows="5"
+                placeholder="Send messgaes"
+              ></textarea>
+              <button
+                type="submit"
+                class="p-2 left-4 bg-sky-800 mt-3 hover:bg-sky-900 transition duration-200 rounded-sm ease-in-out text-gray-300"
+              >
+                Create
+              </button>
+            </form>
+            <form
+              action=""
+              method="POST"
+              class="bg-slate-950 p-2 rounded shadow-md hidden"
+            >
+              <button class="bg-[#ff8800] p-1.5 rounded-sm" id="works">
+                Works
+              </button>
+              <p
+                class="text-gray-300 text-pretty text-lg mb-1.5 font-serif font-medium"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
+                dolorum numquam veritatis voluptas. Nostrum, perferendis soluta.
+              </p>
+              <div class="mb-1">
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2 text-white shadow-md"
+                />
+                <input
+                  type="text"
+                  name="firstName"
+                  id="fName"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                  placeholder="First Name"
+                />
+              </div>
+              <div class="mb-1">
+                <input
+                  type="username"
+                  name="username"
+                  id="username"
+                  placeholder="Enter Username"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter Email"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                />
+              </div>
+              <textarea
+                name="message"
+                class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                id="message"
+                cols="10"
+                rows="5"
+                placeholder="Send messgaes"
+              ></textarea>
+              <button
+                type="submit"
+                class="p-2 left-4 bg-sky-800 mt-3 hover:bg-sky-900 transition duration-200 rounded-sm ease-in-out text-gray-300"
+              >
+                Create
+              </button>
+            </form>
+            <form
+              action=""
+              method="POST"
+              class="bg-slate-950 p-2 rounded shadow-md hidden"
+            >
+              <button class="bg-[#ff8800] p-1.5 rounded-sm" id="users">
+                Users
+              </button>
+              <p
+                class="text-gray-300 text-pretty text-lg mb-1.5 font-serif font-medium"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
+                dolorum numquam veritatis voluptas. Nostrum, perferendis soluta.
+              </p>
+              <div class="mb-1">
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2 text-white shadow-md"
+                />
+                <input
+                  type="text"
+                  name="firstName"
+                  id="fName"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                  placeholder="First Name"
+                />
+              </div>
+              <div class="mb-1">
+                <input
+                  type="username"
+                  name="username"
+                  id="username"
+                  placeholder="Enter Username"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter Email"
+                  class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                />
+              </div>
+              <textarea
+                name="message"
+                class="p-2 mb-1.5 border-none outline-none rounded w-1/2"
+                id="message"
+                cols="10"
+                rows="5"
+                placeholder="Send messgaes"
+              ></textarea>
+              <button
+                type="submit"
+                class="p-2 left-4 bg-sky-800 mt-3 hover:bg-sky-900 transition duration-200 rounded-sm ease-in-out text-gray-300"
+              >
+                Create
+              </button>
+            </form>
+          </div>
+
+          <!-- SIDEBAR BOARDS -->
+          <div class="flex-1 p-4 mb-5">
+            <div
+              class="bg-slate-950 shadow-md shadow-slate-800 inset-2 transition p-4"
+            >
+              <!-- ========== BOARDS =========== -->
+              <!-- =========== FIRST BOARD ========== -->
+              <div class="p-4 mb-4">
+                <span
+                  class="flex-1 flex flex-col items-center justify-center hidde"
+                  id="chart"
+                >
+                  <button class="bg-[#ff8800] p-2 rounded mb-2" id="chart-btn">
+                    Chart
+                  </button>
+                  <div class="flex items-center gap-2">
+                    <img
+                      src=""
+                      alt="photo"
+                      class="h-8.5 w-8.5 rounded-full p-3 flex items-center justify-center"
+                    />
+                    <p class="text-gray-300 font-serif">
+                      Lorem ipsum dolor sit amet consectetur.
+                    </p>
+                  </div>
+                  <article class="flex items-center gap-3">
+                    <div class="lg:flex items-center gap-2 flex-col">
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >First Name:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Last Name:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                    </div>
+                    <div class="lg:flex items-center gap-2 flex-col">
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Username:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Email:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                    </div>
+                  </article>
+                </span>
+              </div>
+              <!-- =========== SECOND BOARD ========== -->
+              <div class="p-4 mb-4 hidden">
+                <span
+                  class="flex-1 flex flex-col items-center justify-center"
+                  id="msgs"
+                >
+                  <button class="bg-[#ff8800] p-2 rounded mb-2" id="msgs-btn">
+                    Messages
+                  </button>
+                  <div class="flex items-center gap-2">
+                    <img
+                      src=""
+                      alt="photo"
+                      class="h-8.5 w-8.5 rounded-full p-3 flex items-center justify-center"
+                    />
+                    <p class="text-gray-300 font-serif">
+                      Lorem ipsum dolor sit amet consectetur.
+                    </p>
+                  </div>
+                  <article class="flex items-center gap-3">
+                    <div class="lg:flex items-center gap-2 flex-col">
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >First Name:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Last Name:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                    </div>
+                    <div class="lg:flex items-center gap-2 flex-col">
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Username:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Email:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                    </div>
+                  </article>
+                </span>
+              </div>
+              <!-- =========== THIRD BOARD ========== -->
+              <div class="p-4 mb-4 hidden">
+                <span
+                  class="flex-1 flex flex-col items-center justify-center"
+                  id="settings"
+                >
+                  <button
+                    class="bg-[#ff8800] p-2 rounded mb-2"
+                    id="settings-btn"
+                  >
+                    Settings
+                  </button>
+                  <div class="flex items-center gap-2">
+                    <img
+                      src=""
+                      alt="photo"
+                      class="h-8.5 w-8.5 rounded-full p-3 flex items-center justify-center"
+                    />
+                    <p class="text-gray-300 font-serif">
+                      Lorem ipsum dolor sit amet consectetur.
+                    </p>
+                  </div>
+                  <article class="flex items-center gap-3">
+                    <div class="lg:flex items-center gap-2 flex-col">
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >First Name:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Last Name:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                    </div>
+                    <div class="lg:flex items-center gap-2 flex-col">
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Username:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                      <label
+                        for=""
+                        class="text-gray-300 font-medium text-xl font-serif"
+                        >Email:</label
+                      >
+                      <input
+                        type="text"
+                        name="firstName"
+                        id="fName"
+                        class="mb-2 p-2 rounded-md border-none text-slate-950 outline-none"
+                        readonly
+                      />
+                    </div>
+                  </article>
+                </span>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="active-btn w-40 bg-blue-800 p-5 md:mt-[4%] mt-[10%]">
+          <div class="mt-[22%] mb-[0%] p-3">
+            <div
+              class="relative flex-1 p-3 flex items-center justify-center flex-col"
+            >
+              <button class="flex items-center gap-2" id="dropdown-btn">
+                <i class=""></i>
+                Dashboard
+              </button>
+              <span class="absolute top-0 -mt-[80%]" id="dropdown-menu">
+                <a href="" class="text-rose-600">Admin</a>
+                <a href="" class="text-rose-600">Admin</a>
+                <a href="" class="text-rose-600">Admin</a>
+              </span>
+            </div>
+            <div
+              class="relative flex-1 p-3 flex items-center justify-center flex-col"
+            >
+              <button class="flex items-center gap-2" id="dropdown-btn">
+                <i class=""></i>
+                Works
+              </button>
+              <span class="absolute top-0 p-4 left-5" id="dropdown-menu">
+                <a href="" class="text-rose-600">Admin</a>
+                <a href="" class="text-rose-600">Admin</a>
+                <a href="" class="text-rose-600">Admin</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
  <footer><%- include('../partials/footer.ejs') %></footer>
  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
 <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>

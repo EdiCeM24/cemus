@@ -22,30 +22,21 @@ import adminRouter from "./routes/admin.route.js";
 import contactRouter from "./routes/contact.route.js";
 import homeRouter from "./routes/home.route.js";
 import passwordResetRouter from "./routes/passwordReset.route.js";
-import { authorize, protects } from "./middlewares/auth.middleware.js";
+import { authorize, protects } from "./middlewares/protect.middleware.js";
 import { detectDevice } from "./middlewares/device.middleware.js";
-import { limiter } from "./middlewares/rateLimiter.middleware.js";
+import limiter from "./middlewares/rateLimiter.middleware.js";
 import credentials from "./middlewares/credentials.middleware.js";
 // import corsOptions from "./config/corsOptions.js";
 
 const app = express();
 const port = PORT || 4000;
-// const pgPool = new pg.Pool({
-//   user: "",
-//   host: "",
-//   database: "",
-//   password: "",
-//   port: 5432,
-// });
 
-// const { Strategy } = pkg;
-
+app.enable("trust proxy"); // Enable trust proxy for secure cookies behind a reverse proxy
 if (Array.isArray()) {
 }
 
 const pgSession = connectPgSimple(session);
 const store = new pgSession({
-  // pool: pgPool,
   conString: DATABASE_URL,
   tableName: "user_sessions",
   createTableIfMissing: true,
@@ -141,14 +132,14 @@ app.use((req, res, next) => {
 // });
 
 app.use(detectDevice);
-
+// limiter,
+//   protects,
+//   authorize("admin", "super_admin"),
 // While below ones applies to some specific routes:
 app.use("/api/v1/auth", authRouter);
 app.use(
   "/api/v1/admin",
-  limiter,
-  protects,
-  authorize("admin", "super_admin"),
+
   adminRouter,
 );
 app.use("/api/v1/contacts", contactRouter);
@@ -159,34 +150,40 @@ app.use("/api/v1/passwords", limiter, passwordResetRouter);
 // OAuth Callback Route
 
 app.get(
-  "/auth/github",
+  "/auth/github/callback",
   passport.authenticate("github", {
     scope: ["user:email"],
     failureRedirect: "/api/v1/auth/login",
   }),
   (req, res) => {
     res.redirect("/api/v1/homes/home");
+    req.flash("success_msg", "You have been logged in successfully!");
   },
 );
 
 // 2. CALLBACK ROUTE (Where Google sends the user back)
 app.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/api/v1/auth/login" }),
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    failureRedirect: "/api/v1/auth/login",
+  }),
   (req, res) => {
     // Successful authentication, redirect home.
     res.redirect("/api/v1/homes/home");
+    req.flash("success_msg", "You have been logged in successfully!");
   },
 );
 
 app.get(
-  "/auth/facebook",
+  "/auth/facebook/callback",
   passport.authenticate("facebook", {
     scope: ["profile", "email"],
     failureRedirect: "/api/v1/auth/login",
   }),
   (req, res) => {
     res.redirect("/api/v1/homes/home");
+    req.flash("success_msg", "You have been logged in successfully!");
   },
 );
 

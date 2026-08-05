@@ -5,9 +5,9 @@ import {
   deleteMessage,
   handleUserDelete,
   admins,
-  updateUser,
+  messageHandler,
 } from "../controllers/admin.controller.js";
-import { authorize, protects } from "../middlewares/auth.middleware.js";
+import { authorize, protects } from "../middlewares/protect.middleware.js";
 import isAdmin from "../middlewares/isAdmin.middleware.js";
 import verifyEmail from "../controllers/verifyEmail.controller.js";
 
@@ -15,12 +15,17 @@ const adminRouter = express.Router();
 // authorize("admin"), protects, isAdmin,
 adminRouter.get(
   "/dashboard",
-  protects,
-  authorize("super_admin", "admin"),
+  // protects,
+  // authorize("super_admin", "admin"),
   dashboard,
 );
 
-adminRouter.get("/admin", protects, authorize("super_admin", "admin"), admins);
+adminRouter.get(
+  "/admin",
+  // protects,
+  // authorize("super_admin", "admin"),
+  admins,
+);
 
 // GET ALL USERS
 //adminRouter.get('/', )
@@ -55,11 +60,11 @@ adminRouter.delete(
   deleteMessage,
 );
 
-adminRouter.put(
-  "/users/:id",
+adminRouter.post(
+  "/info",
   authorize("super_admin", "admin"),
   protects,
-  updateUser,
+  messageHandler,
 );
 
 // POST FOR CLIENT TO CREATE SUGGESTIONS OR HELP

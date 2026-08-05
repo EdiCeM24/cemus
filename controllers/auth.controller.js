@@ -9,20 +9,34 @@ import RefreshToken from "../models/refreshToken.model.js";
 import hashToken from "../utils/hashToken.js";
 import { Op } from "sequelize";
 import sequelize from "../database/db.js";
+import redis from "redis";
+
+// Redis Implentation
+const redisClient = redis.createClient({
+  host: "localhost",
+  port: 6379,
+});
 
 // CONTROLLER FUNCTIONALITIES LOGIC
 export const register = asyncHandler(async (req, res) => {
+  // 1. Safe File Check
+  if (!req.file) {
+    req.flash("error_msg", "Profile image is required!");
+    return res.redirect("/api/v1/auth/sign-up");
+  }
+
   const profile = req.file.filename;
+  // const filePath = req.file.path; // Keep track for cleanup
+  let { firstName, lastName, username, email, password } = req.body;
 
-  let { name, username, email, password } = req.body;
-
-  // SANITIZE INPUTS
-  name = name?.trim();
+  // 2. Sanitize Inputs Safely
+  firstName = firstName?.trim();
+  lastName = lastName?.trim();
   username = username?.trim().toLowerCase();
   email = email?.trim().toLowerCase();
 
-  // VALIDATION
-  if (!name || !username || !email || !password || !profile) {
+  // 3. VALIDATION
+  if (!firstName || !lastName || !username || !email || !password || !profile) {
     req.flash("error_msg", "All fields are required!");
     return res.redirect("/api/v1/auth/sign-up");
   }
@@ -32,6 +46,7 @@ export const register = asyncHandler(async (req, res) => {
 
   //Email Pattern Check
   if (!emailRegex.test(email)) {
+    // await safeDeleteFile(filePath);
     req.flash("error_msg", "Invalid email");
     return res.redirect("/api/v1/auth/sign-up");
   }
@@ -41,6 +56,7 @@ export const register = asyncHandler(async (req, res) => {
 
   // Username Pattern Check
   if (!usernameRegex.test(username)) {
+    // await safeDeleteFile(filePath);
     req.flash(
       "error_msg",
       "Username must contain only letters, numbers and underscores and be between 3 and 30 characters.",
@@ -54,6 +70,7 @@ export const register = asyncHandler(async (req, res) => {
 
   // Password Pattern Check
   if (!strongPassword.test(password)) {
+    // await safeDeleteFile(filePath);
     req.flash(
       "error_msg",
       "Username must contain only letters, numbers and underscores and be between 3 and 30 characters.",
@@ -67,6 +84,7 @@ export const register = asyncHandler(async (req, res) => {
     return res.redirect("/api/v1/auth/sign-up");
   }
 
+  // 4. Database transaction
   const transaction = await sequelize.transaction();
   try {
     // Find User Identification
@@ -76,9 +94,12 @@ export const register = asyncHandler(async (req, res) => {
       },
       transaction,
     });
+
     // User Identification Check
     if (user) {
-      req.flash("error_msg", "User already exists");
+      await transaction.rollback();
+      // await safeDeleteFile(filePath);
+      req.flash("error_msg", "Email or username already exists");
       return res.redirect("/api/v1/auth/sign-up");
     }
 
@@ -90,26 +111,26 @@ export const register = asyncHandler(async (req, res) => {
     const verificationTokenExpires = new Date(Date.now() + 20 * 60 * 1000);
 
     const salt = await bcryptSalt.genSalt(12);
-    const hashed = await bcryptSalt.hash(password, salt);
+    const hashedPassword = await bcryptSalt.hash(password, salt);
 
     const newUser = await User.create(
       {
-        name,
+        firstName,
+        lastName,
         username,
         email,
-        password: hashed,
+        password: hashedPassword,
         profile: profile,
         verificationToken: hashedToken,
         verificationTokenExpires,
         isVerified: false,
         role: "user",
+        loginAttempts: 0,
       },
       {
         transaction,
       },
     );
-
-    await transaction.commit();
 
     // ✅ Create verification link
     const verifyLink = `${CLIENT_URL}/api/v1/auth/verify-email/${rawToken}`;
@@ -122,32 +143,49 @@ export const register = asyncHandler(async (req, res) => {
           <h2 class="">Email Verification</h2>
           
           <strong>This link expires in 20 minutes.</strong>
-          
-          <p>If you didn't request this account, ignore this email.</p>
-
-          <p>Click below to verify your account:</p>
 
           <a href="${verifyLink}">Verify Email</a>
         `,
     });
 
+    await transaction.commit();
+
     req.flash("success_msg", "Registration successful. check your email. ✅");
     return res.redirect("/api/v1/auth/verify-email");
   } catch (error) {
-    console.log(error);
-    if (newUser) {
-      await newUser.destroy({ transaction });
+    // Ensure transaction rolls back safely if still active
+    if (!transaction.finished) {
+      await transaction.rollback();
+      await newUser.destroy({ transaction }); // To check this
     }
-    await transaction.rollback();
 
-    req.flash("error_msg", "Please verify your information.");
+    // Clean up uploaded file on system failure
+    // await safeDeleteFile(filePath);
 
+    console.error("Registration Error: ", error);
+    req.flash("error_msg", "An unexpected error occurred. Please try again.");
     return res.redirect("/api/v1/auth/sign-up");
   }
 });
 
+// Helper function to prevent crashing on file system deletions
+// async function safeDeleteFile(filePath) {
+//   try {
+//     if (filePath) await fs.unlink(filePath);
+//   } catch (err) {
+//     console.error(`Failed to delete orphaned file: ${filePath}`, err);
+//   }
+// }
+
 export const signOut = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
+
+  await redisClient.set(
+    `revoked:${jwt.decode(token).jti}`,
+    "revoked",
+    "EX",
+    3600,
+  );
 
   if (refreshToken) {
     await RefreshToken.destroy({
@@ -164,28 +202,3 @@ export const signOut = asyncHandler(async (req, res) => {
 
   return res.redirect("/api/v1/auth/login");
 });
-
-//
-// FOR LOGOUT PRODUCTION FLOW:
-// Read refresh token
-//         │
-//         ▼
-// If token exists
-//         │
-//         ▼
-// Hash token using helper
-//         │
-//         ▼
-// Delete refresh token from DB
-//         │
-//         ▼
-// Clear access cookie
-//         │
-//         ▼
-// Clear refresh cookie
-//         │
-//         ▼
-// Audit log logout
-//         │
-//         ▼
-//      Redirect

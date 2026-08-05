@@ -1,7 +1,7 @@
 import { Strategy } from "passport-google-oauth20";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "../env.js";
-
 import { findOrCreateOAuthUser } from "../../services/oauth.service.js";
+import { registerDevice } from "../../services/device.service.js";
 
 export default new Strategy(
   {
@@ -9,12 +9,12 @@ export default new Strategy(
 
     clientSecret: GOOGLE_CLIENT_SECRET,
 
-    callbackURL: "http://localhost:6002/auth/google/callback",
+    callbackURL: "/auth/google/callback",
+    proxy: true,
   },
 
   async (accessToken, refreshToken, profile, done) => {
     done(null, profile);
-    console.log("Testing google profile: ", profile);
     try {
       const user = await findOrCreateOAuthUser({
         oauthProvider: "google",
@@ -25,14 +25,17 @@ export default new Strategy(
 
         avatar: profile.photos[0]?.value,
 
-        name: profile.name,
+        firstName: profile.name.givenName,
+
+        lastName: profile.name.familyName,
 
         accessToken: accessToken,
 
         refreshToken: refreshToken,
       });
 
-      done(null, user);
+      await registerDevice(user);
+      return done(null, user);
     } catch (err) {
       done(err);
     }

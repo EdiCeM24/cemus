@@ -19,7 +19,7 @@ const RefreshToken = sequelize.define(
       allowNull: false,
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: true
     },
     revoked: {

@@ -17,7 +17,7 @@ const sendEmail = asyncHandler(
       to: email,
       subject: "Verify your Account",
       html: `
-      <p>Click the link below to verify your email:</p>
+      <p>Click the link below to verify your account:</p>
 
       <a href="${verifyLink}">Verify Account</a>
     `,

@@ -2,6 +2,7 @@
 import { FACEBOOK_APP_SECRET, FACEBOOK_APP_ID } from "../env.js";
 import { Strategy } from "passport-facebook";
 import { findOrCreateOAuthUser } from "../../services/oauth.service.js";
+import { registerDevice } from "../../services/device.service.js";
 
 export default new Strategy(
   {
@@ -11,7 +12,13 @@ export default new Strategy(
 
     callbackURL: "http://localhost:6002/auth/facebook/callback",
 
-    profileFields: ["id", "emails", "name", "profile.type(large)"],
+    profileFields: [
+      "id",
+      "emails",
+      "firstName",
+      "lastName",
+      "profile.type(large)",
+    ],
   },
 
   async (accessToken, refreshToken, profile, done) => {
@@ -25,14 +32,17 @@ export default new Strategy(
 
         avatar: profile.photos?.[0]?.value,
 
-        name: profile.name.name,
+        firstName: profile.name?.givenName,
+
+        lastName: profile.name?.familyName,
 
         accessToken: accessToken,
 
         refreshToken: refreshToken,
       });
 
-      done(null, user);
+      await registerDevice(user);
+      return done(null, user);
     } catch (err) {
       done(err);
     }

@@ -6,9 +6,9 @@ export const checkResendLimit = asyncHandler(async (user) => {
   }
 
   user.resendCount += 1;
-
-  if (user.resendCount >= 3) {
-    user.resendBlockedUntil = new Date(Date.now() + 30 * 60 * 1000);
+  // 4 instead of 3 that was before:
+  if (user.resendCount >= 4) {
+    user.resendBlockedUntil = new Date(Date.now() + 30 * 60 * 60 * 1000);
 
     user.resendCount = 0;
   }

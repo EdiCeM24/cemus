@@ -19,6 +19,8 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@arcjet/inspect": "^1.9.1",
+    "@arcjet/node": "^1.9.1",
     "bcryptjs": "^3.0.3",
     "connect-flash": "^0.1.1",
     "connect-pg-simple": "^10.0.0",
@@ -45,14 +47,17 @@
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.20.0",
     "pg-hstore": "^2.3.4",
+    "redis": "^6.2.0",
     "resend": "^6.12.3",
     "sass": "^1.99.0",
     "sequelize": "^6.37.8",
     "useragent": "^2.3.0",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.0",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.5.0",
+    "daisyui": "^5.7.16",
     "nodemon": "^3.1.14",
     "postcss": "^8.5.14",
     "tailwindcss": "^3.4.19"

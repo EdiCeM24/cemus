@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 import User from "../models/User.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { Op } from "sequelize";
-import Contact from "../models/contact.model.js";
 
 export const adminLogin = asyncHandler(async (req, res) => {
   try {

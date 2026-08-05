@@ -48,9 +48,9 @@
               <strong class="flex text-justify font-serif text-pretty text-[16px] font-semibold text-gray-800" id=""></strong>
             </div>
             <div class="social-link flex space-x-1 items-center justify-evenly bottom-1 mb-[2px] mt-1">
-              <a href="http://localhost:6002/auth/google" class="no-underline"><img src="/images/google.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
-              <a href="http://localhost:6002/auth/facebook" class="no-underline"><img src="/images/facebook.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
-              <a href="http://localhost:6002/auth/github" class="no-underline"><img src="/images/github.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+              <a href="http://localhost:6002/auth/google/callback" class="no-underline"><img src="/images/google.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+              <a href="http://localhost:6002/auth/facebook/callback" class="no-underline"><img src="/images/facebook.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+              <a href="http://localhost:6002/auth/github/callback" class="no-underline"><img src="/images/github.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
             </div>
             <div class="mb-0.5 p-0">
               <div class="profile-image">
@@ -58,12 +58,15 @@
               </div>
 
               <div class="mb-[12px] p-0">
-                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="name" id="name" placeholder="Enter your full name..." required autocapitalize="off" autofocus>
-                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="username" id="username" placeholder="Enter your username..." required autocapitalize="off" autofocus>
+                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="firstName" id="firstName" placeholder="Enter your first name..." required autocapitalize="off" autofocus>
+                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="lastName" id="lastName" placeholder="Enter your last name..." required autocapitalize="off" autofocus>
               </div>
 
               <div class="mb-1 p-0">
+                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="username" id="username" placeholder="Enter your username..." required autocapitalize="off" autofocus>
                 <input type="email" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="email" id="email" placeholder="Enter your email..." required autocapitalize="off" autofocus>
+              </div>
+              <div class="mb-1 p-0">
                 <input type="password" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="password" id="password" placeholder="Enter your password..." required autocapitalize="off" autofocus>
                 <span class="signup_eye_icons relative"><i class="fa fa-eye absolute top-1 right-3 cursor-pointer" aria-hidden="false"></i></span>
               </div>
@@ -82,9 +85,9 @@
 
               <div class="terms-links">
                 <p class="text-black text-[16px] font-semibold">By clicking these 
-                  <a href="/api/v1/auth/" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Terms and Conditions</a> 
+                  <a href="/api/v1/homes/terms-of-use" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Terms and Conditions</a> 
                   <span class="text-rose-700">and</span>
-                  <a href="/api/v1/auth/" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Privacy Policy</a>
+                  <a href="/api/v1/homes/privacy-policy" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Privacy Policy</a>
                 </p>
               </div>
 
