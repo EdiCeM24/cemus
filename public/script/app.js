@@ -51,7 +51,9 @@ questions.forEach((question) => {
 });
 
 function appQuestions() {
-  return alert("Are you serious about this?");
+  return alert(
+    "Welcome to Edidiong's portfolio website! Feel free to explore.",
+  );
 }
 
 appQuestions();

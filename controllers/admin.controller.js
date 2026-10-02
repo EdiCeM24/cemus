@@ -1,7 +1,7 @@
 import User from "../models/User.model.js";
 import { paginate } from "../utils/pagination.js";
 import { searchQuery } from "../utils/search.js";
-import sendEmail from "../config/sendEmail.js";
+// import sendEmail from "../config/sendEmail.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import Contact from "../models/contact.model.js";
 
@@ -18,15 +18,58 @@ const dashboard = asyncHandler(async (req, res) => {
 });
 
 const admins = asyncHandler(async (req, res) => {
-  res.render("admin/admin", { user: "", title: "Admin Page" }, (err, ejs) => {
-    if (err) {
-      return res.status(500).json({
-        message: "Page not found or template error",
-        error: err.message,
-      });
-    }
-    res.send(ejs);
-  });
+  try {
+    // const users = await User.findAll();
+    // const user = await User.findAll();
+
+    // if (req.user.role !== "admin") {
+    //   req.flash("error_msg", "Forbidden!");
+    //   return res.redirect("/api/v1/auth/sign-up");
+    // }
+
+    // const contacts = await Contact.findAll();
+    // // activities
+    // const activities = await Contact.findOne({
+    //   where: { id: req.messages.id },
+    // });
+
+    // console.log(activities.activity); // To cross check
+
+    // const contactService = await Contact.findByPk();
+    // console.log(contactService.service); // To cross check.
+
+    // const page = parseInt(req.query.page) || 1;
+    // const keyword = req.query.search || "";
+
+    // const pageNumber = await paginate(
+    //   User,
+    //   page,
+    //   10,
+    //   searchQuery(keyword, ["name", "email"]),
+    // );
+
+    // const message = await paginate(
+    //   Contact,
+    //   page,
+    //   10,
+    //   searchQuery(keyword, ["name", "email", "message"]),
+    // );
+
+    res.render("admin/admin", {
+      // users,
+      // user,
+      // pageNumber,
+      // message,
+      // contacts,
+      // keyword,
+      title: "Admin Page",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Page not found or template error",
+      error: error.message,
+    });
+  }
 });
 
 const adminBoard = asyncHandler(async (req, res) => {

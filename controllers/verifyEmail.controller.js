@@ -8,16 +8,22 @@ const verifyEmail = asyncHandler(async (req, res) => {
   const { token } = req.params;
 
   if (!token) {
-    return res.status(400).json({ message: "Invalid token" });
+    return res.status(400).json({ message: "Invalid verification token" });
   }
   const hashedToken = await hashToken(token);
+
+  console.log("--- DEBUGGING EMAIL VERIFICATION ---");
+  console.log("Raw token from URL:", token);
+  console.log("Hashed token being queried:", hashedToken);
+  console.log("Current App Time (JS):", new Date());
+  console.log("-------------------------------------");
 
   // 2. Set the expiration to 30 minutes in the past/future depending on your logic
   const user = await User.findOne({
     where: {
       verificationToken: hashedToken,
       verificationTokenExpires: {
-        [Op.gt]: new Date(Date.now()),
+        [Op.gt]: new Date(Date.now() + 30 * 60 * 1000),
       },
     },
   });
@@ -28,11 +34,10 @@ const verifyEmail = asyncHandler(async (req, res) => {
     return res.redirect("/api/v1/auth/sign-up");
   }
 
-  user.isVerified = true;
-
   user.verificationToken = null;
   user.verificationTokenExpires = null;
 
+  user.isVerified = true;
   await user.save();
 
   req.flash("success_msg", "Email verified successfully ✅");

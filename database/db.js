@@ -16,7 +16,7 @@ const sequelize = new Sequelize(
     host: "localhost",
     port: DATABASE_PORT,
     logging:
-      NODE_ENV === "production" ? false : console.log("development.local"),
+      NODE_ENV === "production" ? false : console.log("production.local"),
   },
 );
 

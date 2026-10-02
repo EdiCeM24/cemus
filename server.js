@@ -12,10 +12,11 @@ import {
   CLIENT_URL,
   NODE_ENV,
   SESSION_SECRET,
-  DATABASE_URL,
+  DATABASE_URI,
 } from "./config/env.js";
 import passport from "./config/passport.js";
 import sequelize from "./database/db.js";
+// import sequelize from "./models/index.js";
 import { PORT } from "./config/env.js";
 import authRouter from "./routes/auth.route.js";
 import adminRouter from "./routes/admin.route.js";
@@ -27,6 +28,7 @@ import { detectDevice } from "./middlewares/device.middleware.js";
 import limiter from "./middlewares/rateLimiter.middleware.js";
 import credentials from "./middlewares/credentials.middleware.js";
 // import corsOptions from "./config/corsOptions.js";
+// import aj from "./libs/arcjet.js";
 
 const app = express();
 const port = PORT || 4000;
@@ -37,7 +39,7 @@ if (Array.isArray()) {
 
 const pgSession = connectPgSimple(session);
 const store = new pgSession({
-  conString: DATABASE_URL,
+  conString: DATABASE_URI,
   tableName: "user_sessions",
   createTableIfMissing: true,
 });
@@ -106,10 +108,6 @@ app.use(
   }),
 );
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join("public", "home.ejs"));
-});
-
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success");
   res.locals.error_msg = req.flash("error_msg");
@@ -132,6 +130,47 @@ app.use((req, res, next) => {
 // });
 
 app.use(detectDevice);
+
+// app.use(async (req, res, next) => {
+//   try {
+//     const decision = await aj.protect(req, {
+//       requested: 1,
+//       // // Manually specify the required fields
+//       // ip: req.ip || req.headers.get("x-forwarded-for"),
+//       // headers: req.headers,
+//       // method: req.method,
+//       // url: req.url,
+//     });
+
+//     if (decision.isDenied()) {
+//       if (decision.reason.isRateLimit()) {
+//         res.status(429).json({
+//           error_msg,
+//           error: "Too many requests, please try again later.",
+//         });
+//       } else if (decision.reason.isBot()) {
+//         res.status(403).json({ error_msg, error: "Bot access denied!" });
+//       } else {
+//         res.status(403).json({ error_msg, error: "Forbidden!" });
+//       }
+
+//       return;
+//     }
+
+//     // Check for spoofed bots
+//     if (decision.results.some((result) => result.reason.isBot())) {
+//       res.status(403).json({ error: "Spoofed bot detected." });
+
+//       return;
+//     }
+
+//     next();
+//   } catch (error) {
+//     console.error("Arcjet error ", error);
+//     next(error);
+//   }
+// });
+
 // limiter,
 //   protects,
 //   authorize("admin", "super_admin"),
@@ -215,8 +254,10 @@ app.get("/download-cv/", (req, res) => {
 });
 
 // DB AND SERVER
+
+//
 sequelize
-  .sync()
+  .sync({ alter: true })
   .then(() => {
     console.log("Database is syncing!");
     app.listen(port, () => {

@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../database/db.js";
+// import sequelize from "./index.js";
 
 const RefreshToken = sequelize.define(
   "RefreshToken",
@@ -20,7 +21,11 @@ const RefreshToken = sequelize.define(
     },
     userId: {
       type: DataTypes.UUID,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
     revoked: {
       type: DataTypes.BOOLEAN,

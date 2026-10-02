@@ -11,7 +11,7 @@ touchMeOut.addEventListener("click", () => {
 window.addEventListener("click", (event) => {
   // event.preventDefault();
   if (!event.target.closest(".contact_form") && event.target !== touchMeOut) {
-    contactForm.style.display = "none";
+    contactForm.classList.remove("show"); // style.display = "none";
   }
 });
 

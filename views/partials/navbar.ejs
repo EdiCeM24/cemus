@@ -1,0 +1,125 @@
+<header
+  class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800"
+>
+  <div
+    class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex justify-between items-center"
+  >
+    <div class="header_myLogo flex items-center justify-evenly gap-1">
+      <a
+        href="/api/v1/homes/home"
+        class="no-underline flex items-center justify-center gap-1"
+      >
+        <img
+          src="/images/favicon3.ico"
+          class="w-10 h-10 rounded-full object-cover"
+          alt=""
+        />
+        <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
+          EDIDIONG
+        </h1>
+      </a>
+    </div>
+
+    <button
+      class="md:hidden text-lg font-semibold text-gray-300 cursor-pointer border-none outline-none bg-transparent"
+      id="navbar-btn"
+    >
+      Nav
+    </button>
+
+    <nav
+      class="navbar-nav-links md:flex items-center gap-8 text-sm font-medium text-slate-300 mt-1"
+    >
+      <button
+        class="text-gray-300 text-3xl md:hidden font-extrabold border-none outline-none bg-transparent"
+        id="navbar-mob-close-btn"
+      >
+        &times;
+      </button>
+      <a
+        href="/api/v1/homes/home#home"
+        class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600 hover:border-b-orange-600"
+        >Home</a
+      >
+      <a
+        href="/api/v1/homes/about"
+        class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600 hover:border-b-orange-600"
+        >About</a
+      >
+      <a
+        href="/api/v1/homes/projects"
+        class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600 hover:border-b-orange-600"
+        >Projects</a
+      >
+      <a
+        href="/api/v1/contacts/contact"
+        class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600 hover:border-b-orange-600"
+        >Contact</a
+      >
+      <a
+        href="/api/v1/homes/home/#contact"
+        class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600 hover:border-b-orange-600"
+        >Homepage</a
+      >
+      <!-- <a href="#" class="hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Services</a> -->
+      <div class="relative group">
+        <% users.forEach(user => { %>
+          <img
+            src=" user.profile "
+            alt="user"
+            class="w-10 h-10 rounded-full flex items-center justify-center"
+          />
+          <ul
+            class="absolute hidden group-hover:block bg-[#333] shadow-md p-3 rounded-md w-[200px]"
+          >
+            <li
+              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+            >
+              username
+            </li>
+            <li
+              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+            >
+              email
+            </li>
+            <li
+              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+            >
+              firstName
+            </li>
+            <li
+              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+            >
+              lastName
+            </li>
+            <li class="">
+              <form action="/api/v1/auth/logout" method="POST" class="flex items-center justify-center">
+                <button
+                  type="submit"
+                  class="flex items-center justify-center text-teal-600 border-none outline-none py-3 px-4 w-12 text-[16px] font-serif font-medium hover:text-orange-600 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+                >
+                  Logout
+                </button>
+              </form>
+            </li>
+            <% if (user.role === 'admin') {%>
+              <li
+                class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+              >
+                <a href="/api/v1/admin/admin" class="text-teal-950 px-2 py-1 font-medium">Admin</a>
+              </li>
+            <%}%>
+          </ul>
+        <%})%>
+      </div>
+    </nav>
+
+    <button
+      class="hire-me bg-cyan-500 hover:bg-cyan-400 transition ease-in-out px-5 py-2 rounded-full font-semibold text-slate-950 shadow-lg shadow-cyan-500/30"
+    >
+      Hire Me
+    </button>
+  </div>
+</header>
+<script src="/script/navbar.js"></script>
+<script src="/script/dash.js"></script>

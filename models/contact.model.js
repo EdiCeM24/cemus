@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../database/db.js";
+// import sequelize from "./index.js";
 
 const ContactSchema = sequelize.define(
   "Contact",
@@ -11,49 +12,43 @@ const ContactSchema = sequelize.define(
     },
     name: {
       type: DataTypes.STRING,
-      required: true,
       allowNull: false,
       unique: true,
     },
     email: {
       type: DataTypes.STRING,
-      required: true,
       unique: true,
-      trim: true,
       allowNull: false,
     },
     website: {
       type: DataTypes.STRING,
-      required: true,
-      trim: true,
       allowNull: false,
+      unique: true,
     },
     company: {
       type: DataTypes.STRING,
-      required: true,
-      trim: true,
       allowNull: false,
     },
     activity: {
-      type: DataTypes.STRING,
-      required: true,
-      trim: true,
+      type: DataTypes.ENUM("freelance", "remote", "on_site"),
       allowNull: false,
     },
     subject: {
       type: DataTypes.STRING,
-      required: true,
       allowNull: false,
     },
     message: {
       type: DataTypes.STRING,
-      required: true,
       allowNull: false,
     },
     isVerified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
       allowNull: true,
+    },
+    service: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     role: {
       type: DataTypes.ENUM("user", "admin", "super_admin"),

@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../database/db.js";
+// import sequelize from "./index.js";
 
 const VerificationAttempt = sequelize.define("VerificationAttempt", {
   id: {

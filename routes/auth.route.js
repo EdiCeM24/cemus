@@ -37,7 +37,7 @@ authRouter.get("/verify-email", verifyTokenMessage);
 
 authRouter.post("/refresh-token", verifyRefreshToken); // To use it and verify sign in
 
-authRouter.post("/verify/:token", verifyEmail);
+authRouter.get("/verify/:token", verifyEmail);
 
 authRouter.post("/register", upload.single("profile"), validateUser, register);
 

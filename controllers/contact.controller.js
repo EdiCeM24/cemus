@@ -1,5 +1,5 @@
 import Contact from "../models/contact.model.js";
-import {} from "../config/env.js";
+// import {} from "../config/env.js";
 import sendEmail from "../config/sendEmail.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { Op } from "sequelize";
@@ -26,14 +26,15 @@ export const handleContactForm = async (req, res) => {
 export const handleContactLogic = async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
-    let { name, email, website, company, activity, subject, message } =
+    let { name, email, website, company, activity, subject, message, service } =
       req.body;
+
+    let budgetType;
 
     name = name?.trim();
     email = email?.trim().toLowerCase();
     website = website?.trim();
     company = company?.trim();
-    activity = activity?.trim();
     subject = subject?.trim();
     message = message?.trim();
 
@@ -44,10 +45,31 @@ export const handleContactLogic = async (req, res) => {
       !company ||
       !activity ||
       !subject ||
-      !message
+      !message ||
+      !service
     ) {
       req.flash("error_msg", "All fields required!");
       return res.redirect("/api/v1/contacts/contact");
+    }
+
+    switch (service) {
+      case "1":
+        budgetType = "1000-1500";
+        break;
+      case "2":
+        budgetType = "1500-2000";
+        break;
+      case "3":
+        budgetType = "2000-2500";
+        break;
+      case "4":
+        budgetType = "2500-3000";
+        break;
+      case "5":
+        budgetType = "3000+";
+        break;
+      default:
+        budgetType = "unknown";
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,19 +87,19 @@ export const handleContactLogic = async (req, res) => {
       return res.redirect("/api/v1/contacts/contact");
     }
 
-    const user = await Contact.findOne({
+    const contactUser = await Contact.findOne({
       where: {
-        [Op.or]: [{ email }, { name }],
+        [Op.or]: [{ email: email }, { name: name }],
       },
       transaction,
     });
 
-    if (user) {
+    if (contactUser) {
       req.flash("error_msg", "Contact already exists!");
       return res.redirect("/api/v1/contacts/contact");
     }
 
-    const contactUser = await Contact.create(
+    const contactMessage = await Contact.create(
       {
         name,
         email,
@@ -86,12 +108,13 @@ export const handleContactLogic = async (req, res) => {
         activity,
         subject,
         message,
+        service: budgetType,
       },
       { transaction },
     );
 
     await sendEmail({
-      to: contactUser.email,
+      to: contactMessage.email,
       subject: "Your Messages have been sent!",
       html: `
       <h2>Email Confirmation. Thank you!</h2>
@@ -102,7 +125,7 @@ export const handleContactLogic = async (req, res) => {
 
     req.flash("success_msg", "Message sent successfully ✅");
 
-    return res.redirect("/api/v1/contacts/contact");
+    return res.redirect("/api/v1/contacts/contact-success");
   } catch (error) {
     console.log(error);
     await transaction.rollback();

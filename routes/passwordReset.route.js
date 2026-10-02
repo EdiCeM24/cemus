@@ -25,4 +25,3 @@ passwordResetRouter.post("/forgot-password", forgotPassword);
 passwordResetRouter.post("/reset-password/:token", resetPassword);
 
 export default passwordResetRouter;
-

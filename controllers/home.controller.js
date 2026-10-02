@@ -14,8 +14,8 @@ export const asyncWrapper = (fn) => {
 
 export const homePage = asyncWrapper(async (req, res) => {
   try {
-    const user = await User.findAll();
-    res.render("home", { title: "Edidiong Page", user }, (err, ejs) => {
+    const users = await User.findAll();
+    res.render("home", { title: "Edidiong Page", users }, (err, ejs) => {
       if (err) {
         console.log("this page is not loaded: ", err, "home");
         return req.flash("error_msg", "Page not found or template error");
@@ -204,6 +204,29 @@ export const settings = asyncHandler(async (req, res) => {
 
       res.send(ejs);
     });
+  } catch (error) {
+    console.log("why the failed page: ", error);
+
+    req.flash("error_msg", "We are sorry that your page unable to load: ", err);
+    return;
+  }
+});
+
+export const contactSuccess = asyncHandler(async (req, res) => {
+  try {
+    res.render(
+      "contact-success",
+      { title: "Edidiong Contact-success Page" },
+      (err, ejs) => {
+        if (err) {
+          return req.flash("error_msg", "Page not found or template error");
+        } else {
+          req.flash("success_msg", "Page loaded successfully!");
+        }
+
+        res.send(ejs);
+      },
+    );
   } catch (error) {
     console.log("why the failed page: ", error);
 

@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../database/db.js";
+// import sequelize from "./index.js";
 
 const LoginDevice = sequelize.define(
   "LoginDevice",
@@ -15,6 +16,7 @@ const LoginDevice = sequelize.define(
         model: "Users",
         key: "id",
       },
+      fields: "userid",
     },
     deviceId: {
       type: DataTypes.STRING,
@@ -35,14 +37,23 @@ const LoginDevice = sequelize.define(
     refreshToken: {
       type: DataTypes.TEXT,
     },
+  },
+  {
+    timestamps: true,
     indexes: [
       {
         unique: true,
-        fields: ["userId", "deviceId"],
+        fields: ["userid", "deviceId"],
+      },
+      {
+        fields: ["ipAddress"],
+      },
+      {
+        name: "custom_index_name",
+        fields: ["browser", "os"],
       },
     ],
   },
-  { timestamps: true },
 );
 
 export default LoginDevice;

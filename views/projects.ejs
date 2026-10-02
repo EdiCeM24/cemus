@@ -1,70 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <%- include('partials/head.ejs') %>
   </head>
   <body>
     <!-- Navbar -->
-    <header
-      class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex justify-between items-center"
-      >
-        <div class="header_myLogo flex items-center justify-evenly gap-1">
-          <a
-            href="/api/v1/homes/home"
-            class="no-underline flex items-center justify-center gap-1"
-          >
-            <img
-              src="/images/favicon3.ico"
-              class="w-10 h-10 rounded-full object-cover"
-              alt=""
-            />
-            <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
-              EDIDIONG
-            </h1>
-          </a>
-        </div>
-        <!-- <h1 class="text-2xl font-extrabold tracking-wide gradient-text">
-        EDIDIONG
-      </h1> -->
-
-        <nav
-          class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300"
-        >
-          <a
-            href="/api/v1/homes/home#home"
-            class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600"
-            >Home</a
-          >
-          <a
-            href="/api/v1/homes/about"
-            class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600"
-            >About</a
-          >
-          <a
-            href="/api/v1/homes/projects"
-            class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600"
-            >Projects</a
-          >
-          <a
-            href="/api/v1/contacts/contact"
-            class="nav-link hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600"
-            >Contact</a
-          >
-          <!-- <a href="#" class="hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Services</a> -->
-        </nav>
-
-        <!-- <button
-          class="reach_out_to bg-cyan-500 hover:bg-cyan-400 transition ease-in-out px-5 py-2 rounded-full font-semibold text-slate-950 shadow-lg shadow-cyan-500/30"
-        >
-          Hire Me
-        </button> -->
-      </div>
+     <header class="container mx-auto">
+      <%- include('partials/navbar.ejs') %>
     </header>
+    
 
-    <div class="contact-conn container mx-auto max-h-screen mt-[4%] p-10 px-10"> 
+    <div class="contact-conn container mx-auto max-h-screen mt-[2%] p-10 px-10"> 
       <div class="">
         <% if (success_msg) { %>
           <p class="text-green-600 font-serif font-semibold text-[16px]"><%= success_msg[0] %></p>
@@ -89,7 +35,7 @@
       <div class="mb-4 p-2">
         <span class="flex flex-col items-center justify-center float-end right-5 mb-3">
           <strong class="text-3xl text-gray-300 font-extrabold font-serif right-5">Marcus Edidiong,</strong>
-          <p class="text-xl text-sky-400 font-semibold font-serif pl-3 w-[300px]">Director of creative development & design.</p>
+          <p class="text-xl text-sky-400 font-semibold font-serif pl-3 w-[300px]">is a creative developer & a skilled designer.</p>
         </span>
 
         <div class="">
@@ -235,5 +181,34 @@
     </main>
 
     <footer><%- include('partials/footer.ejs') %></footer>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script>
+      // Use EJS output syntax to check if the message array contains elements
+      // connect-flash returns an array, so check if length > 0
+    </script>
+    <% if (success_msg && success_msg.length > 0) { %>
+        Toastify({
+            text: "<%= success_msg %>",
+            duration: 4000,
+            gravity: "top", // top or bottom
+            position: "right", // left, center or right
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+        }).showToast();
+    <% } %>
+
+    <% if (error_msg && error_msg.length > 0) { %>
+        Toastify({
+            text: "<%= error_msg %>",
+            duration: 4000,
+            gravity: "top",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+            }
+        }).showToast();
+    <% } %>
   </body>
 </html>

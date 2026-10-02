@@ -10,19 +10,18 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = asyncHandler(
-  async ({ email, verifyLink, to, subject, html }) => {
-    await transporter.sendMail({
-      from: "edidiong-portfolio-website",
-      to: email,
-      subject: "Verify your Account",
-      html: `
-      <p>Click the link below to verify your account:</p>
+const sendEmail = asyncHandler(async ({ html, subject, to, verifyLink }) => {
+  // 1. Double check that we actually have the required parameters
+  if (!to || !verifyLink) {
+    throw new Error("Missing email or verifyLink parameters");
+  }
 
-      <a href="${verifyLink}">Verify Account</a>
-    `,
-    });
-  },
-);
+  await transporter.sendMail({
+    from: `'Edidiong Portfolio' <p>${AUTH_EMAIL}</p>`,
+    to: to,
+    subject: subject,
+    html: html,
+  });
+});
 
 export default sendEmail;

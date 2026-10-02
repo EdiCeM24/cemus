@@ -81,7 +81,7 @@ const signIn = asyncHandler(async (req, res) => {
       return res.redirect("/api/v1/auth/sign-up");
     }
 
-    req.flash("error_msg", "Please verify your email to login in.");
+    req.flash("error_msg", "Please verify your email to login.");
   }
 
   // Reset Login Restrictions
@@ -119,7 +119,7 @@ export default signIn;
 export const user = asyncHandler(async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id);
-    res.render("user", { user });
+    res.render("home", { user });
   } catch (error) {
     res
       .status(500)

@@ -10,12 +10,17 @@ import hashToken from "../utils/hashToken.js";
 import { Op } from "sequelize";
 import sequelize from "../database/db.js";
 import redis from "redis";
+import jwt from "jsonwebtoken";
 
 // Redis Implentation
 const redisClient = redis.createClient({
   host: "localhost",
   port: 6379,
 });
+redisClient.on("error", (err) => {
+  console.error("Redis Client error: ", err);
+});
+// redisClient.connect();
 
 // CONTROLLER FUNCTIONALITIES LOGIC
 export const register = asyncHandler(async (req, res) => {
@@ -36,7 +41,7 @@ export const register = asyncHandler(async (req, res) => {
   email = email?.trim().toLowerCase();
 
   // 3. VALIDATION
-  if (!firstName || !lastName || !username || !email || !password || !profile) {
+  if (!firstName || !lastName || !username || !email || !password) {
     req.flash("error_msg", "All fields are required!");
     return res.redirect("/api/v1/auth/sign-up");
   }
@@ -52,14 +57,14 @@ export const register = asyncHandler(async (req, res) => {
   }
 
   // Username Pattern
-  const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
+  const usernameRegex = /^[a-zA-Z0-9@]{3,30}$/;
 
   // Username Pattern Check
   if (!usernameRegex.test(username)) {
     // await safeDeleteFile(filePath);
     req.flash(
       "error_msg",
-      "Username must contain only letters, numbers and underscores and be between 3 and 30 characters.",
+      "Username must contain only letters, numbers and at sign and be between 3 and 30 characters.",
     );
     return res.redirect("/api/v1/auth/sign-up");
   }
@@ -73,19 +78,20 @@ export const register = asyncHandler(async (req, res) => {
     // await safeDeleteFile(filePath);
     req.flash(
       "error_msg",
-      "Username must contain only letters, numbers and underscores and be between 3 and 30 characters.",
+      "Password must contain at least 8 characters, letters, numbers and underscores and be between 3 and 30 characters.",
     );
 
     return res.redirect("/api/v1/auth/sign-up");
   }
   // Password Length Check
-  if (password.length < 8) {
-    req.flash("error_msg", "Password must be at least 8 characters.");
-    return res.redirect("/api/v1/auth/sign-up");
-  }
+  // if (password.length < 8) {
+  //   req.flash("error_msg", "Password must be at least 8 characters.");
+  //   return res.redirect("/api/v1/auth/sign-up");
+  // }
 
   // 4. Database transaction
   const transaction = await sequelize.transaction();
+
   try {
     // Find User Identification
     const user = await User.findOne({
@@ -132,60 +138,87 @@ export const register = asyncHandler(async (req, res) => {
       },
     );
 
+    await transaction.commit();
+
     // ✅ Create verification link
     const verifyLink = `${CLIENT_URL}/api/v1/auth/verify-email/${rawToken}`;
 
-    // Needs to review the mail message why not send.
-    await sendEmail({
-      to: newUser.email,
-      subject: "Verify Email",
-      html: `
+    try {
+      // Needs to review the mail message why not send.
+      await sendEmail({
+        to: newUser.email,
+        subject: "Verify your Account",
+        html: `
           <h2 class="">Email Verification</h2>
           
           <strong>This link expires in 20 minutes.</strong>
+          
+          <p>Click the link below to verify your account:</p>
 
           <a href="${verifyLink}">Verify Email</a>
         `,
-    });
-
-    await transaction.commit();
+      });
+    } catch (error) {
+      // console.error("Email Delivery Failed: ", error);
+      // We don't rollback here because the user is already successfully registered
+      req.flash(
+        "success_msg",
+        "Registration successful, but we couldn't send the verification email. Please request a new link.",
+        error,
+      );
+      return res.redirect("/api/v1/auth/sign-up");
+    }
 
     req.flash("success_msg", "Registration successful. check your email. ✅");
     return res.redirect("/api/v1/auth/verify-email");
   } catch (error) {
     // Ensure transaction rolls back safely if still active
-    if (!transaction.finished) {
-      await transaction.rollback();
-      await newUser.destroy({ transaction }); // To check this
+    if (transaction && !transaction.finished) {
+      try {
+        await transaction.rollback();
+      } catch (rollbackErr) {
+        // console.error("Rollback failed: ", rollbackErr);
+        req.flash(
+          "error_msg",
+          "transaction rollback due to unsuccessful registration: ",
+          rollbackErr,
+        );
+      }
     }
 
-    // Clean up uploaded file on system failure
-    // await safeDeleteFile(filePath);
-
-    console.error("Registration Error: ", error);
-    req.flash("error_msg", "An unexpected error occurred. Please try again.");
+    // console.error("Registration Error: ", error);
+    req.flash(
+      "error_msg",
+      "An unexpected error occurred. Please try again: ",
+      error,
+    );
     return res.redirect("/api/v1/auth/sign-up");
   }
 });
 
-// Helper function to prevent crashing on file system deletions
-// async function safeDeleteFile(filePath) {
-//   try {
-//     if (filePath) await fs.unlink(filePath);
-//   } catch (err) {
-//     console.error(`Failed to delete orphaned file: ${filePath}`, err);
-//   }
-// }
-
+//
 export const signOut = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
 
-  await redisClient.set(
-    `revoked:${jwt.decode(token).jti}`,
-    "revoked",
-    "EX",
-    3600,
-  );
+  if (!refreshToken) {
+    req.flash("error_msg", "Invalid token.");
+    return res.redirect("/api/v1/homes/home");
+  }
+  const decodedToken = jwt.decode(refreshToken);
+
+  if (!decodedToken || !decodedToken.jti) {
+    req.flash("error_msg", "Invalid token");
+
+    return res.redirect("/api/v1/homes/home");
+  }
+
+  await redisClient.set(`revoked:${decodedToken.jti}`, "revoked", "EX", 3600);
+  // await redisClient.set(
+  //   `revoked:${jwt.decode(token).jti}`,
+  //   "revoked",
+  //   "EX",
+  //   3600,
+  // );
 
   if (refreshToken) {
     await RefreshToken.destroy({

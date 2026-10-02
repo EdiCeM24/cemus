@@ -1,36 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <%- include('partials/head.ejs') %>
   </head>
 <body>
  <!-- Navbar -->
-  <header>
-    <%- include('includes/header.ejs') %>
-  </header>
-
-  <div class="contact-conn container mx-auto max-h-screen mt-[4%] p-10 px-10"> 
-    <div class="">
-      <% if (success_msg) { %>
-        <p class="text-green-600 font-serif font-semibold text-[16px]"><%= success_msg[0] %></p>
-      <% } %>
-    </div>
-
-    <div class="mb-2 p-1">
-      <% if (error_msg) { %>
-        <span class="text-rose-600 font-serif font-semibold text-[16px]"><%= error_msg %></span>
-      <% } %>
-    </div>
-
-    <div class="mb-2 p-1">
-      <% if(error) { %>
-        <span class="text-rose-600 font-serif font-semibold text-[16px]"><%= error %></span>
-      <%}%> 
-    </div>
-  </div>
-  
-<div class="flex items-center justify-between flex-col w-full mt-3 p-5">
-    <section class="md:flex flex-1 items-center justify-between mt-[1%] mb-[3%] gap-8">
+  <navbar>
+    <%- include('partials/navbar.ejs') %>
+  </navbar>
+  <div class="flex items-center justify-between flex-col w-full lg:mt-[5%] mt-[10%] md:p-5 p-10">
+    <section class="md:flex flex-1 items-center justify-between mt-[1%] mb-[3%] gap-8 ">
      
       <div class="absolute inset-0">
           <div class="absolute top-20 left-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
@@ -39,7 +18,7 @@
 
       <div class="absolute w-[450px] h-[450px] bg-cyan-500/20 rounded-full blur-3xl"></div>
 
-      <div class="flex items-center justify-center flex-col mb-4 flex-1">
+      <div class="flex items-center justify-center flex-col mb-4 md:p-3 p-5 flex-1 ">
         <span class="flex flex-col items-center justify-center leading-tight">
           <span class="flex items-center justify-center gap-2">
             <strong class="mb-3 text-[#eee] text-3xl font-extrabold">Hi,</strong>
@@ -51,46 +30,53 @@
         </span>
 
         <span class="p-4 md:p-0">
-          <p class="tracking-[0.3em] max-w-[450px] text-lg text-white">Studied computer science in the Federal Polytechnic Nekede, Owerri and PGD in view. I'm a creative problem-solver with a keen eye for detail and a love for innovative thinking.</p>
+          <p class="tracking-[0.3em] max-w-[450px] w-full text-lg text-white">Studied computer science in the Federal Polytechnic Nekede, Owerri and PGD in view. I'm a creative problem-solver with a keen eye for detail and a love for innovative thinking.</p>
         </span>
         <span class="p-4 md:p-0 mt-4 mb-4">
-          <p class="tracking-[0.3em] max-w-[450px] text-lg text-white mb-1">
-            I'm a web developer with five (5) years of experience in the industry.
-          </p>
-          <p class="tracking-[0.3em] max-w-[450px] text-lg text-white">
+          <!-- <p class="tracking-[0.3em] max-w-[450px] w-full text-lg text-white mb-1">
+            I'm a web developer with five years of experience in the industry.
+          </p> -->
+          <p class="tracking-[0.3em] max-w-[450px] w-full text-lg text-white">
             My expertise lies in web development, where I have had the opportunity to work on many projects and achieved an excellent.
           </p>
         </span>
+         <!-- To work on these to accept clicks -->
+        <div class="">
+          <div class="mt-4 flex items-center justify-between gap-3 space-x-2">
+            <a href="https://github.com/EdiCeM24" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-github text-white flex items-center justify-center object-cover"></i></a>
+            <a href="https://facebook.com/Saviour Marcus" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-facebook text-white flex items-center justify-center object-cover"></i></a>
+            <a href="https://www.linkedin.com/in/cletus-marcus" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-linkedin text-white flex items-center justify-center object-cover"></i></a>
+            <a href="https://x.com/Edicem24" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-twitter text-white flex items-center justify-center object-cover"></i></a>
+            <a href="https://ma" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-youtube text-white flex items-center justify-center object-cover"></i></a>
+          </div>
 
-        <div class="flex items-center justify-evenly gap-3 mt-3.5">
-          <a href="/download-cv" class="bg-sky-400 p-2.5 px-3 grass hover:bg-sky-500 text-slate-950 text-lg font-extrabold rounded-sm cursor-pointer underline-none gap-1.5">
-            <button class=" glass flex items-center justify-center gap-[3px] hover:bg-white/10 transition px-5 py-2 rounded-full font-medium">
-              <i class="fa-solid fa-download text-white"></i>
-              Download CV
+          <div class="flex items-center justify-evenly md:gap-3 gap-5  mb-3 lg:mt-3.5 mt-5 p-4 px-6">
+            <!-- Some Mobile Devices are not clicked and hovered -->
+            <button class="hover:bg-white focus:bg-white hover:opacity-60 border-2 border-purple-700 whitespace-nowrap text-white hover:text-slate-950 transition-transform duration-200 ease-in-out shadow-md grass py-5 px-5 rounded-sm text-[16px] font-extrabold cursor-pointer gap-1.5" id="openPopup-btn">
+              Hire Me <i class="fa-solid fa-angle-right hover:text-slate-950"></i>
             </button>
-          </a>
-          <button type="button" class="hover:bg-white border-2 border-purple-700 text-white hover:text-slate-950 transition-all duration-200 ease-in-out shadow-md grass p-2.5 px-3 rounded-sm text-[18px] font-extrabold cursor-pointer gap-1.5">
-            Hire Me <i class="fa-solid fa-angle-right hover:text-slate-950"></i>
-          </button>
+            
+            <a href="/download-cv" class="bg-sky-400 p-2.5 px-3 grass hover:bg-sky-500 text-slate-950 text-lg font-extrabold rounded-sm cursor-pointer underline-none gap-1.5">
+              <button class=" glass flex items-center justify-center whitespace-nowrap gap-[3px] hover:bg-white/10 transition px-5 py-2 rounded-full font-medium">
+                <i class="fa-solid fa-download text-white"></i>
+                Download CV
+              </button>
+            </a>
+          </div> 
         </div>
 
-        <div class="mt-4 flex items-center justify-between gap-3 space-x-2">
-          <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-github text-white flex items-center justify-center object-cover"></i></a>
-          <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-facebook text-white flex items-center justify-center object-cover"></i></a>
-          <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-linkedin text-white flex items-center justify-center object-cover"></i></a>
-          <a href="" class="border border-pink-500 rounded-full flex items-center justify-center object-cover w-6 h-6"><i class="fa-brands fa-twitter text-white flex items-center justify-center object-cover"></i></a>
-        </div>
       </div>
 
-      <div class="relative glass p-4 rounded-[40px] shadow-2xl shadow-cyan-500/20 w-[400px]">
-        <span class="mt-1.5 mb-2 flex-1">
-          <img src="/images/cemus_in_suit.jpg" alt="Photo" class="w-[400px] h-[500px] object-cover rounded-[30px]">
-          <div class="absolute top-[50%] right-10 opacity-0 hover:opacity-100 transform hover:-translate-x-full transition-all ease-in-out flex items-center justify-center gap-[4%] flex-col bg-slate-300 p-10 rounded space-x-3">
-            <a href="+2347024253772" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out">WhatsApp Me</a>
-            <a href="" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out">Youtube</a>
-            <a href="" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out">fa</a>
-            <a href="" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out">fa</a>
+      <div class="relative glass p-4 rounded-[40px] shadow-2xl shadow-cyan-500/20 md:w-[300px] w-[400px]">
+        <span class="relative mt-1.5 mb-2 flex-1">
+          <img src="/images/cemus_in_suit.jpg" alt="Photo" class="md:w-[300px] w-[400px] h-[500px] object-cover rounded-[30px]">
+          <div class="absolute top-[50%] right-10 hover:bg-opacity-50 transition-transform duration-300 scale-0 hover:scale-100 ease-in-out flex items-center justify-center gap-[4%] flex-col bg-slate-300 p-10 rounded space-x-3">
+            <a href="+2347024253772" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out rounded-full w-10 h-10">WhatsApp Me</a>
+            <a href="" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out rounded-full w-10 h-10">Youtube</a>
+            <a href="" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out rounded-full w-10 h-10">fa</a>
+            <a href="" class="hover:opacity-100 translate-x-0 hover:-translate-x-5 transition-all duration-200 ease-in-out rounded-full w-10 h-10">fa</a>
           </div>
+          
         </span>
       </div>
 
@@ -137,7 +123,7 @@
             </div>
 
             <div class="glass rounded-3xl p-8">
-              <h3 class="text-cyan-400 text-xl font-bold mb-4">Deployment</h3>
+              <h3 class="text-cyan-400 md:text-xl text-lg md:ml-0 -ml-5 font-bold mb-4">Deployment</h3>
               <p class="text-slate-300">Docker, AWS, CI/CD, Production Hosting</p>
             </div>
 
@@ -146,46 +132,53 @@
         </div>
       </section>
   </div>
-   <div class="contact_form mb-5 p-10 transform-cpu transition-shadow">
-     <strong class="contact_form_heading flex text-center justify-center text-2xl font-serif font-semibold text-[#eee] mt-3 mb-3">Hire Me</strong>
-      <i class="fa fa-times cursor-pointer text-xl font-bold" aria-hidden="true" id="contact-cancel"></i>
-      <div class="cont_form_container w-full flex items-center justify-center">
-        <form action="/api/v1/contacts/contact" method="POST" class="contact-form flex items-center justify-center py-4 px-6">
-          <div class="contact_form_contents w-full items-center justify-center">
-            <div class="contact_form_control w-ful mt-3 mb-3 gap-4">
-              <input type="text" name="name" id="name" placeholder="Your full name" class="w-ful text-black text-xl font-semibold font-serif p-2 mb-3 px-3 border-none outline-none rounded-sm" required autocomplete="off" autofocus>
-              <input type="email" name="email" id="email" placeholder="Your Email" class="w-ful text-black text-xl font-semibold font-serif p-2 mt-1 px-3 border-none outline-none rounded-sm" required autocomplete="off" autofocus>
-            </div>
-            <div class="contact_form_control w-ful mt-3 mb-3 gap-4">
-              <input type="url" name="website" id="website" class="w-ful text-black text-xl font-semibold font-serif p-2 mb-3 px-3 border-none outline-none rounded-sm" placeholder="Your Website" required autocomplete="off" autofocus>
-              <input type="text" name="company" id="company" class="w-ful text-black text-xl font-semibold font-serif p-2 mt-1 px-3 border-none outline-none rounded-sm" placeholder="Your Company" required autocomplete="off" autofocus>
-            </div>
-            <div class="contact_form_control md:flex items-center justify-between w-ful mt-4 mb-4">
-              <input type="text" name="subject" id="subject" class="w-ful text-black text-xl font-semibold font-serif p-2 px-3 border-none outline-none rounded-sm" placeholder="Your Subject" required autocomplete="off" autofocus>
-              <section class="flex items-center justify-center gap-3 ml-2">
-                <span class="flex items-center justify-evenly gap-1">
-                  <input type="radio" name="activity" value="freelance" id="freelance" required>
-                  <label for="" class="text-white font-medium text-[15px]">Freelance</label>
-                </span>
-                <span class="flex items-center justify-evenly gap-1">
-                  <input type="radio" name="activity" value="remote" id="remote" required>
-                  <label for="" class="text-white font-semibold text-lg">Remote</label>
-                </span>
-                <span class="flex items-center justify-evenly gap-1">
-                  <input type="radio" name="activity" value="on_site" id="on_site" required>
-                  <label for="" class="text-white font-semibold text-lg">On_site</label>
-                </span>
-              </section>
-            </div>
-            <div class="contact_form_control w-ful mt-4 mb-3">
-              <textarea name="message" id="message" class="w-ful text-black text-xl font-semibold font-serif p-2 px-3 border-none outline-none rounded-sm" cols="30" rows="4" placeholder="Your message" required autocomplete="off" autofocus></textarea>
-            </div>
-    
-            <button type="submit" class="w-ful cursor-pointer p-2 px-3 text-white text-xl font-semibold font-serif border-none outline-none rounded-sm bg-cyan-800 hover:bg-cyan-900 transition duration-200 ease-in-out">Contact Me</button>
-          </div>
-        </form>
+  <div class="container mx-auto w-full h-screen flex flex-col items-center justify-center mb-5">
+    <form action="/api/v1/homes/about" method="POST" class="flex-1 items-center relative overflow-hidden">
+      <div class="popup z-20 p-3 shadow-lg px-10 bg-opacity-75 transition-opacity overflow-y-auto" id="popup">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-gray-300 text-[14px] font-normal">For reaching out to me; you can contact me.</p>
+          <button type="button" id="closePopup" class="text-gray-300 flex items-center justify-center text-2xl font-bold">&times;</button>
+        </div>
+        <div class="flex justify-center items-center flex-col gap-2.5 w-full">
+          <input type="text" name="name" class="w-full p-2 rounded-[4px] bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 text-gray-300 text-xl font-medium outline-none" placeholder="Enter name" required autocomplete="off">
+          <input type="email" name="email" class="w-full p-2 rounded-[4px] bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 text-gray-300 text-xl font-medium outline-none" placeholder="Enter email" required autocomplete="off">
+          <input type="tel" name="phoneNumber" class="w-full p-2 rounded-[4px] bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 text-gray-300 text-xl font-medium outline-none" placeholder="Enter phone number" required autocomplete="off">
+          <input type="text" name="company" class="w-full p-2 rounded-[4px] bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 text-gray-300 text-xl font-medium outline-none" placeholder="Enter company name" required autocomplete="off">
+          <input type="url" name="website" class="w-full p-2 rounded-[4px] bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 text-gray-300 text-xl font-medium outline-none" placeholder="Enter company website" required autocomplete="off">
+          <input type="text" name="subject" class="w-full p-2 rounded-[4px] bg-transparent border-t-0 border-l-0 border-r-0 border-b-2 text-gray-300 text-xl font-medium outline-none" placeholder="Enter your subject" required autocomplete="off">
+        </div>
+        <div class="md:flex items-center md:mt-2 md:mb-2 mt-3 mb-3 gap-2 w-full">
+          <span class="flex items-center gap-1">
+            <input type="radio" name="service" value="freelance" class="" required>
+            <label for="" class="text-gray-300 text-[13px] font-medium">Freelance</label>
+            <input type="radio" name="service" value="remote" class="" required>
+            <label for="" class="text-gray-300 text-[13px] font-medium">Remote</label>
+            <input type="radio" name="service" value="onSite" class="" required>
+            <label for="" class="text-gray-300 text-[13px] font-medium whitespace-nowrap">On site</label>
+          </span>
+
+          <select name="budget" id="" class="outline-none bg-sky-950 text-white p-4 rounded-[4px]" required>
+            <option>Weekly Budget</option>
+            <option value="1">$1000 - 1500</option>
+            <option value="2">$1500 - 2000</option>
+            <option value="3">$2000 - 2500</option>
+            <option value="4">$2500 - 3000</option>
+            <option value="5">$3000 - 4000</option>
+            <option value="6">$4000+</option>
+          </select>
+        </div>
+
+        <div class="mt-2 mb-2">
+        <textarea name="message" class="w-full bg-slate-800 text-gray-300 rounded-[4px] outline-none border-2 hover:border-sky-600" id="" cols="20" rows="5" required></textarea>
+        </div>
+  
+        <div class="">
+        <button type="submit" class="btn btn-outline btn-ghost text-[#3C5077] py-[10px] px-[60px] border-0 cursor-pointer text-[25px] font-semibold rounded-[30px]">Contact Me</button>
+        </div>
       </div>
-   </div>
+
+    </form>
+  </div>
 
   <div class="p-5 px-5 mt-[0%] fixed left-[0%] top-[0%]">
     <div class=" md:mt-[20%] mt-[80%]  ">
@@ -202,7 +195,38 @@
   <footer>
     <%- include('partials/footer.ejs') %>
   </footer>
-  <script src="/script/contactForm.js"></script>
+  <script src="/script/about.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <script>
+      // Use EJS output syntax to check if the message array contains elements
+      // connect-flash returns an array, so check if length > 0
+    </script>
+    <div class="">
+      <% if (success_msg && success_msg.length > 0) { %>
+          Toastify({
+              text: "<%= success_msg %>",
+              duration: 4000,
+              gravity: "top", // top or bottom
+              position: "right", // left, center or right
+              style: {
+                  background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+          }).showToast();
+      <% } %>
+
+      <% if (error_msg && error_msg.length > 0) { %>
+          Toastify({
+              text: "<%= error_msg %>",
+              duration: 4000,
+              gravity: "top",
+              position: "right",
+              style: {
+                  background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+              }
+          }).showToast();
+      <% } %>
+    </div>
 </body>
 </html>
 

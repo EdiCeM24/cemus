@@ -3,13 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 @plugin "daisyui";
+@import "daisyui/dist/full.css";
 
 /* Safe-padding for mobile devices with notches */
 :root {
   --ion-safe-area-top: 20px;
   --ion-safe-area-bottom: 20px;
 }
-
+* {
+  font-family: 'Lato', sans-serif;
+}
 body {
   font-family: "Inter", sans-serif;
   background: #0f172a;
@@ -24,6 +27,7 @@ body {
 .nav-link.active {
   border-bottom: 2px solid #ff4500;
   width: 100%;
+  transition: transform 0.3s ease-in-out;
 }
 .nav-link::after {
   content: "";
@@ -37,6 +41,7 @@ body {
 }
 .nav-link.active::after {
   width: 100%;
+  background-color: orangered;
 }
 /** ========== ADMIN DASHBOARD PAGE SECTION ========== **/
 /** ========== Google fonts ========== **/
@@ -64,6 +69,14 @@ body {
   overflow-x: hidden;
 }
 
+/* LUCIDE ICON */
+.lucide {
+  stroke: #ff4500; /* Custom color */
+  stroke-width: 2.5; /* Line thickness */
+  width: 32px; /* Icon size width */
+  height: 32px; /* Icon size height */
+}
+
 .container {
   position: relative;
   width: 100%;
@@ -80,9 +93,28 @@ body {
 }
 #dropdown-menu {
   display: none;
+  position: relative;
 }
 #dropdown-menu.show {
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/** ========== ABOUT PAGE FORM INVISIBLE ========== **/
+
+.popup {
+  top: 0;
+  left: 50%;
+  transform: translateY(-50%, -50%) scale(0.1);
+  visibility: hidden;
+  transition: transform 0.4s top 0.4s;
+}
+.popup.open-popup {
+  visibility: visible;
+  top: 50%;
+  transform: translateY(0) scale(1);
 }
 
 /** ========== ABOUT AND PROJECT PAGES ========== **/
@@ -250,35 +282,6 @@ body {
   align-items: center;
   font-size: 2.5rem;
   cursor: pointer;
-}
-.search {
-  position: relative;
-  width: 400px;
-  margin: 0 10px;
-}
-
-.search label {
-  position: relative;
-  width: 100%;
-}
-
-.search label input {
-  width: 100%;
-  height: 40px;
-  border-radius: 40px;
-  padding: 5px 20px;
-  padding-left: 35px;
-  font-size: 18px;
-  outline: none;
-  border: 1px solid var(--color-blue);
-}
-
-.search label ion-icon {
-  border: 1px solid var(--color-blue);
-  position: absolute;
-  top: 0;
-  left: 10px;
-  font-size: 1.2rem;
 }
 
 .user {
@@ -670,8 +673,27 @@ body {
 
 /** ========== FOR END OF HEADER PAGE ========== **/
 @media screen and (max-width: 689px) {
-  .header_links {
-    display: none;
+  .header_container {
+    position: relative;
+    margin-top: -13%;
+    left: 25px;
+  }
+  .navbar-nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #2a2a2a;
+    flex-direction: column;
+    position: fixed;
+    top: 3%;
+    left: 45%;
+    z-index: 50;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .navbar-nav-links.open {
+    transform: translateY(0);
   }
   .tool-logos {
     display: flex;
@@ -679,6 +701,11 @@ body {
     justify-content: center;
     flex-direction: column;
     margin-bottom: 10px;
+  }
+  /** ========== ABOUT PAGE ========== **/
+  .about_page_hover:hover {
+    background-color: white;
+    padding: 15px;
   }
   /** ========== FORGOT AND RESET PASSWORD PAGEs ========== **/
   #contains {
@@ -720,43 +747,32 @@ body {
   }
   .contact-heading {
     margin-top: 25% !important;
-    padding: 5px 10px;
-    margin-left: -4%;
-    width: 100%;
+    padding: 3px 5px;
+    display: flex;
+    right: 0;
+    text-align: justify;
+    justify-content: center;
   }
   .contact_form_container {
     display: none;
-    position: absolute;
-    z-index: 10;
-    top: 150%;
-    margin-top: 100%;
-    transform: translateX(-100%) scale(0);
-    transition: all 0.05s ease-in-out;
-    opacity: 0;
-    transition: all 0.05s ease-in-out;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.01);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #0f172a;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition:
-      transform 0.3s ease-in-out,
-      opacity 0.3s ease-in-out;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+      opacity 0.3s,
+      transform 0.3s;
   }
-  .show {
+  .contact_form_container.show {
     display: flex;
-    position: absolute;
-    top: 120%;
-    margin-top: 120%;
-    transform: translateX(100%) scale(1);
-    transition: all 0.05s ease-in-out;
-    width: 100%;
-    height: 100vh;
-    margin-left: 4%;
-    z-index: 10;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    /* pointer-events: none; */
   }
   /** ========== END OF CONTACT PAGE ========== **/
   /** ========== REGISTER AND LOGIN PAGEs SECTION ========== **/
@@ -826,9 +842,10 @@ body {
 .contact_form_container {
   display: none;
   position: absolute;
-  z-index: 10;
-  top: 60%;
-  transform: translateY(50%) scale(0);
+  /* z-index: 10;
+  top: 0%;
+  margin-top: -80%; */
+  transform: translateY(0%) scale(0);
   /* transition: all 0.05s ease-in-out; */
   align-items: center;
   justify-content: center;
@@ -844,12 +861,12 @@ body {
 .show {
   display: flex;
   position: absolute;
-  top: 50%;
-  transform: translateY(50%) scale(1);
+  /* top: 0%; */
+  transform: translateY(0%) scale(1);
   /* transition: all 0.05s ease-in-out;  */
   width: 100%;
   height: 70vh;
-  z-index: 10;
+  /* z-index: 10; */
   align-items: center;
   justify-content: center;
   transition: all 0.05s ease-in-out;
@@ -879,14 +896,11 @@ body {
     width: 100%;
   }
   .myPhoto img {
-    width: 70%;
+    margin-top: -40%;
   }
-  .contact-heading {
-    padding-left: 20px;
+  .contact-content {
     display: flex;
-    width: 35%;
-    text-align: center;
-    justify-content: space-between;
+    align-items: center;
   }
   .contact-text_social {
     display: flex;
@@ -905,8 +919,9 @@ body {
     display: none;
     position: absolute;
     z-index: 10;
-    top: 30%;
-    transform: translateY(50%) scale(0);
+    top: 0;
+    margin-top: -60%;
+    transform: translateY(0%) scale(0);
     transition: all 0.05s ease-in-out;
     align-items: center;
     justify-content: center;

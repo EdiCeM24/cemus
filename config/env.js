@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV || "development"}.local` });
+dotenv.config({ path: `.env.${process.env.NODE_ENV || "production"}.local` });
 
 export const {
   PORT,
@@ -26,5 +26,12 @@ export const {
   FACEBOOK_APP_SECRET,
   SESSION_SECRET,
   DATABASE_URL,
+  DATABASE_URI,
   TERMII_API_KEY,
+  ARCJET_SDK_KEY,
+  ARCJET_ENV,
+  PGUSER,
+  PGPASSWORD,
+  PGHOST,
+  PGDATABASE,
 } = process.env;

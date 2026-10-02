@@ -9,7 +9,9 @@ const migration = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn("Users", "role");
+    await queryInterface.removeColumn("Users", "role", {
+      type: Sequelize.ENUM("", "", ""), // added this
+    });
   },
 };
 

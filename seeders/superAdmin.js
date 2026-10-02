@@ -27,5 +27,5 @@ import { Op } from "sequelize";
     req.flesh("success_msg", "Super user created successfully!");
   }
 
-  process.exit(1);  // added 1 in it.
+  process.exit(1); // added 1 in it.
 })();

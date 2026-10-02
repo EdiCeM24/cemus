@@ -5,7 +5,8 @@ import asyncHandler from "../utils/asyncHandler.js";
 
 // I will test it if it works
 export const protects = asyncHandler(async (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies.accessToken; // before it was token and I replaced accessToken.
+
   if (!token) {
     req.flash("error_msg", "Unauthorize access");
     return res.redirect("/api/v1/auth/login");

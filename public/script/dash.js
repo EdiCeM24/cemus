@@ -15,12 +15,6 @@ navLinks.forEach((link) => {
   });
 });
 
-// function app() {
-//   return alert("Are you serious about this?");
-// }
-
-// app();
-
 //
 dropdownBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -31,12 +25,6 @@ dropdownBtns.forEach((btn) => {
 
     // Hide all dropdown menus
     dropdownMenus.forEach((menu) => menu.classList.remove("show"));
-    // Show dropdown menu corresponding to clicked button
-    // const menu = btn.nextElementSibling;
-    // if (menu && menu.classList.contains("dropdown-menu")) {
-    //   menu.classList.add("show");
-    // }
-    // dropdownMenus[index].classList.add("show");
 
     const dropdownMenu = btn.parentNode.querySelector("#dropdown-menu");
     if (dropdownMenu) {
@@ -62,14 +50,3 @@ dropdownBtns.forEach((btn) => {
 //     }
 //   });
 // });
-
-const bsCollapse = new bootstrap.Collapse("#myCollapse", {
-  toggle: false,
-});
-
-const accordionCollapseElementList = document.querySelectorAll(
-  "#myAccordion .collapse",
-);
-const accordionCollapseList = [...accordionCollapseElementList].map(
-  (accordionCollapseEl) => new bootstrap.Collapse(accordionCollapseEl),
-);

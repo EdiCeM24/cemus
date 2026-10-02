@@ -44,8 +44,8 @@ const verifyRefreshToken = asyncHandler(async (req, res, token) => {
       userId,
     });
 
-    res.cookie("accessToken", accessToken, cookieOptions);
-    res.cookie("refreshToken", refreshToken, cookieOptions);
+    res.cookie("accessToken", accessToken, cookieOptions.accessToken);
+    res.cookie("refreshToken", refreshToken, cookieOptions.refreshToken);
 
     req.flash("success_msg", "RefreshToken was verified!");
   } catch (error) {

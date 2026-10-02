@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../database/db.js";
+// import sequelize from "./index.js";
 
 const UserSchema = sequelize.define(
   "Users",
@@ -26,8 +27,6 @@ const UserSchema = sequelize.define(
     email: {
       type: DataTypes.STRING,
       unique: true,
-      required: true,
-      trim: true,
       allowNull: false,
       validate: {
         isEmail: true,

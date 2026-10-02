@@ -6,7 +6,9 @@ const clickMe = document.querySelector(".signup-btn");
 clickMe.addEventListener("click", app);
 
 function app() {
-  return alert("Are you serious about this?");
+  return alert(
+    "Welcome to Edidiong's portfolio website! Feel free to explore.",
+  );
 }
 
 app();
