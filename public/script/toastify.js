@@ -1,3 +1,9 @@
+import { createIcons, icons } from "lucide";
+import "toastify-js/src/toastify.css";
+
+// Initialize all icons with data-lucide attribute
+createIcons({ icons });
+
 Toastify({
   text: "This is a success toast!",
   duration: 3000,

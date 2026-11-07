@@ -1,48 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <%- include('partials/head.ejs') %>
-  <body data-theme="dark" class="text-white overflow-x-hidden p-0 m-0 box-border bg-base-100 text-base-content">
+  <body data-theme="dark" class="text-white overflow-x-hidden p-0 m-0 box-border bg-base-10 text-base-conten bg-slate-950">
     <header>
       <%- include('partials/navbar.ejs') %>
     </header>
     <!-- Main Content Area -->
-        <main class="main relative flex items-center justify-between flex-col w-full">
-          <div class="mb-5 absolute top-[3%] md:mt-[3%] mt-[4%] md:ml-0 ml-[30%]">
-            
-
-            
-          </div> 
+    <main class="main relative flex items-center justify-between flex-col w-full">
+      <div class="mb-5 absolute top-[3%] md:mt-[3%] mt-[4%] md:ml-0 ml-[30%]"></div> 
     
-          <div class="signup-message absolute -top-12 gap-4 flex items-center justify-between text-nowrap whitespace-normal">
-                <% for( let index = 0; index < success_msg.length; index++ ) { %>
-                  <div class="flex items-center justify-evenly gap-2 -mt-4 bg-slate-300 bg-opacity-70 p-1 py-1 px-1" id="success_msg">
-                    <% if (success_msg[index]) { %>
-                      <p class="text-green-600 text-pretty text-sm font-medium"><%= success_msg[0] %></p>
-                      <span class="cursor-pointer text-2xl font-semibold text-rose-600 hover:text-rose-500" id="success-btn">&times;</span>
-                    <% } %>
-                  </div>
-                <% } %>
-
-                <div class="flex items-center justify-evenly gap-2 -mt-4 bg-opacity-70 p-1 py-1 px-1" id="error_msg">
-                  <% for( let index = 0; index < error_msg.length; index++ ) { %>
-                    <% if (error_msg[index]) { %>
-                      <span class="text-rose-600 text-pretty bg-slate-300 -mt-4 bg-opacity-70 p-1 py-1 px-1  text-sm font-medium"><%= error_msg %></span>
-                      <span class="cursor-pointer text-2xl font-semibold -mt-4 bg-opacity-70 p-1 py-1 px-1 text-rose-600 hover:text-rose-500 bg-slate-300" id="error-Btn">&times;</span>
-                    <% } %>
-                  <% } %>
-                </div>
-
-                <div class="flex items-center justify-evenly gap-2 -mt-4 bg-opacity-70 p-1 py-1 px-1" id="error_msge">
-                  <% for( let index = 0; index < error.length; index++ ) { %>
-                    <% if(error[index]) { %>
-                      <span class="text-rose-600 text-pretty bg-slate-300 text-sm -mt-4 bg-opacity-70 p-1 py-1 px-1 font-medium"><%= error %></span>
-                      <span class="cursor-pointer text-2xl font-semibold text-rose-600 hover:text-rose-500 -mt-4 bg-opacity-70 p-1 py-1 px-1 bg-slate-300" id="errorEl">&times;</span>
-                    <%}%> 
-                  <% } %>
-                </div>
-              </div>
+        <div class="signup-message absolute -top-12 gap-4 flex items-center justify-between text-nowrap whitespace-normal">
+                
           
-          </div>
+        </div>
 
           <!-- ========== INTRODUCTION ========== -->
           <!-- Hero Section -->
@@ -72,7 +42,7 @@
             </h2>
 
             <p class="text-slate-300 text-lg leading-relaxed max-w-xl mt-8 mb-10">
-              I design and develop modern, scalable, and production-ready web applications using React.js, Node.js, Express.js, PostgreSQL, and modern UI technologies.
+              I design and develop modern, scalable, and production-ready web applications using React.js, Node.js, Express.js, Django, PostgreSQL, and modern UI technologies.
             </p>
 
             <div class="flex flex-wrap items-center gap-5">
@@ -212,7 +182,7 @@
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
-              <img src="/codebase.jpg" class="h-56 w-full object-cover" />
+              <img src="/images/Microsoft-Surface-Duo-localhost.png" class="h-56 w-full object-cover" />
 
               <div class="p-8">
                 <h3 class="text-2xl font-bold mb-4">SaaS Dashboard</h3>
@@ -287,19 +257,7 @@
 
       
     </main>
-    <footer>
-      <%- include('partials/footer.ejs') %>
-    </footer>
-    <script src="/script/app.js"></script>
-    <script>
-      const themeSelect = document.getElementById('theme-select');
-      themeSelect.addEventListener('change', (e) => {
-        const newTheme = e.target.value;
-        document.documentElement.setAttribute('data-theme', newTheme)
-      })
-   </script>
-   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
+    
    <script>
       // Use EJS output syntax to check if the message array contains elements
       // connect-flash returns an array, so check if length > 0
@@ -317,26 +275,50 @@
     <% } %>
 
     <% if (error_msg && error_msg.length > 0) { %>
-        Toastify({
-            text: "<%= error_msg %>",
-            duration: 4000,
-            gravity: "top",
-            position: "right",
-            style: {
-                background: "linear-gradient(to right, #ff5f6d, #ffc371)",
-            }
-        }).showToast();
+      Toastify({
+        text: "<%= error_msg %>",
+        duration: 4000,
+        gravity: "top",
+        position: "right",
+        style: {
+          background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+        }
+      }).showToast();
     <% } %>
-    <% if (error && error.length > 0) { %>
-        Toastify({
-            text: "<%= error %>",
-            duration: 4000,
-            gravity: "top",
-            position: "right",
-            style: {
-                background: "linear-gradient(to right, #ff5f6d, #ffc371)",
-            }
-        }).showToast();
-    <% } %>
+    <div class="">
+      <!-- // Check if there is a success message -->
+      <% if (success_msg && success_msg.length > 0) { %>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '<%= success_msg %>',
+            timer: 3000
+        });
+      <% } %>
+
+      <!-- // Check if there is an error message -->
+      <% if (error_msg && error_msg.length > 0) { %>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '<%= error_msg %>'
+        });
+      <% } %>
+    </div>
+    <footer>
+      <%- include('partials/footer.ejs') %>
+    </footer>
+    <script src="/script/app.js"></script>
+    <script>
+      const themeSelect = document.getElementById('theme-select');
+      themeSelect.addEventListener('change', (e) => {
+        const newTheme = e.target.value;
+        document.documentElement.setAttribute('data-theme', newTheme)
+      })
+   </script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.min.js"></script>
   </body>
 </html>

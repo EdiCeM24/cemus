@@ -8,8 +8,8 @@ import {
   messageHandler,
 } from "../controllers/admin.controller.js";
 import { authorize, protects } from "../middlewares/protect.middleware.js";
-import isAdmin from "../middlewares/isAdmin.middleware.js";
 import verifyEmail from "../controllers/verifyEmail.controller.js";
+import isSuperAdmin from "../middlewares/protect.middleware.js";
 
 const adminRouter = express.Router();
 // authorize("admin"), protects, isAdmin,
@@ -21,10 +21,13 @@ adminRouter.get(
 );
 
 // THE USE ONE
+// protects,
+// authorize,
+// isSuperAdmin,
+// verifyEmail,
 adminRouter.get(
   "/admin",
-  // protects,
-  // authorize("super_admin", "admin"),
+
   admins,
 );
 
@@ -49,7 +52,7 @@ adminRouter.delete(
   "/user/:id",
   authorize("super_admin", "admin"),
   protects,
-  isAdmin,
+
   handleUserDelete,
 );
 
@@ -57,7 +60,7 @@ adminRouter.delete(
   "/message/:id",
   authorize("super_admin", "admin"),
   protects,
-  isAdmin,
+
   deleteMessage,
 );
 

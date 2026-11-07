@@ -1,0 +1,39 @@
+<div class="">
+  <div class="hidde bg-slate-800 rounded-md flex items-center flex-col w-full py-3 px-5 h-full" id="getAllUsersBoard">
+    <span class="" id="display-board"> Users Display Board</span>
+    <ul class="mb-3 flex items-center">
+      <% users.forEach(user => { %>
+        <li class="flex items-center">
+          <a href="/admin/admin/<%= user.id %>" class="">Name: <%= user.firstName %></a>
+          <button class="" onclick="showUserDetails('<= user.id %>')">View Details</button>
+        </li>
+      <% }) %>
+    </ul>
+    <div class="p-4 flex items-center flex-col w-full mb-3" id="user-details"></div>
+    <span class="md:flex items-center gap-5 justify-center w-full mt-4">
+      <button
+        type="button"
+        id="single-user"
+        class="bg-blue-600 py-2 px-4 md:mb-0 mb-2 border-none outline-none shadow-md hover:bg-blue-800 text-white font-semibold font-serif teansition-200 duration-200 ease-in-out w-full rounded-sm"
+      >
+        User
+      </button>
+      <button
+        type="button" 
+        id="user-details"
+        onclick="showUserDetails('<= user.id %>')" 
+        class="bg-blue-600 py-2 px-4 md:mb-0 mb-2 border-none outline-none shadow-md hover:bg-blue-800 text-white font-semibold font-serif teansition-200 duration-200 ease-in-out w-full rounded-sm"
+      >
+        User Details
+      </button>
+      <button
+        type="button"
+        id="board-cancel"
+        class="bg-blue-600 py-2 px-4 border-none outline-none shadow-md hover:bg-blue-800 text-white font-semibold font-serif teansition-200 duration-200 ease-in-out w-full rounded-sm"
+      >
+        Cancel
+      </button>
+    </span>
+  </div>
+</div>
+<script src="/public/js/main.js"></script>

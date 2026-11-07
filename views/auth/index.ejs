@@ -3,103 +3,117 @@
 <head>
   <%- include('../includes/head.ejs') %>
 </head>
-<body class="bg-[#f9fafb] p-0 m-0 h-[100vh]">
-  <div class="signup-container mx-auto container flex items-center justify-center bg-[#f9fafb] mt-[5%]">
-    
+<body class="bg-[#f9fafb] p-0 m-0">
+  <div class="mb-2">
+    <header class="flex items-center justify-between p-2.5 bg-slate-800 top-0 h-14 w-full">
+      <span class="flex items-center gap-1">
+        <img src="/images/favicon3.ico" class="w-14 h-14 object-cover rounded-full p-2" alt="">
+        <p class="text-2xl font-extra-bold gradient-text font-serif">Edidiong</p>
+      </span>
 
-    <div class="auth-container flex h-[100vh] bg-[#f9fafb] items-center justify-center">
-      
-     
-      
-      <div class="authCard flex items-center justify-evenly m-[30px] w-full h-[800px]">
+      <div class="">
+        <a href="" class="text-xl font-bold text-teal-600 hover:text-teal-700 transition duration-200 text-serif">Logout</a>
+      </div>
+    </header>
 
+    <div class="container w-full mx-auto flex items-center justify-center bg-[#f9fafb] mt-[-2%]">
+      <div class="md:flex w-full bg-[#f9fafb] items-center justify-center">
         <div 
-          class="auth-left flex-1 
+          class="flex-1 
           bg-gradient-to-tr from-[#4f46e5] via-[#9911f3] to-[#34ef78] 
-          flex p-[40px] text-white items-center h-[500px] w-[20%] 
-          justify-center flex-col rounded-[4px]"
+          flex p-[40px] text-white items-center h-[455px]  w-full md:max-w-[50%] 
+          justify-center flex-col rounded-[4px] mt-[-4%]"
         >
-          <strong>Welcome!</strong>
-          <span class="font-semibold font-serif">Create your account...</span>
-          <div class="signup-message">
-            <div class="p-2 mb-2">
-               <% if (success_msg) { %>
-                <p class="text-green-500 text-justify text-lg font-medium"><%= success_msg[0] %></p>
-               <% } %>
-            </div>
-
-            <div class="mb-2 p-1">
-              <% if (error_msg) { %>
-                <span class="text-rose-500 font-serif font-semibold"><%= error_msg %></span>
-              <% } %>
-            </div>
-
-            <div class="mb-2 p-1">
-              <% if(error) { %>
-                <span class="text-rose-500 font-serif font-semibold"><%= error %></span>
-              <%}%> 
-            </div>
-          </div>
+          <strong class="text-gray-300 font-bold">Welcome!</strong>
+          <span class="font-semibold font-serif text-gray-300">Create your account...</span>
         </div>
-        <div class="auth-right flex-1 p-[0px]">
-          <form action="/api/v1/auth/register" method="POST" class="form p-0.5" enctype="multipart/form-data">
-            <!-- <input type="hidden" name="" value=""/> -->
-            <div class="signup-head-text mb-5">
-              <strong class="flex text-justify font-serif text-pretty text-[16px] font-semibold text-gray-800" id=""></strong>
-            </div>
-            <div class="social-link flex space-x-1 items-center justify-evenly bottom-1 mb-[2px] mt-1">
-              <a href="http://localhost:6002/auth/google/callback" class="no-underline"><img src="/images/google.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
-              <a href="http://localhost:6002/auth/facebook/callback" class="no-underline"><img src="/images/facebook.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
-              <a href="http://localhost:6002/auth/github/callback" class="no-underline"><img src="/images/github.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
-            </div>
-            <div class="mb-0.5 p-0">
-              <div class="profile-image">
-                <input type="file" class="w-full p-[8px] text-slate-950 mb-0.5" name="profile" id="profile" required>
+        <div class="authCard flex items-center justify-evenly w-full h-[800px] flex-1 mt-[-4%]">
+
+          <div class="auth-right flex-1 p-[0px]">
+            <form action="/api/v1/auth/register" method="POST" class="form p-0.5 w-full" enctype="multipart/form-data">
+              <!-- <input type="hidden" name="" value=""/> -->
+              <div class="signup-head-text mb-5">
+                <strong class="flex text-justify font-serif text-pretty text-[16px] font-semibold text-gray-800" id=""></strong>
+              </div>
+              <div class="social-link flex space-x-1 items-center justify-evenly bottom-1 mb-[2px] mt-1">
+                <a href="http://localhost:6002/auth/google/callback" class="no-underline"><img src="/images/google.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+                <a href="http://localhost:6002/auth/facebook/callback" class="no-underline"><img src="/images/facebook.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+                <a href="http://localhost:6002/auth/github/callback" class="no-underline"><img src="/images/github.png" class="w-6 h-6 rounded-full border border-violet-400 flex items-center justify-center" alt=""></a>
+              </div>
+              <div class="mb-0.5 p-0">
+                <div class="profile-image">
+                  <input type="file" class="w-full p-[8px] text-slate-950 mb-0.5" name="profile" id="profile" required>
+                </div>
+
+                <div class="mb-[12px] p-0">
+                  <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="firstName" id="firstName" placeholder="Enter your first name..." required autocapitalize="off" autofocus>
+                  <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="lastName" id="lastName" placeholder="Enter your last name..." required autocapitalize="off" autofocus>
+                </div>
+
+                <div class="mb-1 p-0">
+                  <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="username" id="username" placeholder="Enter your username..." required autocapitalize="off" autofocus>
+                  <input type="email" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="email" id="email" placeholder="Enter your email..." required autocapitalize="off" autofocus>
+                </div>
+                <div class="mb-1 p-0">
+                  <input type="password" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="password" id="password" placeholder="Enter your password..." required autocapitalize="off" autofocus>
+                  <span class="signup_eye_icons relative"><i class="fa fa-eye absolute top-1 right-3 cursor-pointer" aria-hidden="false"></i></span>
+                </div>
+                
+                <div class="btn-signup mb-0.5 p-0.5">
+                  <button type="submit" class="signup-btn w-full p-2 bg-[#4f46e5] text-white border-none rounded-[4px] cursor-pointer transition-[0.3s] duration-150 ease-in-out uppercase text-[20px] hover:bg-[#6366f1]">Register</button>
+                </div>
               </div>
 
-              <div class="mb-[12px] p-0">
-                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="firstName" id="firstName" placeholder="Enter your first name..." required autocapitalize="off" autofocus>
-                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="lastName" id="lastName" placeholder="Enter your last name..." required autocapitalize="off" autofocus>
-              </div>
+              <div class="signup-cont p-0.5 w-full">
+                <div class="parma-link flex items-center justify-between">
+                  <p class="text-black text-[15px] font-medium">Have an account? <a href="/api/v1/auth/login" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Login</a></p>
 
-              <div class="mb-1 p-0">
-                <input type="text" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="username" id="username" placeholder="Enter your username..." required autocapitalize="off" autofocus>
-                <input type="email" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-1 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="email" id="email" placeholder="Enter your email..." required autocapitalize="off" autofocus>
-              </div>
-              <div class="mb-1 p-0">
-                <input type="password" class="w-full p-[8px] text--[18px] font-semibold text-slate-950 mb-0.5 border-[#ddd] border-solid border outline-none focus:border-blue-700 focus:shadow-[0, 0, 5px rgba(79, 70, 229, 0.3)]" name="password" id="password" placeholder="Enter your password..." required autocapitalize="off" autofocus>
-                <span class="signup_eye_icons relative"><i class="fa fa-eye absolute top-1 right-3 cursor-pointer" aria-hidden="false"></i></span>
-              </div>
-              
-              <div class="btn-signup mb-0.5 p-0.5">
-                <button type="submit" class="signup-btn w-full p-2 bg-[#4f46e5] text-white border-none rounded-[4px] cursor-pointer transition-[0.3s] duration-150 ease-in-out uppercase text-[20px] hover:bg-[#6366f1]">Register</button>
-              </div>
-            </div>
+                  <a href="/api/v1/passwords/forgot" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Forgot Password</a>
+                </div>
 
-            <div class="signup-cont p-0.5 w-full">
-              <div class="parma-link flex items-center justify-between">
-                <p class="text-black text-[15px] font-medium">Have an account? <a href="/api/v1/auth/login" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Login</a></p>
+                <div class="terms-links">
+                  <p class="text-black text-[16px] font-semibold">By clicking these 
+                    <a href="/api/v1/homes/terms-of-use" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Terms and Conditions</a> 
+                    <span class="text-rose-700">and</span>
+                    <a href="/api/v1/homes/privacy-policy" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Privacy Policy</a>
+                  </p>
+                </div>
 
-                <a href="/api/v1/passwords/forgot" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Forgot Password</a>
               </div>
-
-              <div class="terms-links">
-                <p class="text-black text-[16px] font-semibold">By clicking these 
-                  <a href="/api/v1/homes/terms-of-use" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Terms and Conditions</a> 
-                  <span class="text-rose-700">and</span>
-                  <a href="/api/v1/homes/privacy-policy" class="text-blue-700 hover:text-blue-500 text-[16px] font-semibold">Privacy Policy</a>
-                </p>
-              </div>
-
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
+  </div>  
+  
+  
+  <div class="">
+    <% if (success_msg && success_msg.length > 0) { %>
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: '<%= success_msg %>',
+        timer: 3000,
+        confirmButtonColor: '#3085d6'
+      });
+    <% } %>
+
+    <% if (error_msg && error_msg.length > 0) { %>
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '<%= error_msg %>',
+        confirmButtonColor: '#d33'
+      });
+    <% } %>
   </div>
-  <footer>
+  <footer class="mt-[5%] bg-slate-800">
     <%- include('../includes/footer.ejs') %>
   </footer>
   <script src="/script/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.min.js"></script>
+  <!-- SweetAlert Flash Handler Logic -->
 </body>
 </html>

@@ -5,18 +5,30 @@
 @plugin "daisyui";
 @import "daisyui/dist/full.css";
 
+[data-lucide] {
+  width: 24px;
+  height: 24px;
+  stroke: #4f46e5; /* Icon color */
+  stroke-width: 2; /* Line thickness */
+}
+
 /* Safe-padding for mobile devices with notches */
 :root {
   --ion-safe-area-top: 20px;
   --ion-safe-area-bottom: 20px;
 }
 * {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 body {
   font-family: "Inter", sans-serif;
   background: #0f172a;
   overflow-y: scroll;
+}
+.show-sidebar {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  transition-duration: 300ms;
 }
 /** ========== ALL NAVBARS PAGE SECTION ========== **/
 .nav-link {

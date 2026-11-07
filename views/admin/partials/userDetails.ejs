@@ -1,0 +1,19 @@
+<div class="">
+  <div
+    class="hidde bg-slate-800 rounded-md w-full py-3 px-5 h-full"
+    id="userDetailsBoard"
+  >
+    <span class=""> User Details Board</span>
+    <ul class="">
+      <li class="p-4">
+        <span class="mb-2.5"><%= userDetails.profile || userDetails.avatar %></span>
+        <span class="mb-2.5">Username: <%= userDetails.username %></span>
+        <span class="mb-2.5">First Name: <%= userDetails.fisttName %></span>
+        <span class="mb-2.5">Second Name: <%= userDetails.lastName %></span>
+        <span class="mb-2.5">Email: <%= userDetails.email %></span>
+      </li>
+    </ul>
+    <div class="p-4 flex items-center flex-col w-full" id="user-details"></div>
+  </div>
+</div>
+<script src="/public/js/main.js"></script>

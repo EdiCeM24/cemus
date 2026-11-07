@@ -1,5 +1,5 @@
 import express from "express";
-import { signOut, register } from "../controllers/auth.controller.js";
+import { register } from "../controllers/auth.controller.js";
 import {
   handleLogin,
   verifyTokenMessage,
@@ -13,6 +13,7 @@ import validateUser from "../middlewares/inputValidator.middleware.js";
 // import { refreshTokenHandler } from "../controllers/refreshToken.controller.js";
 import verifyRefreshToken from "../services/auth.service.js";
 import { protects } from "../middlewares/protect.middleware.js";
+import fileSizeErrorHandler from "../middlewares/multerErrorHandler.js";
 
 const authRouter = express.Router();
 
@@ -39,11 +40,17 @@ authRouter.post("/refresh-token", verifyRefreshToken); // To use it and verify s
 
 authRouter.get("/verify/:token", verifyEmail);
 
-authRouter.post("/register", upload.single("profile"), validateUser, register);
+authRouter.post(
+  "/register",
+  upload.single("profile"),
+  fileSizeErrorHandler,
+  validateUser,
+  register,
+);
 
 authRouter.post("/sign-in", validateUser, signIn);
 
 // verifyToken
-authRouter.post("/logout", signOut);
+// authRouter.post("/logout", signOut);
 
 export default authRouter;

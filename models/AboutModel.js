@@ -50,6 +50,13 @@ const aboutForm = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    date: {
+      type: DataTypes.DATE,
+    },
+    status: {
+      type: DataTypes.ENUM("completed", "pending", "negotiated"),
+      defaultValue: "pending",
+    },
   },
   { timestamps: true },
 );

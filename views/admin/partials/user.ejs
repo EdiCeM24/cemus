@@ -1,0 +1,20 @@
+<div class="">
+  <div
+    class="hidde bg-slate-800 rounded-md w-full py-3 px-5 h-full"
+    id="getuserBoard"
+  >
+    <span class=""> User Display Board</span>
+    <div class="">
+      <span class="">Name: <%= user.name %></span>
+      <span class="">Name: <%= user.email %></span>
+    </div>
+    <ul class="">
+      <li class="">
+        <a href="/users/<%= user.id %>" class=""><%= user.name %></a>
+        <button class="" onclick="showUserDetails('<= user.id %>')"></button>
+      </li>
+    </ul>
+    <div class="p-4 flex items-center flex-col w-full" id="user-details"></div>
+  </div>
+</div>
+<script src="/public/js/main.js"></script>

@@ -1,0 +1,121 @@
+<aside
+  id="sidebar"
+  class="w-64 bg-green-900 text-slate-100 flex mt-10 md:overflow-auto overflow-auto py-4 flex-col transition-all duration-300"
+>
+  <div
+    class="h-16 flex items-center gap-1 px-6 justify-center font-bold text-xl border-b border-slate-800"
+  >
+    <div
+      class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-sm text-white"
+    >
+      ⚡
+    </div>
+    <span class="text-indigo-500">Dash</span>Board
+  </div>
+  <nav class="flex-1 px-4 py-6 space-y-2">
+    <div class="">
+      <a
+        href="/api/v1/homes/home"
+        class="flex items-center px-4 py-2.5 bg-indigo-600 rounded-lg text-white font-medium"
+      >
+        Contents
+      </a>
+      <span class="flex flex-1 items-start flex-col justify-start">
+        <button
+          id="analytics-btn"
+          data-target="analytics-show-1"
+          class="flex items-center px-4 py-2.5 hover:bg-slate-800 rounded-lg w-24 text-slate-300"
+        >
+          Analytics
+        </button>
+
+        <div
+          class="hidden items-center flex-col py-2 w-20 left-0 p-2"
+          id="analytics-show-1"
+        >
+          <button class="text-gray-300 hover:text-white" id="">
+            Customers
+          </button>
+          <button class="text-gray-300 hover:text-white" id="">Customer</button>
+          <button class="text-gray-300 hover:text-white" id="">Details</button>
+        </div>
+      </span>
+      <span class="flex flex-1 items-start flex-col justify-start">
+        <button
+          id="analytics-btn"
+          data-target="analytics-show-2"
+          class="flex items-center px-4 py-2.5 hover:bg-slate-800 rounded-lg w-24 text-slate-300"
+        >
+          Users
+        </button>
+
+        <div
+          class="hidden items-center flex-col py-2 w-20 left-0 p-2"
+          id="analytics-show-2"
+        >
+          <button class="text-gray-300 hover:text-white" id="">Users</button>
+          <button class="text-gray-300 hover:text-white" id="">User</button>
+          <button class="text-gray-300 hover:text-white" id="">Details</button>
+        </div>
+      </span>
+
+      <span class="flex flex-1 items-start flex-col justify-start">
+        <button
+          id="analytics-btn"
+          data-target="analytics-show-3"
+          class="flex items-center px-4 py-2.5 hover:bg-slate-800 rounded-lg w-24 text-slate-300"
+        >
+          Messages
+        </button>
+
+        <div
+          class="hidden items-center flex-col py-2 w-20 left-0 p-2"
+          id="analytics-show-3"
+        >
+          <button class="text-gray-300 hover:text-white" id="">messages</button>
+          <button class="text-gray-300 hover:text-white" id="">Message</button>
+          <button class="text-gray-300 hover:text-white" id="">Details</button>
+        </div>
+      </span>
+      <span class="flex flex-1 items-start flex-col justify-start">
+        <button
+          id="analytics-btn"
+          data-target="analytics-show-4"
+          class="flex items-center px-4 py-2.5 hover:bg-slate-800 rounded-lg w-24 text-slate-300"
+        >
+          Activities
+        </button>
+
+        <div
+          class="hidden items-center flex-col py-2 w-20 left-0 p-2"
+          id="analytics-show-4"
+        >
+          <button class="text-gray-300 hover:text-white" id="">Job Type</button>
+          <button class="text-gray-300 hover:text-white" id="">Amount</button>
+          <button class="text-gray-300 hover:text-white" id="">Details</button>
+        </div>
+      </span>
+
+      <span class="flex flex-1 items-start flex-col justify-start">
+        <button
+          id="analytics-btn"
+          data-target="analytics-show-5"
+          class="flex items-center px-4 py-2.5 hover:bg-slate-800 rounded-lg w-24 text-slate-300"
+        >
+          Settings
+        </button>
+
+        <div
+          class="fle hidden items-center flex-col py-2 w-20 left-0 p-2"
+          id="analytics-show-5"
+        >
+          <button class="text-gray-300 hover:text-white" id="">Register</button>
+          <button class="text-gray-300 hover:text-white" id="">Login</button>
+          <button class="text-gray-300 hover:text-white" id="">Sign Out</button>
+        </div>
+      </span>
+    </div>
+  </nav>
+</aside>
+
+<script src="/script/admin.js"></script>

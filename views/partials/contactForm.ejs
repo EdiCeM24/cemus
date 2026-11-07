@@ -1,0 +1,152 @@
+<link rel="stylesheet" href="/css/output.css" />
+
+<div class="w-full h-full flex-col">
+  <div
+    id="modal_form_container"
+    class="moda bg-slate-800 w-full h-full antialiased"
+  >
+    <div class="modal-bo">
+      <div class="modal-to flex items-center justify-between">
+        <p class="text-gray-300 text-xl font-serif font-medium">
+          Complete the form to get in touch
+        </p>
+        <button
+          type="button"
+          id="closePopup"
+          class="text-gray-300 flex items-center justify-center text-2xl font-bold"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-middl">
+        <form
+          action=""
+          method="POST"
+          class="w-full h-full bg-rose-500 p-3 antialiased"
+        >
+          <div class="w-full flex items-center mt-4 flex-col gap-y-2">
+            <input
+              type="text"
+              name="name"
+              class="input input-bordered w-full max-w-xs"
+              placeholder="Enter name"
+              required
+              autocomplete="off"
+            />
+            <input
+              type="email"
+              name="email"
+              class="input input-bordered w-full max-w-xs"
+              placeholder="Enter email"
+              required
+              autocomplete="off"
+            />
+            <input
+              type="tel"
+              name="phoneNumber"
+              class="input input-bordered w-full max-w-xs"
+              placeholder="Enter phone number"
+              required
+              autocomplete="off"
+            />
+            <input
+              type="text"
+              name="company"
+              class="input input-bordered w-full max-w-xs"
+              placeholder="Enter company name"
+              required
+              autocomplete="off"
+            />
+            <input
+              type="url"
+              name="website"
+              class="input input-bordered w-full max-w-xs"
+              placeholder="Enter company website"
+              required
+              autocomplete="off"
+            />
+            <input
+              type="text"
+              name="subject"
+              class="input input-bordered w-full max-w-xs"
+              placeholder="Enter your subject"
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="lg:flex items-center justify-evenly gap-x-24 gap-y-5">
+            <span class="flex items-center gap-1">
+              <input
+                type="radio"
+                name="service"
+                value="freelance"
+                class=""
+                required
+              />
+              <label for="" class="text-gray-300 text-[13px] font-medium"
+                >Freelance</label
+              >
+              <input
+                type="radio"
+                name="service"
+                value="remote"
+                class=""
+                required
+              />
+              <label for="" class="text-gray-300 text-[13px] font-medium"
+                >Remote</label
+              >
+              <input
+                type="radio"
+                name="service"
+                value="onSite"
+                class=""
+                required
+              />
+              <label
+                for=""
+                class="form-control text-gray-300 text-[13px] font-medium whitespace-nowrap"
+                >On site</label
+              >
+            </span>
+
+            <select
+              name="budget"
+              id=""
+              class="outline-none bg-sky-950 text-white p-4 rounded-[4px] mt-2"
+              required
+            >
+              <option>Weekly Budget</option>
+              <option value="1">$1000</option>
+              <option value="2">$1500</option>
+              <option value="3">$2000</option>
+              <option value="4">$2500</option>
+              <option value="5">$3000</option>
+              <option value="6">$4000+</option>
+            </select>
+          </div>
+
+          <div class="mt-2 mb-2">
+            <textarea
+              name="message"
+              class="w-full bg-slate-800 text-gray-300 rounded-[4px] outline-none border-2 hover:border-sky-600"
+              id=""
+              cols="20"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          <div class="">
+            <button type="submit" class="btn btn-success text-white shadow-md">
+              Contact Me
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/script/about.js"></script>

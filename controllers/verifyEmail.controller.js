@@ -5,7 +5,7 @@ import hashToken from "../utils/hashToken.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 const verifyEmail = asyncHandler(async (req, res) => {
-  const { token } = req.params;
+  const { token } = req.params; // cookies
 
   if (!token) {
     return res.status(400).json({ message: "Invalid verification token" });
@@ -23,7 +23,7 @@ const verifyEmail = asyncHandler(async (req, res) => {
     where: {
       verificationToken: hashedToken,
       verificationTokenExpires: {
-        [Op.gt]: new Date(Date.now() + 30 * 60 * 1000),
+        [Op.gt]: new Date(),
       },
     },
   });
@@ -34,9 +34,9 @@ const verifyEmail = asyncHandler(async (req, res) => {
     return res.redirect("/api/v1/auth/sign-up");
   }
 
+  // Clear token fields and mark as verified
   user.verificationToken = null;
   user.verificationTokenExpires = null;
-
   user.isVerified = true;
   await user.save();
 

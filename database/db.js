@@ -15,8 +15,8 @@ const sequelize = new Sequelize(
     dialect: "postgres",
     host: "localhost",
     port: DATABASE_PORT,
-    logging:
-      NODE_ENV === "production" ? false : console.log("production.local"),
+    logging: console.log(),
+    //NODE_ENV === "production" ? false : console.log("production.local"),
   },
 );
 

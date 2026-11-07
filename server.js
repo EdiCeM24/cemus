@@ -79,8 +79,9 @@ app.use(
     rolling: true,
     proxy: true,
     cookie: {
-      secure: NODE_ENV === "production",
+      path: "/",
       httpOnly: true,
+      secure: NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 3 * 24 * 60 * 60 * 1000,
     },
@@ -110,9 +111,8 @@ app.use(
 
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success");
-  res.locals.error_msg = req.flash("error_msg");
-  res.locals.error = req.flash("error");
-  return next();
+  res.locals.error_msg = req.flash("error");
+  next();
 });
 
 app.use(limiter); // It applies to all routes
@@ -256,15 +256,19 @@ app.get("/download-cv/", (req, res) => {
 // DB AND SERVER
 
 //
-sequelize
-  .sync({ alter: true })
-  .then(() => {
-    console.log("Database is syncing!");
+const startServser = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("PostgreSQL Connected!");
+    await sequelize.sync({ alter: true });
+    console.log("Databse Synchronized!");
     app.listen(port, () => {
-      console.log(`Server is listening on port localhost:${port}`);
+      console.log(`Server is listening on port 🚀 localhost:${port}`);
     });
-  })
-  .catch((err) => {
-    console.log(`Server is not responding: ${err}`);
+  } catch (error) {
+    console.log(`Server is not responding: ${error}`);
     process.exit(1);
-  });
+  }
+};
+
+startServser();

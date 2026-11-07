@@ -1,6 +1,6 @@
 import Contact from "../models/contact.model.js";
 // import {} from "../config/env.js";
-import sendEmail from "../config/sendEmail.js";
+// import sendEmail from "../config/sendEmail.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { Op } from "sequelize";
 import sequelize from "../database/db.js";
@@ -54,16 +54,16 @@ export const handleContactLogic = async (req, res) => {
 
     switch (service) {
       case "1":
-        budgetType = "1000-1500";
+        budgetType = "1000";
         break;
       case "2":
-        budgetType = "1500-2000";
+        budgetType = "1500";
         break;
       case "3":
-        budgetType = "2000-2500";
+        budgetType = "2000";
         break;
       case "4":
-        budgetType = "2500-3000";
+        budgetType = "2500";
         break;
       case "5":
         budgetType = "3000+";
@@ -112,14 +112,6 @@ export const handleContactLogic = async (req, res) => {
       },
       { transaction },
     );
-
-    await sendEmail({
-      to: contactMessage.email,
-      subject: "Your Messages have been sent!",
-      html: `
-      <h2>Email Confirmation. Thank you!</h2>
-      `,
-    });
 
     await transaction.commit();
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title || 'Admin Dashboard' %></title>
+    <link rel="stylesheet" href="/css/output.css" />
+  </head>
+  <body class="bg-slate-100 text-slate-900 antialiased font-sans">
+    <div class="flex h-screen overflow-hidden">
+      <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <%- include('../partials/sidebar') %>
+
+        <!-- Main Right Container Area -->
+        <div class="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <!-- Navbar -->
+          <%- include('../partials/header') %>
+
+          <!-- Dynamic Page Body Injection -->
+          <main class="flex-1 p-4 md:p-8"><%- body %></main>
+        </div>
+      </div>
+    </div>
+    <!-- Global scripts -->
+    <script src="/js/main.js"></script>
+    <!-- Dynamic Page-Specific JavaScript Injection -->
+    <%- script %>
+  </body>
+</html>

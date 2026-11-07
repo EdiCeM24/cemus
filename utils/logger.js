@@ -8,7 +8,7 @@ export const logger = winston.createLogger({
   ),
 
   transports: [
-    new winston.transports.console(),
+    new winston.transports.Console(),
     new winston.transports.File({ filename: "logs/device-registration.log" }),
   ],
 });

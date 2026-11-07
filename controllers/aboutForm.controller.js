@@ -72,22 +72,22 @@ const messageForm = asyncHandler(async (req, res) => {
 
   switch (budget) {
     case "1":
-      budgetType = "1000-1500";
+      budgetType = "1000";
       break;
     case "2":
-      budgetType = "1500-2000";
+      budgetType = "1500";
       break;
     case "3":
-      budgetType = "2000-2500";
+      budgetType = "2000";
       break;
     case "4":
-      budgetType = "2500-3000";
+      budgetType = "2500";
       break;
     case "5":
-      budgetType = "3000-3500";
+      budgetType = "3000";
       break;
     case "6":
-      budgetType = "4000+";
+      budgetType = "3500+";
       break;
     default:
       budgetType = "unrecognized";

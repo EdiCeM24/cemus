@@ -62,56 +62,59 @@
         >Homepage</a
       >
       <!-- <a href="#" class="hover:text-cyan-400 transition ease-in-out hover:border-b-2 border-b-orange-600">Services</a> -->
-      <div class="relative group">
-        <% users.forEach(user => { %>
-          <img
-            src=" user.profile "
-            alt="user"
-            class="w-10 h-10 rounded-full flex items-center justify-center"
-          />
-          <ul
-            class="absolute hidden group-hover:block bg-[#333] shadow-md p-3 rounded-md w-[200px]"
-          >
-            <li
-              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+       <% if (typeof loggedInUser !== 'undefined' && loggedInUser !== null) { %>
+        <div class="relative group">
+          <% loggedInUser.forEach(user => { %>
+            <img
+              src=" user.profile "
+              alt="user"
+              class="w-10 h-10 rounded-full flex items-center justify-center"
+            />
+            <ul
+              class="absolute hidden group-hover:block bg-[#333] shadow-md p-3 rounded-md w-[200px]"
             >
-              username
-            </li>
-            <li
-              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
-            >
-              email
-            </li>
-            <li
-              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
-            >
-              firstName
-            </li>
-            <li
-              class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
-            >
-              lastName
-            </li>
-            <li class="">
-              <form action="/api/v1/auth/logout" method="POST" class="flex items-center justify-center">
-                <button
-                  type="submit"
-                  class="flex items-center justify-center text-teal-600 border-none outline-none py-3 px-4 w-12 text-[16px] font-serif font-medium hover:text-orange-600 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
-                >
-                  Logout
-                </button>
-              </form>
-            </li>
-            <% if (user.role === 'admin') {%>
               <li
                 class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
               >
-                <a href="/api/v1/admin/admin" class="text-teal-950 px-2 py-1 font-medium">Admin</a>
+                username
               </li>
-            <%}%>
-          </ul>
-        <%})%>
-      </div>
+              <li
+                class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+              >
+                email
+              </li>
+              <li
+                class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+              >
+                firstName
+              </li>
+              <li
+                class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+              >
+                lastName
+              </li>
+              <li class="">
+                <form action="/api/v1/auth/logout" method="POST" class="flex items-center justify-center">
+                  <button
+                    type="submit"
+                    class="flex items-center justify-center text-teal-600 border-none outline-none py-3 px-4 w-12 text-[16px] font-serif font-medium hover:text-orange-600 transition duration-150 ease-linear hover:border-b-2 border-b-orange-600"
+                  >
+                    Logout
+                  </button>
+                </form>
+              </li>
+              <% if (user.role === 'admin') {%>
+                <li
+                  class="px-2 py-1 hover:bg-gray-100 hover:text-teal-950 font-medium"
+                >
+                  <a href="/api/v1/admin/admin" class="text-teal-950 px-2 py-1 font-medium">Admin</a>
+                </li>
+              <%}%>
+            </ul>
+          <%})%>
+        </div>
+        
+      <% } %>
     </nav>
 
     <button

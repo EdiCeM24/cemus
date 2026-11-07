@@ -1,10 +1,9 @@
-import bcryptSalt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { cookieOptions } from "../config/cookies.js";
 import User from "../models/User.model.js";
 import sendEmail from "../config/sendEmail.js";
 import { CLIENT_URL } from "../config/env.js";
 import crypto from "crypto";
-import asyncHandler from "../utils/asyncHandler.js";
 import RefreshToken from "../models/refreshToken.model.js";
 import hashToken from "../utils/hashToken.js";
 import { Op } from "sequelize";
@@ -23,26 +22,27 @@ redisClient.on("error", (err) => {
 // redisClient.connect();
 
 // CONTROLLER FUNCTIONALITIES LOGIC
-export const register = asyncHandler(async (req, res) => {
+export const register = async (req, res) => {
   // 1. Safe File Check
   if (!req.file) {
-    req.flash("error_msg", "Profile image is required!");
+    req.flash("error", "Profile image is required!");
     return res.redirect("/api/v1/auth/sign-up");
   }
 
   const profile = req.file.filename;
   // const filePath = req.file.path; // Keep track for cleanup
-  let { firstName, lastName, username, email, password } = req.body;
+  let { firstName, lastName, username, email, password, role } = req.body;
 
   // 2. Sanitize Inputs Safely
   firstName = firstName?.trim();
   lastName = lastName?.trim();
   username = username?.trim().toLowerCase();
   email = email?.trim().toLowerCase();
+  role = role?.trim();
 
   // 3. VALIDATION
   if (!firstName || !lastName || !username || !email || !password) {
-    req.flash("error_msg", "All fields are required!");
+    req.flash("error", "All fields are required!");
     return res.redirect("/api/v1/auth/sign-up");
   }
 
@@ -51,8 +51,7 @@ export const register = asyncHandler(async (req, res) => {
 
   //Email Pattern Check
   if (!emailRegex.test(email)) {
-    // await safeDeleteFile(filePath);
-    req.flash("error_msg", "Invalid email");
+    req.flash("error", "Invalid email");
     return res.redirect("/api/v1/auth/sign-up");
   }
 
@@ -61,9 +60,8 @@ export const register = asyncHandler(async (req, res) => {
 
   // Username Pattern Check
   if (!usernameRegex.test(username)) {
-    // await safeDeleteFile(filePath);
     req.flash(
-      "error_msg",
+      "error",
       "Username must contain only letters, numbers and at sign and be between 3 and 30 characters.",
     );
     return res.redirect("/api/v1/auth/sign-up");
@@ -75,10 +73,9 @@ export const register = asyncHandler(async (req, res) => {
 
   // Password Pattern Check
   if (!strongPassword.test(password)) {
-    // await safeDeleteFile(filePath);
     req.flash(
-      "error_msg",
-      "Password must contain at least 8 characters, letters, numbers and underscores and be between 3 and 30 characters.",
+      "error",
+      "Password must contain at least 8 characters, letters, numbers and at symbol and be between 3 and 30 characters.",
     );
 
     return res.redirect("/api/v1/auth/sign-up");
@@ -104,8 +101,7 @@ export const register = asyncHandler(async (req, res) => {
     // User Identification Check
     if (user) {
       await transaction.rollback();
-      // await safeDeleteFile(filePath);
-      req.flash("error_msg", "Email or username already exists");
+      req.flash("error", "Email or username already exists");
       return res.redirect("/api/v1/auth/sign-up");
     }
 
@@ -116,8 +112,8 @@ export const register = asyncHandler(async (req, res) => {
 
     const verificationTokenExpires = new Date(Date.now() + 20 * 60 * 1000);
 
-    const salt = await bcryptSalt.genSalt(12);
-    const hashedPassword = await bcryptSalt.hash(password, salt);
+    const salt = await bcrypt.genSalt(12);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await User.create(
       {
@@ -130,7 +126,7 @@ export const register = asyncHandler(async (req, res) => {
         verificationToken: hashedToken,
         verificationTokenExpires,
         isVerified: false,
-        role: "user",
+        role,
         loginAttempts: 0,
       },
       {
@@ -162,14 +158,14 @@ export const register = asyncHandler(async (req, res) => {
       // console.error("Email Delivery Failed: ", error);
       // We don't rollback here because the user is already successfully registered
       req.flash(
-        "success_msg",
+        "success",
         "Registration successful, but we couldn't send the verification email. Please request a new link.",
         error,
       );
       return res.redirect("/api/v1/auth/sign-up");
     }
 
-    req.flash("success_msg", "Registration successful. check your email. ✅");
+    req.flash("success", "Registration successful. check your email. ✅");
     return res.redirect("/api/v1/auth/verify-email");
   } catch (error) {
     // Ensure transaction rolls back safely if still active
@@ -179,7 +175,7 @@ export const register = asyncHandler(async (req, res) => {
       } catch (rollbackErr) {
         // console.error("Rollback failed: ", rollbackErr);
         req.flash(
-          "error_msg",
+          "error",
           "transaction rollback due to unsuccessful registration: ",
           rollbackErr,
         );
@@ -188,37 +184,39 @@ export const register = asyncHandler(async (req, res) => {
 
     // console.error("Registration Error: ", error);
     req.flash(
-      "error_msg",
+      "error",
       "An unexpected error occurred. Please try again: ",
       error,
     );
     return res.redirect("/api/v1/auth/sign-up");
   }
-});
+};
 
 //
-export const signOut = asyncHandler(async (req, res) => {
+export const signOut = async (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
 
   if (!refreshToken) {
-    req.flash("error_msg", "Invalid token.");
+    req.flash("error", "Invalid token.");
     return res.redirect("/api/v1/homes/home");
   }
   const decodedToken = jwt.decode(refreshToken);
-
   if (!decodedToken || !decodedToken.jti) {
-    req.flash("error_msg", "Invalid token");
-
+    req.flash("error", "Invalid token");
     return res.redirect("/api/v1/homes/home");
   }
 
-  await redisClient.set(`revoked:${decodedToken.jti}`, "revoked", "EX", 3600);
-  // await redisClient.set(
-  //   `revoked:${jwt.decode(token).jti}`,
-  //   "revoked",
-  //   "EX",
-  //   3600,
-  // );
+  const currentTime = Math.floor(Date.now() / 1000);
+  const remainingTime = decodedToken.exp - currentTime;
+
+  if (remainingTime) {
+    await redisClient.set(
+      `revoked:${decodedToken.jti}`,
+      "revoked",
+      "EX",
+      remainingTime,
+    );
+  }
 
   if (refreshToken) {
     await RefreshToken.destroy({
@@ -231,7 +229,7 @@ export const signOut = asyncHandler(async (req, res) => {
   res.clearCookie("accessToken", cookieOptions.accessToken);
   res.clearCookie("refreshToken", cookieOptions.refreshToken);
 
-  req.flash("success_msg", "You have been logged out successfully.");
+  req.flash("success", "You have been logged out successfully.");
 
   return res.redirect("/api/v1/auth/login");
-});
+};

@@ -1,187 +1,171 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <%- include('partials/head.ejs') %>
   </head>
-  <body>
+  <body class="bg-slate-950">
     <!-- Navbar -->
      <header class="container mx-auto">
       <%- include('partials/navbar.ejs') %>
     </header>
+    <main class="bg-slate-950 relative">
+      <div class="mt-[5%] left-2 flex items-center justify-evenly flex-col">
+        <section class="">
+          <div class="mt-[5%]">
+          <div class="mb-4 p-2">
+          <span class="flex flex-col items-center justify-center float-end right-5 mb-3">
+            <strong class="text-3xl text-gray-300 font-extrabold font-serif right-5">Marcus Edidiong,</strong>
+            <p class="text-xl text-sky-400 font-semibold font-serif pl-3 w-[300px]">is a creative developer & a skilled designer.</p>
+          </span>
+
+          <div class="">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            
+            <a href="/api/v1/homes/home/#projects" id="projects">
+              <div class="text-center mb-20">
+                <h2 class="text-4xl lg:text-5xl font-extrabold text-white mb-5">
+                  A Glimpse into <span class="gradient-text">My Design Process</span>
+                </h2>
+
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                  Some production-level applications and systems I have designed and developed.
+                </p>
+              </div>
+            </a>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+              <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+                <img src="/images/Microsoft-Surface-Duo-localhost.png" class="h-56 w-full object-cover" />
+
+                <div class="p-8">
+                  <h3 class="text-2xl text-white font-bold mb-4">SaaS Dashboard</h3>
+                  <p class="text-slate-300 mb-6">
+                    Analytics and subscription management platform with real-time reports.
+                  </p>
+
+                  <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                    View Project →
+                  </button>
+                </div>
+              </div>
+
+
+              <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+                <div class="p-8">
+                  <h3 class="text-2xl text-white font-bold mb-4">E-Commerce App</h3>
+                  <p class="text-slate-300 mb-6">
+                    Full production ecommerce application with payments and authentication.
+                  </p>
+
+                  <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                    View Project →
+                  </button>
+                </div>
+              </div>
+
+
+              <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+                  <div class="p-8">
+                    <h3 class="text-2xl text-white font-bold mb-4">AI Platform</h3>
+                    <p class="text-slate-300 mb-6">
+                      AI powered productivity application with secure backend architecture.
+                    </p>
+
+                    <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                      View Project →
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            </div>
+          </div>
+
+          <!-- Projects -->
+          <section id="projects" class="py-28">
+
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+              
+              <a href="/api/v1/homes/home/#projects" id="projects">
+                <div class="text-center mb-20">
+                  <h2 class="text-4xl lg:text-5xl font-extrabold text-white mb-5">
+                    Featured <span class="gradient-text">Projects</span>
+                  </h2>
+
+                  <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                    Some production-level applications and systems I have designed and developed.
+                  </p>
+                </div>
+              </a>
+
+              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+                  <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+                  <div class="p-8">
+                    <h3 class="text-2xl text-white font-bold mb-4">SaaS Dashboard</h3>
+                    <p class="text-slate-300 mb-6">
+                      Analytics and subscription management platform with real-time reports.
+                    </p>
+
+                    <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                      View Project →
+                    </button>
+                  </div>
+                </div>
+
+
+                <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+                  <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+                  <div class="p-8">
+                    <h3 class="text-2xl text-white font-bold mb-4">E-Commerce App</h3>
+                    <p class="text-slate-300 mb-6">
+                      Full production ecommerce application with payments and authentication.
+                    </p>
+
+                    <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                      View Project →
+                    </button>
+                  </div>
+                </div>
+
+
+                <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
+                  <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
+
+                  <div class="p-8">
+                    <h3 class="text-2xl text-white font-bold mb-4">AI Platform</h3>
+                    <p class="text-slate-300 mb-6">
+                      AI powered productivity application with secure backend architecture.
+                    </p>
+
+                    <button class="text-cyan-400 font-semibold hover:text-cyan-300">
+                      View Project →
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+      
+        </section>
+      </div>
+    </main>
     
 
-    <div class="contact-conn container mx-auto max-h-screen mt-[2%] p-10 px-10"> 
-      <div class="">
-        <% if (success_msg) { %>
-          <p class="text-green-600 font-serif font-semibold text-[16px]"><%= success_msg[0] %></p>
-        <% } %>
-      </div>
-
-      <div class="mb-2 p-1">
-        <% if (error_msg) { %>
-          <span class="text-rose-600 font-serif font-semibold text-[16px]"><%= error_msg %></span>
-        <% } %>
-      </div>
-
-      <div class="mb-2 p-1">
-        <% if(error) { %>
-          <span class="text-rose-600 font-serif font-semibold text-[16px]"><%= error %></span>
-        <%}%> 
-      </div>
-    </div>
-
-    <main>
-
-      <div class="mb-4 p-2">
-        <span class="flex flex-col items-center justify-center float-end right-5 mb-3">
-          <strong class="text-3xl text-gray-300 font-extrabold font-serif right-5">Marcus Edidiong,</strong>
-          <p class="text-xl text-sky-400 font-semibold font-serif pl-3 w-[300px]">is a creative developer & a skilled designer.</p>
-        </span>
-
-        <div class="">
-          <div class="max-w-7xl mx-auto px-6 lg:px-12">
-          
-          <a href="/api/v1/homes/home/#projects" id="projects">
-            <div class="text-center mb-20">
-              <h2 class="text-4xl lg:text-5xl font-extrabold text-white mb-5">
-                Recent <span class="gradient-text">Projects</span>
-              </h2>
-
-              <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-                Some production-level applications and systems I have designed and developed.
-              </p>
-            </div>
-          </a>
-
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
-
-              <div class="p-8">
-                <h3 class="text-2xl text-white font-bold mb-4">SaaS Dashboard</h3>
-                <p class="text-slate-300 mb-6">
-                  Analytics and subscription management platform with real-time reports.
-                </p>
-
-                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
-                  View Project →
-                </button>
-              </div>
-            </div>
-
-
-            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
-
-              <div class="p-8">
-                <h3 class="text-2xl text-white font-bold mb-4">E-Commerce App</h3>
-                <p class="text-slate-300 mb-6">
-                  Full production ecommerce application with payments and authentication.
-                </p>
-
-                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
-                  View Project →
-                </button>
-              </div>
-            </div>
-
-
-            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
-
-              <div class="p-8">
-                <h3 class="text-2xl text-white font-bold mb-4">AI Platform</h3>
-                <p class="text-slate-300 mb-6">
-                  AI powered productivity application with secure backend architecture.
-                </p>
-
-                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
-                  View Project →
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-        </div>
-      </div>
-
-      <!-- Projects -->
-      <section id="projects" class="py-28">
-
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-          
-          <a href="/api/v1/homes/home/#projects" id="projects">
-            <div class="text-center mb-20">
-              <h2 class="text-4xl lg:text-5xl font-extrabold text-white mb-5">
-                Featured <span class="gradient-text">Projects</span>
-              </h2>
-
-              <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-                Some production-level applications and systems I have designed and developed.
-              </p>
-            </div>
-          </a>
-
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
-
-              <div class="p-8">
-                <h3 class="text-2xl text-white font-bold mb-4">SaaS Dashboard</h3>
-                <p class="text-slate-300 mb-6">
-                  Analytics and subscription management platform with real-time reports.
-                </p>
-
-                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
-                  View Project →
-                </button>
-              </div>
-            </div>
-
-
-            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
-
-              <div class="p-8">
-                <h3 class="text-2xl text-white font-bold mb-4">E-Commerce App</h3>
-                <p class="text-slate-300 mb-6">
-                  Full production ecommerce application with payments and authentication.
-                </p>
-
-                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
-                  View Project →
-                </button>
-              </div>
-            </div>
-
-
-            <div class="glass rounded-3xl overflow-hidden hover:-translate-y-2 transition duration-300">
-              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" class="h-56 w-full object-cover" />
-
-              <div class="p-8">
-                <h3 class="text-2xl text-white font-bold mb-4">AI Platform</h3>
-                <p class="text-slate-300 mb-6">
-                  AI powered productivity application with secure backend architecture.
-                </p>
-
-                <button class="text-cyan-400 font-semibold hover:text-cyan-300">
-                  View Project →
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-    </main>
-
-    <footer><%- include('partials/footer.ejs') %></footer>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
+    
 
     <script>
       // Use EJS output syntax to check if the message array contains elements
@@ -210,5 +194,28 @@
             }
         }).showToast();
     <% } %>
+    <div class="mt-5">
+      <!-- // Check if there is a success message -->
+      <% if (success_msg && success_msg.length > 0) { %>
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: '<%= success_msg %>',
+          timer: 3000
+        });
+      <% } %>
+
+      <!-- // Check if there is an error message -->
+      <% if (error_msg && error_msg.length > 0) { %>
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '<%= error_msg %>'
+        });
+      <% } %>
+    </div> 
+    <footer class="bottom-0"><%- include('partials/footer.ejs') %></footer>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="sweetalert2.min.js"></script>
   </body>
 </html>

@@ -1,235 +1,168 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%- title %></title>
-    <link rel="stylesheet" href="/css/output.css" />
-    <!-- <link rel="stylesheet" href="index.css" /> -->
-    <!--Bootstrap-->
-     
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ovo&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ovo&display=swap"
-      rel="stylesheet"
-    />
-     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      .sidebar .submenu {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-        display: flex;
-        flex-direction: column;
-        padding-left: 15px;
-      }
-      .sidebar .submenu.open {
-        max-height: 200px; /* Adjust as needed */
-      }
-
-    </style>
+    <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <div class="">
-      <header
-        class="md:min-h-[8%] min-h-[4%] w-full bg-slate-950 top-0 fixed left-0 z-10 flex items-center justify-between p-2.5"
-      >
-        <a href="" class="text-white flex items-center justify-evenly gap-0.5">
-          <img
-            src="/images/favicon3.ico"
-            class="h-6 w-6 rounded-full flex items-center justify-center"
-            alt=""
-          />
-          EDIDIONG
-        </a>
-        <div class="admin-navbar flex items-center space-x-2.5">
-          <a
-            href="/api/v1/homes/home"
-            class="text-gray-300 hover:text-sky-500 transition-all duration-300 ease-in-out font-serif font-medium text-lg"
-            >Home</a
+    <header><%- include('partials/header.ejs') %></header>
+    <div class="flex h-screen overflow-hidden">
+      <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <%- include('partials/sidebar.ejs') %>
+
+        <!-- Main Right Container Area -->
+        <div class="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <!-- Navbar -->
+          <%- include('partials/header.ejs') %>
+
+          <!-- Dynamic Page Body Injection -->
+          <main
+            class="flex-1 flex-col p-4 md:p-8 overflow-y-auto sm:overflow-scroll"
           >
-          <a
-            href="/api/v1/homes/about"
-            class="text-gray-300 hover:text-sky-500 transition-all duration-300 ease-in-out font-serif font-medium text-lg"
-            >About</a
-          >
-          <a
-            href="/api/v1/contacts/contact"
-            class="text-gray-300 hover:text-sky-500 transition-all duration-300 ease-in-out font-serif font-medium text-lg"
-            >Contact</a
-          >
-          <a
-            href="/api/v1/homes/projects"
-            class="text-gray-300 hover:text-sky-500 transition-all duration-300 ease-in-out font-serif font-medium text-lg"
-            >Projects</a
-          >
-        </div>
-        <div class="flex items-center gap-3">
-          <button class="text-gray-300 md:hidden" id="sideBar-btn">side</button>
-          <button class="text-gray-300 md:hidden" id="">Nav</button>
-        </div>
-      </header>
-      <main class="relative">
-        <div class="flex items-center h-screen mt-[3%]">
-          <div class="flex justify-between flex-1 md:max-h-7 items-center lg:mt-[1%] mt-[13%]">
-            <div class="w-64 bg-sky-950 text-white p-4 h-screen">
-              <h1 class="text-2xl font-bold mb-2">Dashboard</h1>
-              <ul class="space-y-1">
-                <li class="flex items-center">
-                  <i class="fa fa-message"></i>
-                  <button class="w-full text-left px-4 py-2 hover:bg-gray-700 rounded accordion-button">Messages</button>
-                </li>
-                <ul class="hidde space-y-1 accordion-content">
-                  <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Contacts</a></li>
-                  <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Users</a></li>
-                  <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">getUser</a></li>
-                </ul>
-                <li>
-
-                  <li class="flex items-center">
-                    <i class="fas fa-analytics"></i>
-                    <button class="w-full text-left px-4 py-2 hover:bg-gray-700 rounded accordion-button">Analytics</button>
-                  </li>
-
-                  <ul class="hidde space-y-2 accordion-content">
-                    <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Clients</a></li>
-                    <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Visitors</a></li>
-                  </ul>
-                </li>
-
-                <li>
-                  <li class="flex items-center">
-                    <i class="fa-solid fa-handshake"></i>
-                    <button class="w-full text-left px-4 py-2 hover:bg-gray-700 rounded accordion-button">Employers</button>
-                  </li>
-
-                  <ul class="hidde space-y-2 accordion-content">
-                    <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Employed</a></li>
-                    <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Negotiations</a></li>
-                  </ul>
-                </li>
-
-                <li>
-                  <li class="flex items-center">
-                    <i class="fa-solid fa-gear"></i>
-                    <button class="w-full text-left px-4 py-2 hover:bg-gray-700 rounded accordion-button">Settings</button>
-                  </li>
-
-                  <ul class="hidde space-y-2 accordion-content">
-                    <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Complaint</a></li>
-                    <li><a href="" class="block px-4 py-2 hover:bg-gray-700 rounded">Address</a></li>
-                </li>
-              </ul>
-            
+            <%- include('partials/main.ejs') %>
+            <div class="mt-5 p-3">
+              <%- include('partials/activities.ejs') %>
             </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 lg:mt-[-36%] md:mt-[-70%]">
-                <div class="bg-slate-300 p-4 rounded shadow-md">
-                  <h2 class="text-xl font-bold mb-2">Messages</h2>
-                  <p class="text-slate-950">You have 5 unread messages</p>
-                </div>
-                <div class="bg-slate-300 p-4 rounded shadow-md">
-                  <h2 class="text-xl font-bold mb-2">Registered Users</h2>
-                  <p class="text-slate-950">You have 10 registered users</p>
-                </div>
-                <div class="bg-slate-300 p-4 rounded shadow-md">
-                  <h2 class="text-xl font-bold mb-2">Vistors</h2>
-                  <p class="text-slate-950">You had 100 visitors today</p>
-                </div>
-              </div>
+            <div class="mt-5 p-3"><%- include('partials/users.ejs') %></div>
+            <div class="mt-5 p-3"><%- include('partials/msg.ejs') %></div>
+            <div class="mt-5 p-3"><%- include('partials/settings.ejs') %></div>
+            <div class="mt-5 p-3">
+              <%- include('partials/aboutModel.ejs') %>
             </div>
-
-          </div>
-
-
+          </main>
         </div>
-        
-      </main>
+      </div>
     </div>
+
     
+    <div class="">
+      <!-- // Check if there is a success message -->
+      <% if (success_msg && success_msg.length > 0) { %>
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: '<%= success_msg %>',
+          timer: 3000
+        });
+      <% } %>
 
-    <footer
-      class="py-2 mt-[4%] bottom-0 left-0 w-full text-center text-slate-500 border-t border-slate-800"
-    >
-      © 2026 EDIDIONG Portfolio. All Rights Reserved.
-    </footer>
-
-    <script src="/script/dash.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script type="module" src="/js/main.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <script>
-      lucide.createIcons();
-      // Use EJS output syntax to check if the message array contains elements
-      // connect-flash returns an array, so check if length > 0
-    </script>
-    <% if (success_msg && success_msg.length > 0) { %>
-        Toastify({
-            text: "<%= success_msg %>",
-            duration: 4000,
-            gravity: "top", // top or bottom
-            position: "right", // left, center or right
-            style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-            }
-        }).showToast();
-    <% } %>
-
-    <% if (error_msg && error_msg.length > 0) { %>
-        Toastify({
-            text: "<%= error_msg %>",
-            duration: 4000,
-            gravity: "top",
-            position: "right",
-            style: {
-                background: "linear-gradient(to right, #ff5f6d, #ffc371)",
-            }
-        }).showToast();
-    <% } %>
-
-    <script>
-      import { counterStore } from '../public/script/store.js';
-
-      const display = document.getElementById('counter-value');
-      const btn = document.getElementById('increment-btn');
-
-      // Update DOM on initial load
-      display.innerText = counterStore.getState().count;
-
-      // Subscribe to store changes to re-render the view
-      counterStore.subscribe((state) => {
-        display.innerText = state.count;
-      });
-
-      // Bind actions to UI events
-      btn.addEventListener('click', () => {
-        counterStore.getState().increment();
-      });
-
-      // FOR SIDEBAR
-      const dropdownBtn = document.querySelector('.dropdown-btn');
-      const submenu = document.querySelector('.submenu');
-
-      dropdownBtn.addEventListener('click', () => {
-        submenu.classList.toggle('open');
-      });
-
-    </script>
+      <!-- // Check if there is an error message -->
+      <% if (error_msg && error_msg.length > 0) { %>
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '<%= error_msg %>'
+        });
+      <% } %>
+    </div>
+    <footer><%- include('../partials/footer.ejs') %></footer>
+    <!-- Load Chart.js from official CDN -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- <script src="/script/admin.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.min.js"></script>
+    <!-- SweetAlert Flash Handler Logic --> 
   </body>
 </html>
 
+ <!-- 
+  Inject chart scripts safely into the bottom of layouts/main.ejs 
+  using the express-ejs-layouts script  block.
+-->
+    
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Revenue Line Chart Configuration
+    const ctxRevenue = document
+      .getElementById("revenueChart")
+      .getContext("2d");
+    new Chart(ctxRevenue, {
+      type: "line",
+      data: {
+        labels: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        datasets: [
+          {
+            label: "Monthly Revenue ($)",
+            data: serverRevenue,
+            borderColor: "#4f46e5", // Tailwind indigo-600
+            backgroundColor: "rgba(79, 70, 229, 0.05)",
+            fill: true,
+            tension: 0.35, // Smooth curves
+            borderWidth: 3,
+            pointRadius: 2,
+            pointHoverRadius: 6,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }, // Text descriptors handled in HTML UI
+          tooltip: { padding: 12, cornerRadius: 8 },
+        },
+        scales: {
+          y: {
+            grid: { color: "#f1f5f9" }, // Tailwind slate-100
+            ticks: {
+              color: "#64748b", // Tailwind slate-500
+              callback: (value) => "$" + value.toLocaleString(),
+            },
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: "#64748b" },
+          },
+        },
+      },
+    });
 
+    // 2. Traffic Acquisition Doughnut Chart Configuration
+    const ctxTraffic = document
+      .getElementById("trafficChart")
+      .getContext("2d");
+    new Chart(ctxTraffic, {
+      type: "doughnut",
+      data: {
+        labels: ["Direct", "Organic Search", "Referrals"],
+        datasets: [
+          {
+            data: serverTraffic,
+            backgroundColor: [
+              "#4f46e5", // Indigo-600
+              "#0ea5e9", // Sky-500
+              "#f59e0b", // Amber-500
+            ],
+            borderWidth: 4,
+            borderColor: "#ffffff",
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: { boxWidth: 12, padding: 20, color: "#475569" },
+          },
+          tooltip: { padding: 12, cornerRadius: 8 },
+        },
+      },
+    });
+  });
+</script>

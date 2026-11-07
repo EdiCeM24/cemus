@@ -1,0 +1,101 @@
+
+<section class="bg-slate-100 text-slate-900 antialiased font-sans md:mt-20 mt-40">
+  <div class="space-y-6">
+    <!-- Page Title -->
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-slate-900">Dashboard Overview</h1>
+      <button class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
+        + Export Report
+      </button>
+    </div>
+
+    <!-- KPI Stat Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <p class="text-sm text-slate-500 font-medium">Total Revenue</p>
+        <p class="text-2xl font-bold text-slate-900 mt-2">$45,231.89 <%= totalTransactions.service %></p>
+        <span class="text-xs text-emerald-600 font-semibold mt-1 inline-block">+20.1% from last month</span>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <p class="text-sm text-slate-500 font-medium">Active Users</p>
+        <p class="text-2xl font-bold text-slate-900 mt-2">+2,350 <%= activeUsers %></p>
+        <span class="text-xs text-emerald-600 font-semibold mt-1 inline-block">+180 today</span>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <p class="text-sm text-slate-500 font-medium">Total Users</p>
+        <p class="text-2xl font-bold text-slate-900 mt-2">+12,234 <%= totalUsers %> </p>
+        <span class="text-xs text-rose-600 font-semibold mt-1 inline-block">-4% from last week</span>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <p class="text-sm text-slate-500 font-medium">Active Now</p>
+        <p class="text-2xl font-bold text-slate-900 mt-2">+573 <%= activeNowUsers %></p>
+        <span class="text-xs text-emerald-600 font-semibold mt-1 inline-block">+201 since last hour</span>
+      </div>
+    </div>
+
+    <!-- Data Table Section -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-200 font-semibold text-slate-800">
+        Recent Transactions
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+              <th class="px-6 py-3">Employer</th>
+              <th class="px-6 py-3">Status</th>
+              <th class="px-6 py-3">Negotiated Job</th>
+              <th class="px-6 py-3">Date</th>
+              <th class="px-6 py-3 text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-sm">
+            <% contacts.forEach(txn => { %>
+              <tr class="hover:bg-slate-50">
+                <td class="px-6 py-4 font-medium text-slate-900"><%= txn.name %></td>
+                <td class="px-6 py-4">
+                  <span class="px-2.5 py-1 text-xs font-semibold rounded-full <%= txn.status === 'Paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' %>">
+                    <%= txn.status %>
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="px-2.5 py-1 text-xs font-semibold rounded-full <%= txn.activity === 'Paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' %>">
+                    <%= txn.job %>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-slate-500"><%= txn.formattedDate %></td>
+                <td class="px-6 py-4 text-right font-medium text-slate-900"><%= txn.service %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="">
+  <!-- // Check if there is a success message -->
+  <% if (success_msg && success_msg.length > 0) { %>
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: '<%= success_msg %>',
+      timer: 3000
+    });
+  <% } %>
+
+  <!-- // Check if there is an error message -->
+  <% if (error_msg && error_msg.length > 0) { %>
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: '<%= error_msg %>'
+    });
+  <% } %>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.min.js"></script>
+<!-- SweetAlert Flash Handler Logic -->

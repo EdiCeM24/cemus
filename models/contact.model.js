@@ -50,6 +50,13 @@ const ContactSchema = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM("completed", "pending", "negotiate"),
+      defaultValue: "pending",
+    },
+    date: {
+      type: DataTypes.DATE,
+    },
     role: {
       type: DataTypes.ENUM("user", "admin", "super_admin"),
       defaultValue: "user",

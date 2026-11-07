@@ -1,0 +1,193 @@
+<div class="space-y-6">
+  <!-- Page Title -->
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-slate-900">Dashboard Overview</h1>
+    <button class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
+      + Export Report
+    </button>
+  </div>
+
+  <!-- KPI Stat Cards Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <p class="text-sm text-slate-500 font-medium">Total Revenue</p>
+      <p class="text-2xl font-bold text-slate-900 mt-2">$45,231.89</p>
+      <span class="text-xs text-emerald-600 font-semibold mt-1 inline-block">+20.1% from last month</span>
+    </div>
+    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <p class="text-sm text-slate-500 font-medium">Active Users</p>
+      <p class="text-2xl font-bold text-slate-900 mt-2">+2,350</p>
+      <span class="text-xs text-emerald-600 font-semibold mt-1 inline-block">+180 today</span>
+    </div>
+    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <p class="text-sm text-slate-500 font-medium">Sales</p>
+      <p class="text-2xl font-bold text-slate-900 mt-2">+12,234</p>
+      <span class="text-xs text-rose-600 font-semibold mt-1 inline-block">-4% from last week</span>
+    </div>
+    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <p class="text-sm text-slate-500 font-medium">Active Now</p>
+      <p class="text-2xl font-bold text-slate-900 mt-2">+573</p>
+      <span class="text-xs text-emerald-600 font-semibold mt-1 inline-block">+201 since last hour</span>
+    </div>
+  </div>
+
+  <!-- Data Table Section -->
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-slate-200 font-semibold text-slate-800">
+      Recent Transactions
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+            <th class="px-6 py-3">Customer</th>
+            <th class="px-6 py-3">Status</th>
+            <th class="px-6 py-3">Date</th>
+            <th class="px-6 py-3 text-right">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 text-sm">
+          <% transactions.forEach(txn => { %>
+            <tr class="hover:bg-slate-50">
+              <td class="px-6 py-4 font-medium text-slate-900"><%= txn.customer %></td>
+              <td class="px-6 py-4">
+                <span class="px-2.5 py-1 text-xs font-semibold rounded-full <%= txn.status === 'Paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' %>">
+                  <%= txn.status %>
+                </span>
+              </td>
+              <td class="px-6 py-4 text-slate-500"><%= txn.date %></td>
+              <td class="px-6 py-4 text-right font-medium text-slate-900"><%= txn.amount %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- THE SECOND ONE -->
+<div class="space-y-6">
+  <!-- Existing Title and KPI Stats Cards Grid here... -->
+
+  <!-- Analytics Charts Grid Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Left Area: Revenue Line Chart (Spans 2 columns on large screens) -->
+    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm lg:col-span-2">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Revenue Over Time</h2>
+          <p class="text-xs text-slate-500">Monthly pipeline earnings metric summary</p>
+        </div>
+        <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">Updated Live</span>
+      </div>
+      <div class="relative min-h-[300px] w-full">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Right Area: Traffic Breakdown Doughnut Chart -->
+    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+      <div class="mb-4">
+        <h2 class="text-lg font-bold text-slate-900">Traffic Acquisition</h2>
+        <p class="text-xs text-slate-500">Top user channel conversion points</p>
+      </div>
+      <div class="relative min-h-[300px] w-full flex items-center justify-center">
+        <canvas id="trafficChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Existing Transactions Data Table Section here... -->
+</div>
+
+<!-- 
+  Inject chart scripts safely into the bottom of layouts/main.ejs 
+  using the express-ejs-layouts <%- script %> block.
+-->
+<%- contentFor('script') %>
+<!-- Load Chart.js from official CDN -->
+<script src="https://jsdelivr.net"></script>
+
+<script>
+  // Cleanly inject server arrays straight into browser JavaScript context
+  const serverRevenue = <%- JSON.stringify(revenueData) %>;
+  const serverTraffic = <%- JSON.stringify(trafficData) %>;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Revenue Line Chart Configuration
+    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+    new Chart(ctxRevenue, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+          label: 'Monthly Revenue ($)',
+          data: serverRevenue,
+          borderColor: '#4f46e5', // Tailwind indigo-600
+          backgroundColor: 'rgba(79, 70, 229, 0.05)',
+          fill: true,
+          tension: 0.35, // Smooth curves
+          borderWidth: 3,
+          pointRadius: 2,
+          pointHoverRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }, // Text descriptors handled in HTML UI
+          tooltip: { padding: 12, cornerRadius: 8 }
+        },
+        scales: {
+          y: {
+            grid: { color: '#f1f5f9' }, // Tailwind slate-100
+            ticks: {
+              color: '#64748b', // Tailwind slate-500
+              callback: (value) => '$' + value.toLocaleString()
+            }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#64748b' }
+          }
+        }
+      }
+    });
+
+    // 2. Traffic Acquisition Doughnut Chart Configuration
+    const ctxTraffic = document.getElementById('trafficChart').getContext('2d');
+    new Chart(ctxTraffic, {
+      type: 'doughnut',
+      data: {
+        labels: ['Direct', 'Organic Search', 'Referrals'],
+        datasets: [{
+          data: serverTraffic,
+          backgroundColor: [
+            '#4f46e5', // Indigo-600
+            '#0ea5e9', // Sky-500
+            '#f59e0b'  // Amber-500
+          ],
+          borderWidth: 4,
+          borderColor: '#ffffff',
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { boxWidth: 12, padding: 20, color: '#475569' }
+          },
+          tooltip: { padding: 12, cornerRadius: 8 }
+        }
+      }
+    });
+
+  });
+</script>

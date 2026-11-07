@@ -8,7 +8,7 @@ const cleanupExpiredUsers = () => {
   cron.schedule(
     "0 * * * *",
 
-    async () => {
+    async (req, res) => {
       await User.destroy({
         where: {
           isVerified: false,
@@ -23,6 +23,7 @@ const cleanupExpiredUsers = () => {
       });
 
       console.log("Expired users cleaned");
+      req.flash("success", "Expired user cleaned.");
     },
   );
 };
