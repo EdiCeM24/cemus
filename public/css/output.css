@@ -4277,6 +4277,10 @@ details.collapse summary::-webkit-details-marker {
   margin-top: 80%;
 }
 
+.mt-\[1\%\] {
+  margin-top: 1%;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -4581,6 +4585,10 @@ details.collapse summary::-webkit-details-marker {
   flex-wrap: nowrap;
 }
 
+.place-content-center {
+  place-content: center;
+}
+
 .items-start {
   align-items: flex-start;
 }
@@ -4673,6 +4681,15 @@ details.collapse summary::-webkit-details-marker {
 
 .gap-y-5 {
   row-gap: 1.25rem;
+}
+
+.gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+
+.gap-y-2\.5 {
+  row-gap: 0.625rem;
 }
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -5327,6 +5344,10 @@ details.collapse summary::-webkit-details-marker {
 
 .pt-32 {
   padding-top: 8rem;
+}
+
+.pl-20 {
+  padding-left: 5rem;
 }
 
 .text-left {
@@ -7058,6 +7079,10 @@ body {
     margin-top: 75%;
   }
 
+  .md\:mt-10 {
+    margin-top: 2.5rem;
+  }
+
   .md\:flex {
     display: flex;
   }
@@ -7088,6 +7113,14 @@ body {
 
   .md\:w-\[300px\] {
     width: 300px;
+  }
+
+  .md\:w-0 {
+    width: 0px;
+  }
+
+  .md\:w-full {
+    width: 100%;
   }
 
   .md\:max-w-\[50\%\] {
@@ -7186,6 +7219,10 @@ body {
     width: 80%;
   }
 
+  .lg\:w-0 {
+    width: 0px;
+  }
+
   .lg\:max-w-\[80\%\] {
     max-width: 80%;
   }
@@ -7213,6 +7250,11 @@ body {
   .lg\:px-12 {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .lg\:px-\[20\%\] {
+    padding-left: 20%;
+    padding-right: 20%;
   }
 
   .lg\:text-2xl {

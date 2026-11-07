@@ -14,9 +14,10 @@ export const forgotPasswordLogic = asyncHandler(async (req, res) => {
     { title: "Edidiong's Forgot Password Page" },
     (err, ejs) => {
       if (err) {
-        return req.flash("error_msg", "Page not found or template error");
+        console.log("this page is not loaded: ", err, "Forgot Password");
+        return req.flash("error", "Page not found or template error");
       } else {
-        req.flash("success_msg", "Page loaded successfully!");
+        req.flash("success", "Page loaded successfully!");
       }
 
       res.send(ejs);
@@ -27,7 +28,7 @@ export const forgotPasswordLogic = asyncHandler(async (req, res) => {
 export const passwordReset = asyncHandler(async (req, res) => {
   res.render(
     "passwordReset",
-    { title: "Edidiong's Forgot Password Page", csrfToken: req.csrfToken() },
+    { title: "Edidiong's Forgot Password Page" },
     (err, ejs) => {
       if (err) {
         return req.flash("error_msg", "Page not found or template error");

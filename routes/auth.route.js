@@ -20,7 +20,8 @@ const authRouter = express.Router();
 // GET Routes:
 
 authRouter.get("/sign-up", handleSignup);
-// verifyEmail,
+
+//
 authRouter.get("/login", verifyEmail, protects, handleLogin);
 
 authRouter.get("/verify-success", verifyEmail, verifySuccessMessage);
@@ -48,6 +49,7 @@ authRouter.post(
   register,
 );
 
+//
 authRouter.post("/sign-in", validateUser, signIn);
 
 // verifyToken

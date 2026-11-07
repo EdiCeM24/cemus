@@ -5,8 +5,8 @@
     id="modal_form_container"
     class="moda bg-slate-800 w-full h-full antialiased"
   >
-    <div class="modal-bo">
-      <div class="modal-to flex items-center justify-between">
+    <div class="modal-bo w-full">
+      <div class="modal-to flex items-center justify-between w-full">
         <p class="text-gray-300 text-xl font-serif font-medium">
           Complete the form to get in touch
         </p>
@@ -18,7 +18,7 @@
           &times;
         </button>
       </div>
-      <div class="modal-middl">
+      <div class="modal-middl w-full">
         <form
           action=""
           method="POST"
@@ -75,7 +75,9 @@
             />
           </div>
 
-          <div class="lg:flex items-center justify-evenly gap-x-24 gap-y-5">
+          <div
+            class="lg:flex items-center justify-evenly gap-x-24 gap-y-5 w-full"
+          >
             <span class="flex items-center gap-1">
               <input
                 type="radio"
@@ -114,7 +116,7 @@
             <select
               name="budget"
               id=""
-              class="outline-none bg-sky-950 text-white p-4 rounded-[4px] mt-2"
+              class="outline-none bg-sky-950 text-white p-4 rounded-[4px] mt-2 w-full"
               required
             >
               <option>Weekly Budget</option>
@@ -139,7 +141,10 @@
           </div>
 
           <div class="">
-            <button type="submit" class="btn btn-success text-white shadow-md">
+            <button
+              type="submit"
+              class="btn btn-success text-white shadow-md w-full"
+            >
               Contact Me
             </button>
           </div>
